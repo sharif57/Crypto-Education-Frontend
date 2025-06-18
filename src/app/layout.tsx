@@ -62,6 +62,7 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} antialiased`}
         style={{ fontFamily: "var(--font-poppins)" }}
+          cz-shortcut-listen="true"
       >
         <Header />
         {children}
