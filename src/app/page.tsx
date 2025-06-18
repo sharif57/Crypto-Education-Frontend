@@ -1,9 +1,10 @@
-import React from 'react'
+import Banner from "@/components/hero-banner";
+import React from "react";
 
 export default function Home() {
   return (
     <div>
-      <h1 className='text-text'>Home</h1>
+      <Banner></Banner>
     </div>
-  )
+  );
 }
