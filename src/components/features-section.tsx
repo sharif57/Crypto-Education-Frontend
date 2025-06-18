@@ -1,21 +1,9 @@
-"use client";
-
-import { Brain, Clock, Globe, Play, User } from "lucide-react";
 import Image from "next/image";
 
 export default function FeaturesSection() {
   return (
     <section className="relative bg-[#1a1a1a] py-16 lg:py-24">
       {/* Background subtle pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(6, 182, 212, 0.3) 1px, transparent 0)`,
-            backgroundSize: "40px 40px",
-          }}
-        ></div>
-      </div>
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -130,11 +118,11 @@ export default function FeaturesSection() {
 
           {/* Self-Paced Learning */}
           <div className="lg:col-span-1">
-            <div className="h-full  bg-gradient-to-br from-[#1c1c1c] to-[#2e2e2e]  rounded-3xl p-8 border border-cyan-400/20 hover:border-cyan-400/40 transition-all duration-300 group relative overflow-hidden">
+            <div className="h-full  bg-gradient-to-br from-[#1c1c1c] to-[#2e2e2e]  rounded-3xl p-8 border border-text hover:border-cyan-400/40 transition-all duration-300 group relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
               <div className="relative z-10">
-                 <Image
+                <Image
                   src="/images/time.png"
                   alt="AI"
                   width={600}
@@ -155,14 +143,18 @@ export default function FeaturesSection() {
           {/* Row 2 */}
           {/* Structured Video Masterclasses */}
           <div className="lg:col-span-1">
-            <div className="h-full bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl p-8 border border-cyan-400/20 hover:border-cyan-400/40 transition-all duration-300 group relative overflow-hidden">
+            <div className="h-full bg-gradient-to-br from-[#1c1c1c] to-[#2e2e2e] rounded-3xl p-8 border border-text hover:border-cyan-400/40 transition-all duration-300 group relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
               <div className="relative z-10">
-                <div className="w-16 h-16 bg-cyan-400/20 rounded-full flex items-center justify-center mb-6 group-hover:bg-cyan-400/30 transition-colors duration-300">
-                  <Play className="w-8 h-8 text-cyan-400" />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-4">
+                <Image
+                  src="/images/Group (1).png"
+                  alt="AI"
+                  width={600}
+                  height={600}
+                  className="size-[68px] mb-5"
+                />
+                <h3 className="text-2xl font-medium text-white mb-4">
                   Structured Video Masterclasses
                 </h3>
                 <p className="text-gray-300 text-lg leading-relaxed">
@@ -175,14 +167,18 @@ export default function FeaturesSection() {
 
           {/* Personalized Coaching */}
           <div className="lg:col-span-1">
-            <div className="h-full bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl p-8 border border-cyan-400/20 hover:border-cyan-400/40 transition-all duration-300 group relative overflow-hidden">
+            <div className="h-full bg-gradient-to-br from-[#1c1c1c] to-[#2e2e2e] rounded-3xl p-8 border border-text hover:border-cyan-400/40 transition-all duration-300 group relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
               <div className="relative z-10">
-                <div className="w-16 h-16 bg-cyan-400/20 rounded-full flex items-center justify-center mb-6 group-hover:bg-cyan-400/30 transition-colors duration-300">
-                  <User className="w-8 h-8 text-cyan-400" />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-4">
+                <Image
+                  src="/images/call.png"
+                  alt="AI"
+                  width={600}
+                  height={600}
+                  className="size-[68px] mb-5"
+                />
+                <h3 className="text-2xl font-medium text-white mb-4">
                   Personalized Coaching
                 </h3>
                 <p className="text-gray-300 text-lg leading-relaxed">
