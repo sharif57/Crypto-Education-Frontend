@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Apple, Play } from "lucide-react";
 import Image from "next/image";
 
 export default function MobileShowcase() {
@@ -31,8 +30,8 @@ export default function MobileShowcase() {
             </div>
 
             <p className="text-gray-700 text-lg lg:text-xl leading-relaxed max-w-md lg:max-w-xl">
-              The crypto world is evolving fast. With TheClue, you'll not only
-              keep up but lead the way. This is more than just learning; it's an
+              The crypto world is evolving fast. With TheClue, you&apos;ll not only
+              keep up but lead the way. This is more than just learning; it&apos;s an
               exhilarating adventure into the future of finance.
             </p>
 

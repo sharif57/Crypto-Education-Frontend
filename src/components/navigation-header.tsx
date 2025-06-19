@@ -14,7 +14,7 @@ export default function Header() {
     { name: "Home", href: "/", active: activeItem === "Home" },
     {
       name: "Masterclass",
-      href: "/masterclass",
+      href: "/master-class",
       active: activeItem === "Masterclass",
     },
     {

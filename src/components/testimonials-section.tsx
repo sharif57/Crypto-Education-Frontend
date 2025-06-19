@@ -201,18 +201,18 @@ export default function TestimonialsSection() {
         <div className="max-w-7xl mx-auto -z-20">
           {/* Header Section */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium mb-6">
               What Our Learners Are{" "}
-              <span className="text-[#4ade80]">Saying</span>
+              <span className="text-text">Saying</span>
             </h2>
-            <p className="text-gray-300 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+            <p className="text-gray-300 text-lg sm:text-xl max-w-4xl mx-auto leading-relaxed">
               Join thousands of people worldwide who&lsquo;ve transformed their
               understanding of Web3 with us.
             </p>
           </div>
 
           {/* Testimonials Grid */}
-          <div className="grid grid-cols-1 -z-20 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 lg:mt-[300px]">
+          <div className="grid grid-cols-1 -z-20 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 lg:mt-[200px] mt-[100px] ">
             {/* Column 1 */}
             <div className="space-y-6">
               {/* Theresa Webb */}

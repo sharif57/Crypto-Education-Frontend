@@ -39,6 +39,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/navigation-header";
+import Footer from "@/components/footer";
 
 // Load Poppins with `variable` option
 const poppins = Poppins({
@@ -66,6 +67,7 @@ export default function RootLayout({
       >
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
