@@ -1,4 +1,5 @@
 import AIAssistantSection from "@/components/ai-assistant-section";
+import MobileShowcase from "@/components/app-showcase";
 import FeaturesSection from "@/components/features-section";
 import Banner from "@/components/hero-banner";
 import MasterClass from "@/components/master-class";
@@ -15,6 +16,7 @@ export default function Home() {
       <FeaturesSection/>
       <PricingSection/>
       <TestimonialsSection />   
+      <MobileShowcase/>
     </div>
   );
 }
