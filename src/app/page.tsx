@@ -3,6 +3,7 @@ import FeaturesSection from "@/components/features-section";
 import Banner from "@/components/hero-banner";
 import MasterClass from "@/components/master-class";
 import PricingSection from "@/components/pricing-section";
+import TestimonialsSection from "@/components/testimonials-section";
 import React from "react";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       <AIAssistantSection></AIAssistantSection>
       <FeaturesSection/>
       <PricingSection/>
+      <TestimonialsSection />   
     </div>
   );
 }
