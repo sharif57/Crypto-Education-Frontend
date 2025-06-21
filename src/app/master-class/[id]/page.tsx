@@ -5,7 +5,7 @@ import type React from "react";
 import { useState } from "react";
 import { ChevronDown, ChevronUp, Play, ArrowLeft, X, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useParams, useRouter } from "next/navigation";
+import {  useRouter } from "next/navigation";
 
 interface Message {
   id: string;
@@ -15,7 +15,7 @@ interface Message {
 }
 
 export default function Component() {
-  const { id } = useParams();
+//   const { id } = useParams();
   const [expandedModule, setExpandedModule] = useState("exchanges");
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([

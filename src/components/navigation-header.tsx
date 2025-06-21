@@ -5,8 +5,16 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+
+  const pathname = usePathname();
+
+  if(pathname === "/chat"){
+    return null;
+  }
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("Home");
 
