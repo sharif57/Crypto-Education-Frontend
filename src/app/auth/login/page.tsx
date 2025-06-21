@@ -8,14 +8,28 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-export default function SignUp() {
+export default function SignIn() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      // Handle sign-in logic
+      console.log("Signing in...");
+      router.push("/");
+      // Example: await signIn(email, password);
+    } catch (error) {
+      console.error("Sign in failed:", error);
+    }
+  };
 
   return (
     <div
       className="min-h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center p-4"
-      style={{ backgroundImage: "url(/images/BG.png)" }}
+      style={{ backgroundImage: "url(/images/login.png)" }}
     >
       <Card className="w-full max-w-md bg-gradient-to-b   from-[#161616] via-[#2c2c2c] to-[#3f3d3d]  border-text backdrop-blur-sm">
         <CardHeader className="space-y-1 pb-6">
@@ -26,7 +40,7 @@ export default function SignUp() {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <form className="space-y-4">
+          <form onSubmit={handleSignIn} className="space-y-4">
             <div className="space-y-2">
               <Label
                 htmlFor="signup-email"
@@ -71,6 +85,14 @@ export default function SignUp() {
                 </Button>
               </div>
             </div>
+            <div className="text-right ">
+              <Link
+                href="/auth/forgot-pass"
+                className="text-sm text-text   font-normal transition-colors"
+              >
+                Forget password?
+              </Link>
+            </div>
 
             <Button className="w-full bg-text hover:bg-text rounded-full text-black font-medium py-2.5 transition-colors">
               Sign In
@@ -114,12 +136,12 @@ export default function SignUp() {
 
           <div className="text-center">
             <span className="text-sm text-gray-400">
-              Already have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link
                 href="/auth/signup"
                 className="text-teal-400 hover:text-teal-300 font-medium transition-colors"
               >
-                Sign in
+                Sign Up
               </Link>
             </span>
           </div>
