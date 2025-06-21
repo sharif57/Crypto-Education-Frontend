@@ -51,7 +51,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
 
   return (
     <div
-      className="fixed inset-0  bg-opacity-50 flex items-start justify-center  pt-20 z-50"
+      className="fixed inset-0  bg-opacity-50 flex items-start justify-center  pt-20 z-50 p-4"
       onClick={handleOverlayClick}
     >
       <div
@@ -74,7 +74,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
         {/* New Chat button */}
         <button
           onClick={handleNewChat}
-          className="w-1/4 p-3  flex items-center gap-3 rounded-3xl bg-text transition-colors "
+          className="lg:w-1/4 w-full p-3  flex items-center gap-3 rounded-3xl bg-text transition-colors "
         >
           <svg
             width="24"

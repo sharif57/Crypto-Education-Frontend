@@ -44,7 +44,7 @@ export default function Banner() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="border-2 border-gray-600 text-white hover:text-text hover:bg-gray-800 hover:border-gray-500 px-8 py-6 rounded-full text-lg font-medium transition-all duration-300"
+                  className="border-2 w-full border-gray-600 text-white hover:text-text hover:bg-gray-800 hover:border-gray-500 px-8 py-6 rounded-full text-lg font-medium transition-all duration-300"
                 >
                   Start learning
                 </Button>{" "}

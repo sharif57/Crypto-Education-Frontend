@@ -165,6 +165,7 @@ export default function Component() {
               controls
               poster="/placeholder.svg?height=400&width=800"
               controlsList="nodownload"
+              autoPlay
             >
               <source
                 src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
