@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function FeaturesSection() {
   return (
-    <section id="Features" className="relative bg-[#1a1a1a] py-16 lg:py-24">
+    <section id="features" className="relative bg-[#1a1a1a] py-16 lg:py-24">
       {/* Background subtle pattern */}
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
