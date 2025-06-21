@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 
 interface Lesson {
   id: string;
@@ -29,6 +30,11 @@ export default function MasterClass() {
   const [expandedModule, setExpandedModule] = useState<string | null>(
     "exchanges"
   );
+  // const [expandedModule, setExpandedModule] = useState(null);
+
+  // const toggleModule = (module) => {
+  //   setExpandedModule(expandedModule === module ? null : module);
+  // }
 
   const modules: Module[] = [
     {
@@ -214,6 +220,68 @@ export default function MasterClass() {
   return (
     <div className="min-h-screen bg-[#1a1a1a] p-4 sm:p-6 lg:p-8">
       <div className="max-w-3xl mx-auto">
+        <div className="bg-[#333333] rounded-xl mb-6 shadow-lg overflow-hidden">
+          <div
+            className="flex items-center justify-between p-4 cursor-pointer group"
+            onClick={() => toggleModule("live")}
+          >
+            <div className="flex items-center justify-between gap-5">
+              <div className="relative w-[100px] h-[70px] rounded-lg overflow-hidden shadow-md">
+                <Image
+                  src="/images/live.png"
+                  alt="Live Class"
+                  width={100}
+                  height={70}
+                  className="object-cover w-full h-full"
+                  priority
+                />
+              </div>
+              <h1 className="text-2xl font-semibold text-white tracking-tight">
+                Live Class
+              </h1>
+            </div>
+            <ChevronDown
+              className={`text-white transition-transform duration-200 group-hover:scale-110 ${
+                expandedModule === "live" ? "rotate-180" : ""
+              }`}
+              size={32}
+            />
+          </div>
+          {expandedModule === "live" && (
+            <div className="bg-[#23272f] border-t border-[#333] px-4 py-6 flex  items-center gap-4">
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 40 40"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="20"
+                  cy="20"
+                  r="19.1169"
+                  stroke="#62C1BF"
+                  strokeWidth="1.76627"
+                />
+                <path
+                  d="M14.7295 15.0811C14.7295 14.2753 15.5775 13.7512 16.2983 14.1115L26.8184 19.3716C27.6174 19.7711 27.6174 20.9113 26.8184 21.3108L16.2983 26.5708C15.5775 26.9312 14.7295 26.4071 14.7295 25.6013V15.0811Z"
+                  fill="#62C1BF"
+                />
+              </svg>
+
+              <p className="text-white lg:text-xl text-base font-medium  text-center">
+                Facts and Background: What are virtual currencies ?
+              </p>
+              <button
+                className="bg-text  cursor-pointer lg:px-6 px-2 py-2 lg:rounded-full rounded-lg  font-normal  text-black"
+                onClick={() => alert("Joining Live Class!")}
+              >
+                Join Live
+              </button>
+            </div>
+          )}
+        </div>
+
         <div className="space-y-3">
           {modules.map((module) => {
             const isExpanded = expandedModule === module.id;
@@ -329,7 +397,10 @@ export default function MasterClass() {
                                 : "bg-[#333333] hover:bg-[#3a3a3a]"
                             }`}
                           >
-                            <Link href={`/master-class/${lesson.id}`} className="flex items-center gap-3 p-3 rounded-lg transition-colors duration-200 cursor-pointer">
+                            <Link
+                              href={`/master-class/${lesson.id}`}
+                              className="flex items-center gap-3 p-3 rounded-lg transition-colors duration-200 cursor-pointer"
+                            >
                               {/* Play Button / Status */}
                               <div className="flex-shrink-0">
                                 <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">

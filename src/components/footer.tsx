@@ -1,15 +1,24 @@
-'use client';
-import Link from "next/link"
-import { Instagram, Linkedin, Youtube, Twitter } from "lucide-react"
-import Image from "next/image"
+"use client";
+import Link from "next/link";
+import { Instagram, Linkedin, Youtube, Twitter } from "lucide-react";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export default function Footer() {
-   const pathname = usePathname();
-  
-    if(pathname === "/chat"){
-      return null;
-    }
+  const pathname = usePathname();
+
+  if (
+    pathname === "/chat" ||
+    pathname === "/auth/create-pass" ||
+    pathname === "/auth/forgot-otp" ||
+    pathname === "/auth/forgot-pass" ||
+    pathname === "/auth/signup" ||
+    pathname === "/auth/login" ||
+    pathname === "/auth/verify-email"
+  ) {
+    return null;
+  }
+
   return (
     <footer className="bg-[#1B1B1B] text-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="container mx-auto">
@@ -25,7 +34,6 @@ export default function Footer() {
                 height={500}
                 className="object-cover w-[250px] h-[190px]  object-center"
               />
-         
             </div>
             <p className="text-white text-sm leading-relaxed">
               Your Ultimate 360°
@@ -155,5 +163,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

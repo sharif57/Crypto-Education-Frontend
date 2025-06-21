@@ -153,7 +153,15 @@ export default function Header() {
   const [activeItem, setActiveItem] = useState("Home");
   const pathname = usePathname();
 
-  if (pathname === "/chat") {
+  if (
+    pathname === "/chat" ||
+    pathname === "/auth/create-pass" ||
+    pathname === "/auth/forgot-otp" ||
+    pathname === "/auth/forgot-pass" ||
+    pathname === "/auth/signup" ||
+    pathname === "/auth/login" ||
+    pathname === "/auth/verify-email"
+  ) {
     return null;
   }
 
