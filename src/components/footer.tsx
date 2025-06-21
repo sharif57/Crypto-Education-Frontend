@@ -53,31 +53,31 @@ export default function Footer() {
                 Home
               </Link>
               <Link
-                href="/masterclass"
+                href="/master-class"
                 className="block text-gray-300 hover:text-[#4ade80] transition-colors duration-200 text-sm"
               >
                 Masterclass
               </Link>
               <Link
-                href="/ai-assistance"
+                href="/chat"
                 className="block text-gray-300 hover:text-[#4ade80] transition-colors duration-200 text-sm"
               >
                 AI Assistance
               </Link>
               <Link
-                href="/features"
+                href="#features"
                 className="block text-gray-300 hover:text-[#4ade80] transition-colors duration-200 text-sm"
               >
                 Features
               </Link>
               <Link
-                href="/pricing"
+                href="#prices"
                 className="block text-gray-300 hover:text-[#4ade80] transition-colors duration-200 text-sm"
               >
                 Pricing
               </Link>
               <Link
-                href="/testimonials"
+                href="#testimonials"
                 className="block text-gray-300 hover:text-[#4ade80] transition-colors duration-200 text-sm"
               >
                 Testimonials
@@ -90,13 +90,13 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-6">Legal</h3>
             <nav className="space-y-4">
               <Link
-                href="/terms-of-service"
+                href="/about-us"
                 className="block text-gray-300 hover:text-[#4ade80] transition-colors duration-200 text-sm"
               >
                 Terms of Service
               </Link>
               <Link
-                href="/privacy-policy"
+                href="/about-us"
                 className="block text-gray-300 hover:text-[#4ade80] transition-colors duration-200 text-sm"
               >
                 Privacy Policy
@@ -120,9 +120,18 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors duration-200 text-sm group"
               >
-                <div className="w-5 h-5 bg-black rounded flex items-center justify-center group-hover:bg-gray-800 transition-colors duration-200">
-                  <Twitter className="w-3 h-3 text-white" />
-                </div>
+                <svg
+                  width="16"
+                  height="14"
+                  viewBox="0 0 16 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.73206 5.89657L14.5867 0.704102H12.7428L8.9322 4.77941L6.015 0.704102H0.973145L6.07642 7.83406L0.973145 13.2927H2.81705L6.87773 8.94976L9.98649 13.2927H15.0283L9.73352 5.89657H9.73206ZM3.57157 2.03914H5.3292L12.4299 11.9576H10.6723L3.57011 2.0406L3.57157 2.03914Z"
+                    fill="white"
+                  />
+                </svg>
                 X
               </Link>
               <Link
