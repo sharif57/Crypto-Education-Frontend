@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Search } from "lucide-react";
+import Link from "next/link";
 
 interface ChatSidebarProps {
   isMobileMenuOpen: boolean;
@@ -41,7 +42,7 @@ export default function ChatSidebar({
 
       <div
         className={`
-        fixed md:static top-0 left-0 h-full bg-gradient-to-b   from-[#1A1A1A] via-[#1A1A1A] to-[#3f3d3d] w-64 z-30
+        fixed md:static top-0 left-0 h-full bg-gradient-to-b   from-[#161616] via-[#2c2c2c] to-[#3f3d3d] w-64 z-30
         transform transition-transform duration-300 ease-in-out
         ${
           isMobileMenuOpen
@@ -53,13 +54,16 @@ export default function ChatSidebar({
         <div className="flex flex-col h-full">
           {/* Sidebar Header */}
           <div className="p-4  ">
-            <Image
-              src="/images/sidebatlogo.png"
-              alt="Logo"
-              width={400}
-              height={400}
-              className="object-cover object-center p-4"
-            />
+            <Link href="/">
+              {" "}
+              <Image
+                src="/images/sidebatlogo.png"
+                alt="Logo"
+                width={400}
+                height={400}
+                className="object-cover object-center p-4"
+              />{" "}
+            </Link>
             <div className="flex items-center justify-between">
               <button
                 onClick={() => {
@@ -107,7 +111,7 @@ export default function ChatSidebar({
           </div>
 
           {/* Chat Sections */}
-          <div className="flex-1 overflow-y-auto scrollbar-hide">
+          <div className="flex-1 overflow-y-auto scrollbar-hide no-scrollbar    ">
             <div className="p-4">
               <h2 className="text-sm font-medium mb-2">Today</h2>
               <ul className="space-y-1">

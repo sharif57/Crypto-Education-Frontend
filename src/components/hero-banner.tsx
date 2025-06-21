@@ -1,7 +1,6 @@
-
-
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Banner() {
   return (
@@ -24,7 +23,8 @@ export default function Banner() {
           <div className="space-y-8 text-center lg:text-left">
             <div className="space-y-6 lg:w-5/6">
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-tight text-white">
-                Master Crypto & Web3 — The <span className="text-text">Smart</span> Way
+                Master Crypto & Web3 — The{" "}
+                <span className="text-text">Smart</span> Way
               </h1>
               <p className="text-gray-300 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed mx-auto lg:mx-0">
                 Learn with AI-powered tools, expert-made courses, and personal
@@ -39,13 +39,16 @@ export default function Banner() {
               >
                 Download App
               </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-2 border-gray-600 text-white hover:text-text hover:bg-gray-800 hover:border-gray-500 px-8 py-4 rounded-full text-lg font-medium transition-all duration-300"
-              >
-                Start learning
-              </Button>
+              <Link href={'/master-class'}>
+                {" "}
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="border-2 border-gray-600 text-white hover:text-text hover:bg-gray-800 hover:border-gray-500 px-8 py-4 rounded-full text-lg font-medium transition-all duration-300"
+                >
+                  Start learning
+                </Button>{" "}
+              </Link>
             </div>
           </div>
 

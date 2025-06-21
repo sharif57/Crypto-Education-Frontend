@@ -112,7 +112,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
         </button>
 
         {/* Chat history */}
-        <div className="max-h-96 overflow-y-auto scrollbar-hide">
+        <div className="max-h-96 mt-6 overflow-y-auto scrollbar-hide">
           <h3 className="px-4 py-2 text-sm font-medium text-gray-400">Today</h3>
           <ul>
             {chatHistory.map((chat, index) => (

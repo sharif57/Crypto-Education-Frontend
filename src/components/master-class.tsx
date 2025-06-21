@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Masterclass() {
   return (
@@ -39,13 +40,16 @@ export default function Masterclass() {
             </div>
 
             <div className="flex justify-center lg:justify-start">
-              <Button
-                size="lg"
-                className="bg-text hover:bg-text text-[#224443] font-medium px-20 py-6 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40 group"
-              >
-                Start Learning
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-              </Button>
+              <Link href={"/master-class"}>
+                {" "}
+                <Button
+                  size="lg"
+                  className="bg-text hover:bg-text cursor-pointer text-[#224443] font-medium px-20 py-6 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40 group"
+                >
+                  Start Learning
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
