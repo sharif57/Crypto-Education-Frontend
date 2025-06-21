@@ -31,7 +31,7 @@ export default function AIAssistantSection() {
               <Link href="/chat">
                 <Button
                   size="lg"
-                  className="bg-text cursor-pointer text-[#224443] font-medium px-8 py-4 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40 group"
+                  className="bg-text cursor-pointer text-[#224443] font-medium px-8 py-6 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40 group"
                 >
                   Ask the AI Now
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />

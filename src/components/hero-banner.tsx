@@ -35,7 +35,7 @@ export default function Banner() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button
                 size="lg"
-                className="bg-text hover:bg-text text-[#224443] font-medium px-8 py-4 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40"
+                className="bg-text hover:bg-text text-[#224443] font-medium px-8 py-6 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40"
               >
                 Download App
               </Button>
@@ -44,7 +44,7 @@ export default function Banner() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="border-2 border-gray-600 text-white hover:text-text hover:bg-gray-800 hover:border-gray-500 px-8 py-4 rounded-full text-lg font-medium transition-all duration-300"
+                  className="border-2 border-gray-600 text-white hover:text-text hover:bg-gray-800 hover:border-gray-500 px-8 py-6 rounded-full text-lg font-medium transition-all duration-300"
                 >
                   Start learning
                 </Button>{" "}

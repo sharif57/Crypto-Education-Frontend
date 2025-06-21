@@ -37,7 +37,7 @@ export default function MobileShowcase() {
 
             {/* Download Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button className="bg-[#224443] py-6  text-[#62C1BF]    rounded-full flex items-center gap-3 text-lg hover:bg-[#224443] cursor-pointer font-medium transition-colors duration-200">
+              <Button className="bg-[#224443] py-6 !px-8 text-[#62C1BF]    rounded-full flex items-center gap-3 text-lg hover:bg-[#224443] cursor-pointer font-medium transition-colors duration-200">
                 Get The App On
                 <svg
                   width="20"
@@ -57,7 +57,7 @@ export default function MobileShowcase() {
                 </svg>
               </Button>
 
-              <Button className="bg-outline border border-[#224443] py-6  text-[#224443]    rounded-full flex items-center gap-3 text-lg hover:bg-none cursor-pointer font-medium transition-colors duration-200">
+              <Button className="bg-outline border border-[#224443] py-6 !px-8 text-[#224443]    rounded-full flex items-center gap-3 text-lg hover:bg-none cursor-pointer font-medium transition-colors duration-200">
                 Get The App On
                 <svg
                   width="21"
