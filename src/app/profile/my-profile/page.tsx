@@ -1,13 +1,11 @@
 "use client";
 
 import type React from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function MyProfile() {
-  const router = useRouter();
 
   return (
     <div className="min-h-screen w-full  text-white flex items-center justify-center">

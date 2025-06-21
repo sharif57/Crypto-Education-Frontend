@@ -1,13 +1,11 @@
 "use client";
 
 import type React from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 
 export default function EditProfile() {
-  const router = useRouter();
   const [name, setName] = useState("Marvin McKinney");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>(

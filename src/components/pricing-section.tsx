@@ -46,7 +46,7 @@ export default function PricingSection() {
   ];
 
   return (
-    <section className="relative bg-[#1a1a1a] py-16 lg:py-24">
+    <section id="prices" className="relative bg-[#1a1a1a] py-16 lg:py-24">
       {/* Background subtle pattern */}
       <div className="absolute inset-0 opacity-5">
         <div

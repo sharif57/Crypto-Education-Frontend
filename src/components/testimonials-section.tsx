@@ -197,7 +197,7 @@ export default function TestimonialsSection() {
   };
   return (
     <div>
-      <div className="min-h-screen bg-gradient-to-b z-10 relative from-[#1A1A1A] via-[#1A1A1A] to-[#3f3d3d] text-white py-16 px-4 sm:px-6 lg:px-8">
+      <div id="testimonials" className="min-h-screen bg-gradient-to-b z-10 relative from-[#1A1A1A] via-[#1A1A1A] to-[#3f3d3d] text-white py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto -z-20">
           {/* Header Section */}
           <div className="text-center mb-16">
