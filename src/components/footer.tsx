@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Instagram, Linkedin, Youtube, Twitter } from "lucide-react";
+import { Instagram, Linkedin, Youtube } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
