@@ -218,7 +218,7 @@ export default function MasterClass() {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen mt-[100px] lg:mt-[100px] p-4 sm:p-6 lg:p-8">
       <div className="max-w-3xl mx-auto">
         <div className="bg-[#333333] rounded-xl mb-6 shadow-lg overflow-hidden">
           <div

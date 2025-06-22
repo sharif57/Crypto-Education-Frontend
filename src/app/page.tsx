@@ -9,7 +9,7 @@ import React from "react";
 
 export default function Home() {
   return (
-    <div>
+    <div className="mt-[80px] lg:mt-[50px]">
       <Banner></Banner>
       <MasterClass />
       <AIAssistantSection></AIAssistantSection>

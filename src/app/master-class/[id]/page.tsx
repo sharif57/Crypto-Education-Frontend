@@ -137,7 +137,7 @@ export default function Component() {
   const router = useRouter();
 
   return (
-    <div className="container mx-auto lg:px-8 px-4 mt-6 text-white relative">
+    <div className="container mt-[100px] lg:mt-[120px]  mx-auto lg:px-8 px-4  text-white relative">
       {/* Header */}
       <div className="flex items-center gap-4 p-4">
         <Button
