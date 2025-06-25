@@ -168,7 +168,8 @@ export default function Component() {
               autoPlay
             >
               <source
-                src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                // src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                src="https://cdn.pixabay.com/video/2025/04/07/270349_large.mp4"
                 type="video/mp4"
               />
               Your browser does not support the video tag.

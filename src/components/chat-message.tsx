@@ -26,8 +26,8 @@ export default function ChatMessage({ message }: MessageProps) {
   if (message.role === "user") {
     return (
       <div className="mb-4 max-w-4xl space-y-8 ">
-        <div className="bg-[#62C1BF] text-[#373737] p-3 rounded-r-xl rounded-bl-xl">
-          <p>{message.content}</p>
+        <div className="bg-[#62C1BF]  text-[#373737] p-3 rounded-r-xl rounded-bl-xl">
+          <p className="">{message.content}</p>
         </div>
       </div>
     );
@@ -93,7 +93,7 @@ export default function ChatMessage({ message }: MessageProps) {
             </clipPath>
           </defs>
         </svg>
-      <div className="bg-[#373737] text-[#E0E0E0] p-3 rounded-r-xl rounded-bl-xl">
+      <div className="bg-[#373737] text-[#E0E0E0] p-3 rounded-r-xl  rounded-bl-xl">
        
 
         {isTyping ? (
