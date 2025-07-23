@@ -7,6 +7,8 @@ export const baseApi = createApi({
   }),
   tagTypes: [
     "User",
+    'LiveClass',
+    "Category",
    
   ],
   endpoints: () => ({}),
