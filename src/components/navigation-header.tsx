@@ -29,7 +29,7 @@ export default function Header() {
   })
   console.log(data?.data, 'profile')
   const user = data?.data
-  const IMAGE = process.env.NEXT_PUBLIC_API_URL
+  // const IMAGE = process.env.NEXT_PUBLIC_API_URL
 
 
   // 2. Now conditional return/hide logic:
@@ -190,7 +190,8 @@ export default function Header() {
                 <DropdownMenu>
                   <DropdownMenuTrigger className=" cursor-pointer" title={user?.full_name}>
                     <Image
-                      src={`${IMAGE}${user?.image}`}
+                      // src={`${IMAGE}${user?.image}`}
+                      src={user?.image}
                       alt="Profile"
                       width={400}
                       height={400}

@@ -12,7 +12,7 @@ export default function EditProfile() {
   const router = useRouter();
   const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const IMAGE = process.env.NEXT_PUBLIC_API_URL
+  // const IMAGE = process.env.NEXT_PUBLIC_API_URL
 
 
   const { data } = useUserProfileQuery(undefined)
@@ -20,7 +20,7 @@ export default function EditProfile() {
   const user = data?.data
   const [name, setName] = useState(user?.full_name);
   const [imagePreview, setImagePreview] = useState<string>(
-    `${IMAGE}${user?.image}`
+    `${user?.image}`
   );
 
   const [updateProfile] = useUpdateProfileMutation()

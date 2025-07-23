@@ -12,7 +12,6 @@ export default function MyProfile() {
   console.log(data?.data, 'profile')
   const user = data?.data
 
-  const IMAGE = process.env.NEXT_PUBLIC_API_URL
 
   return (
     <div className="min-h-screen w-full  text-white flex items-center justify-center">
@@ -33,7 +32,7 @@ export default function MyProfile() {
                {
                 user?.image ? (
                   <Image
-                    src={`${IMAGE}${user?.image}`}
+                    src={user?.image}
                     alt="Profile"
                     width={250}
                     height={300}
