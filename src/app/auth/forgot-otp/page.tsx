@@ -7,20 +7,78 @@ import {
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "sonner";
+import { useVerifyEmailMutation } from "@/Redux/feature/authSlice";
+import { useState } from "react";
 
 export default function ForgotOTP() {
+  // const router = useRouter();
+
+  // const handleVerify = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   try {
+  //     console.log("Verifying OTP...");
+  //     router.push("/auth/create-pass");
+  //   } catch (error) {
+  //     console.error("Verification failed:", error);
+  //   }
+  // };
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+  const [otp, setOtp] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [verifyEmail] = useVerifyEmailMutation();
   const router = useRouter();
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+
+    // Validate email and OTP
+    if (!email) {
+      toast.error("Email is missing. Please try signing up again.");
+      setLoading(false);
+      return;
+    }
+
+    if (otp.length !== 6 || !/^\d{6}$/.test(otp)) {
+      toast.error("Please enter a valid 6-digit OTP.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      console.log("Verifying OTP...");
+      const res = await verifyEmail({
+        email,
+        otp,
+      }).unwrap();
+
+      console.log("Verification response:", res);
+
+      toast.success(res.message || "Verification successful!");
+      localStorage.setItem("verify", res.access_token);
       router.push("/auth/create-pass");
-    } catch (error) {
+    } catch (error: unknown) {
+      let errorMessage = "Verification failed. Please try again.";
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "data" in error &&
+        typeof (error as { data?: unknown }).data === "object" &&
+        (error as { data?: unknown }).data !== null &&
+        "error" in (error as { data: { error?: unknown } }).data
+      ) {
+        errorMessage =
+          ((error as { data: { error?: string } }).data.error) || errorMessage;
+      }
+      toast.error(errorMessage);
       console.error("Verification failed:", error);
+    } finally {
+      setLoading(false);
     }
   };
+
 
   return (
     <div
@@ -36,7 +94,9 @@ export default function ForgotOTP() {
         <CardContent className="space-y-6">
           <form onSubmit={handleVerify} className="space-y-6">
             <div className="flex flex-col items-center  justify-center space-y-4">
-              <InputOTP maxLength={6}>
+              <InputOTP maxLength={6}
+                value={otp}
+                onChange={(value) => setOtp(value)}>
                 <InputOTPGroup>
                   <InputOTPSlot
                     index={0}
@@ -68,8 +128,9 @@ export default function ForgotOTP() {
             <Button
               type="submit"
               className="w-full bg-text hover:bg-text text-black font-medium py-3 rounded-full transition-colors"
+              disabled={loading}
             >
-              Verify
+              {loading ? "Verifying..." : "Verify"}
             </Button>
           </form>
         </CardContent>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -9,21 +10,69 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useRegisterMutation } from "@/Redux/feature/authSlice";
+import { toast } from "sonner";
+
+
 
 export default function SignUp() {
-    const router = useRouter();
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [register] = useRegisterMutation();
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true); // Set loading state at the start
+
+    // Client-side validation
+    if (!fullName || !email || !password || !confirmPassword) {
+      toast.error("All fields are required.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match.");
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      // Handle sign-up logic
-      console.log("Signing up...");
-      router.push("/auth/verify-email");
-      // Example: await signUp(email, password);
-    } catch (error) {
+      const res = await register({
+        full_name: fullName,
+        email,
+        password,
+        confirm_password: confirmPassword,
+      }).unwrap(); // Use .unwrap() to handle RTK Query response properly
+
+      toast.success(res.message || "Sign up successful!");
+      router.push(`/auth/verify-email?email=${email}`); // Redirect after successful signup
+    } catch (error: unknown) {
+      // Handle error response
+      let errorMessage = "Sign up failed. Please try again.";
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "data" in error &&
+        typeof (error as { data?: { message?: string } }).data === "object" &&
+        (error as { data?: { message?: string } }).data &&
+        "message" in (error as { data?: { message?: string } }).data!
+      ) {
+        errorMessage =
+          ((error as { data?: { message?: string } }).data as { message?: string }).message ||
+          "Sign up failed. Please try again.";
+      }
+      toast.error(errorMessage);
       console.error("Sign up failed:", error);
+    } finally {
+      setIsLoading(false); // Always reset loading state
     }
   };
 
@@ -32,9 +81,9 @@ export default function SignUp() {
       className="min-h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center p-4"
       style={{ backgroundImage: "url(/images/login.png)" }}
     >
-      <Card className="w-full max-w-md bg-gradient-to-b   from-[#161616] via-[#2c2c2c] to-[#3f3d3d]  border-text backdrop-blur-sm">
+      <Card className="w-full max-w-md bg-gradient-to-b from-[#161616] via-[#2c2c2c] to-[#3f3d3d] border-text backdrop-blur-sm">
         <CardHeader className="space-y-1 pb-6">
-          <div className="flex items-center justify-center ">
+          <div className="flex items-center justify-center">
             <CardTitle className="text-2xl lg:text-5xl text-center font-medium text-white">
               Sign Up
             </CardTitle>
@@ -43,17 +92,17 @@ export default function SignUp() {
         <CardContent className="space-y-4">
           <form onSubmit={handleSignUp} className="space-y-4">
             <div className="space-y-2">
-              <Label
-                htmlFor="name"
-                className="text-sm font-medium text-gray-300"
-              >
+              <Label htmlFor="name" className="text-sm font-medium text-gray-300">
                 Full Name
               </Label>
               <Input
                 id="name"
                 type="text"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
                 placeholder="Enter your full name"
                 className="bg-[#535353] border-gray-600 text-white placeholder:text-gray-400 focus:border-teal-500 focus:ring-teal-500"
+                required
               />
             </div>
 
@@ -65,10 +114,13 @@ export default function SignUp() {
                 Email
               </Label>
               <Input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 id="signup-email"
                 type="email"
                 placeholder="Enter your email"
                 className="bg-[#535353] border-gray-600 text-white placeholder:text-gray-400 focus:border-teal-500 focus:ring-teal-500"
+                required
               />
             </div>
 
@@ -81,10 +133,13 @@ export default function SignUp() {
               </Label>
               <div className="relative">
                 <Input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   id="signup-password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Create a password"
                   className="bg-[#535353] border-gray-600 text-white placeholder:text-gray-400 focus:border-teal-500 focus:ring-teal-500 pr-10"
+                  required
                 />
                 <Button
                   type="button"
@@ -111,10 +166,13 @@ export default function SignUp() {
               </Label>
               <div className="relative">
                 <Input
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   id="confirm-password"
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="Confirm your password"
                   className="bg-[#535353] border-gray-600 text-white placeholder:text-gray-400 focus:border-teal-500 focus:ring-teal-500 pr-10"
+                  required
                 />
                 <Button
                   type="button"
@@ -132,8 +190,12 @@ export default function SignUp() {
               </div>
             </div>
 
-            <Button className="w-full bg-text hover:bg-text rounded-full text-black font-medium py-2.5 transition-colors">
-              Create Account
+            <Button
+              type="submit"
+              className="w-full cursor-pointer bg-text hover:bg-text rounded-full text-black font-medium py-2.5 transition-colors"
+              disabled={isLoading}
+            >
+              {isLoading ? "Creating Account..." : "Create Account"}
             </Button>
           </form>
 
@@ -154,7 +216,7 @@ export default function SignUp() {
             <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
               <path
                 fill="currentColor"
-                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                d="M22.56 12.25c0-.78-.07-1.53-.20-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
               />
               <path
                 fill="currentColor"

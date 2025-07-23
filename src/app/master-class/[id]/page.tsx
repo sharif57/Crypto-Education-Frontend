@@ -5,7 +5,7 @@ import type React from "react";
 import { useState } from "react";
 import { ChevronDown, ChevronUp, Play, ArrowLeft, X, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {  useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface Message {
   id: string;
@@ -15,7 +15,7 @@ interface Message {
 }
 
 export default function Component() {
-//   const { id } = useParams();
+  //   const { id } = useParams();
   const [expandedModule, setExpandedModule] = useState("exchanges");
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -243,7 +243,7 @@ export default function Component() {
         </div>
         {/* AI Assistant Modal - Right Side Positioned */}
         {isAIModalOpen && (
-          <div className="absolute lg:top-2/5 top-0 h-[500px] border-text lg:right-12 right-4 lg:w-[400px] w-[300px] z-20   rounded-xl border  flex flex-col">
+          <div className="absolute lg:top-2/5 top-0 h-[500px] border-text lg:right-12 right-0 lg:w-[400px] w-auto m-0 lg:m-5  z-20 rounded-xl border flex flex-col">
             {/* Modal Header */}
             <div className="flex items-center justify-between p-4 bg-[#62C1BF] rounded-t-xl text-[#224443]">
               <div className="flex items-center gap-2">
@@ -312,17 +312,15 @@ export default function Component() {
             </div>
 
             {/* Messages */}
-            <div className=" overflow-auto  p-4 space-y-4  bg-[#2a2a2a]">
+            <div className="flex-1 overflow-auto p-4 space-y-4 bg-[#2a2a2a]">
               {messages.map((message) => (
                 <div
                   key={message.id}
-                  className={`flex
-                    justify-start
-                  }`}
+                  className={`flex justify-start`}
                 >
                   <div className="flex items-start gap-2 max-w-[100%]">
                     {!message.isUser && (
-                      <div className="w-8 h-8 bg-[#62C1BF]  rounded-full flex items-center justify-center flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#62C1BF] rounded-full flex items-center justify-center flex-shrink-0">
                         <svg
                           width="14"
                           height="14"
@@ -350,17 +348,14 @@ export default function Component() {
                     )}
                     {message.isUser && (
                       <div className="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white text-xs font-medium">
-                          U
-                        </span>
+                        <span className="text-white text-xs font-medium">U</span>
                       </div>
                     )}
                     <div
-                      className={`p-3 rounded-r-3xl rounded-bl-3xl text-sm leading-relaxed ${
-                        message.isUser
+                      className={`p-3 rounded-r-3xl rounded-bl-3xl text-sm leading-relaxed ${message.isUser
                           ? "bg-[#373737] text-[12px] font-normal text-[#E0E0E0]"
                           : "bg-[#62C1BF] text-[12px] font-normal text-[#373737]"
-                      }`}
+                        }`}
                     >
                       {message.text}
                     </div>
@@ -368,7 +363,7 @@ export default function Component() {
                 </div>
               ))}
               {isLoading && (
-                <div className="flex  justify-start">
+                <div className="flex justify-start">
                   <div className="flex items-start gap-2">
                     <div className="w-8 h-8 bg-[#62C1BF] rounded-full flex items-center justify-center">
                       <svg
@@ -407,8 +402,8 @@ export default function Component() {
               )}
             </div>
 
-            {/* Input */}
-            <div className="p-4 bg-[#2a2a2a] rounded-xl  border-t border-gray-600">
+            {/* Input - Fixed at Bottom */}
+            <div className="p-4 bg-[#2a2a2a] rounded-b-2xl border-t border-gray-600 sticky bottom-0">
               <div className="flex gap-2">
                 <input
                   type="text"

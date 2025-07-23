@@ -1,70 +1,4 @@
-// "use client";
-// import {
-//   InputOTP,
-//   InputOTPGroup,
-//   InputOTPSlot,
-// } from "@/components/ui/input-otp";
 
-// import { Button } from "@/components/ui/button";
-// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-// import { useRouter } from "next/navigation";
-
-// export default function VerifyEmail() {
-//   const router = useRouter();
-
-//   const handleSignIn = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     try {
-//       // Handle sign-in logic
-//       console.log("Signing in...");
-//       router.push("/");
-//       // Example: await signIn(email, password);
-//     } catch (error) {
-//       console.error("Sign in failed:", error);
-//     }
-//   };
-
-//   return (
-//     <div
-//       className="min-h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center p-4"
-//       style={{ backgroundImage: "url(/images/BG.png)" }}
-//     >
-//       <Card className="w-full max-w-md mx-auto bg-gradient-to-b   from-[#161616] via-[#2c2c2c] to-[#3f3d3d]  border-text backdrop-blur-sm">
-//         <CardHeader className="space-y-1 pb-6">
-//           <div className="flex items-center justify-center ">
-//             <CardTitle className="text-2xl lg:text-5xl text-center font-medium text-white">
-//               Verify Email
-//             </CardTitle>
-//           </div>
-//         </CardHeader>
-//         <CardContent className="space-y-4">
-//           <form onSubmit={handleSignIn} className="space-y-4">
-//             <div className="space-y-2  flex flex-col justify-center items-center">
-//               <InputOTP maxLength={6}>
-//                 <InputOTPGroup>
-//                   <InputOTPSlot index={0} />
-//                   <InputOTPSlot index={1} />
-//                   <InputOTPSlot index={2} />
-//                   {/* </InputOTPGroup>
-//                 <InputOTPSeparator />
-//                 <InputOTPGroup> */}
-//                   <InputOTPSlot index={3} />
-//                   <InputOTPSlot index={4} />
-//                   <InputOTPSlot index={5} />
-//                 </InputOTPGroup>
-//               </InputOTP>
-//             </div>
-
-//             <Button className="w-full bg-text hover:bg-text rounded-full text-black font-medium py-2.5 transition-colors">
-//               Verify
-//             </Button>
-//           </form>
-//         </CardContent>
-//       </Card>
-//     </div>
-//   );
-// }
 "use client";
 
 import {
@@ -74,18 +8,66 @@ import {
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useVerifyEmailMutation } from "@/Redux/feature/authSlice";
+import { useState } from "react";
+import { toast } from "sonner";
+
+
 
 export default function VerifyEmail() {
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+  const [otp, setOtp] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [verifyEmail] = useVerifyEmailMutation();
   const router = useRouter();
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+
+    // Validate email and OTP
+    if (!email) {
+      toast.error("Email is missing. Please try signing up again.");
+      setLoading(false);
+      return;
+    }
+
+    if (otp.length !== 6 || !/^\d{6}$/.test(otp)) {
+      toast.error("Please enter a valid 6-digit OTP.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      console.log("Verifying OTP...");
-      router.push("/auth/login");
-    } catch (error) {
+      const res = await verifyEmail({
+        email,
+        otp,
+      }).unwrap();
+
+      console.log("Verification response:", res);
+
+      toast.success(res.message || "Verification successful!");
+      localStorage.setItem("access_token", res.access_token);
+      router.push("/");
+    } catch (error: unknown) {
+      let errorMessage = "Verification failed. Please try again.";
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "data" in error &&
+        typeof (error as { data?: unknown }).data === "object" &&
+        (error as { data?: unknown }).data !== null &&
+        "error" in (error as { data: { error?: unknown } }).data
+      ) {
+        errorMessage =
+          ((error as { data: { error?: string } }).data.error) || errorMessage;
+      }
+      toast.error(errorMessage);
       console.error("Verification failed:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -102,8 +84,15 @@ export default function VerifyEmail() {
         </CardHeader>
         <CardContent className="space-y-6">
           <form onSubmit={handleVerify} className="space-y-6">
-            <div className="flex flex-col items-center  justify-center space-y-4">
-              <InputOTP maxLength={6}>
+            <div className="flex flex-col items-center justify-center space-y-4">
+              <p className="text-sm text-gray-400">
+                Enter the 6-digit OTP sent to {email || "your email"}
+              </p>
+              <InputOTP
+                maxLength={6}
+                value={otp}
+                onChange={(value) => setOtp(value)}
+              >
                 <InputOTPGroup>
                   <InputOTPSlot
                     index={0}
@@ -135,8 +124,9 @@ export default function VerifyEmail() {
             <Button
               type="submit"
               className="w-full bg-text hover:bg-text text-black font-medium py-3 rounded-full transition-colors"
+              disabled={loading}
             >
-              Verify
+              {loading ? "Verifying..." : "Verify"}
             </Button>
           </form>
         </CardContent>
