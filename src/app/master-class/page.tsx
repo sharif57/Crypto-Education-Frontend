@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
+import { useLiveClassQuery } from "@/Redux/feature/liveRoomSlice";
 
 interface Lesson {
   id: string;
@@ -26,15 +27,24 @@ interface Module {
   progress?: number;
 }
 
+interface LiveClass {
+  id: string;
+  title: string;
+  date_time: string;
+  duration_minutes: number;
+  link: string;
+}
+
+
+
 export default function MasterClass() {
   const [expandedModule, setExpandedModule] = useState<string | null>(
     "exchanges"
   );
-  // const [expandedModule, setExpandedModule] = useState(null);
+  const { data } = useLiveClassQuery(undefined)
+  console.log(data?.data, 'data')
 
-  // const toggleModule = (module) => {
-  //   setExpandedModule(expandedModule === module ? null : module);
-  // }
+
 
   const modules: Module[] = [
     {
@@ -241,14 +251,16 @@ export default function MasterClass() {
               </h1>
             </div>
             <ChevronDown
-              className={`text-white transition-transform duration-200 group-hover:scale-110 ${
-                expandedModule === "live" ? "rotate-180" : ""
-              }`}
+              className={`text-white transition-transform duration-200 group-hover:scale-110 ${expandedModule === "live" ? "rotate-180" : ""
+                }`}
               size={32}
             />
           </div>
-          {expandedModule === "live" && (
-            <div className="bg-[#23272f] border-t border-[#333] px-4 py-6 flex  items-center gap-4">
+          {expandedModule === "live" && data?.data?.length > 0 && data.data.map((live: LiveClass) => (
+            <div
+              key={live.id}
+              className="bg-[#23272f] border-t border-[#333] px-4 py-6 flex items-center gap-4"
+            >
               <svg
                 width="40"
                 height="40"
@@ -269,17 +281,24 @@ export default function MasterClass() {
                 />
               </svg>
 
-              <p className="text-white lg:text-xl text-base font-medium  text-center">
-                Facts and Background: What are virtual currencies ?
-              </p>
-              <button
-                className="bg-text  cursor-pointer lg:px-6 px-2 py-2 lg:rounded-full rounded-lg  font-normal  text-black"
-                onClick={() => alert("Joining Live Class!")}
+              <div className="text-white flex flex-col gap-1 flex-grow">
+                <p className="lg:text-xl text-base font-medium">{live.title}</p>
+                <p className="text-sm text-gray-300">
+                  {new Date(live.date_time).toLocaleString()} ({live.duration_minutes} mins)
+                </p>
+              </div>
+
+              <a
+                href={live.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-text cursor-pointer lg:px-6 px-2 py-2 lg:rounded-full rounded-lg font-normal text-black"
               >
                 Join Live
-              </button>
+              </a>
             </div>
-          )}
+          ))}
+
         </div>
 
         <div className="space-y-3">
@@ -391,11 +410,10 @@ export default function MasterClass() {
                           <div
                             key={lesson.id}
                             onClick={() => handleLessonClick(lesson)}
-                            className={` ${
-                              isLocked
-                                ? "bg-[#2a2a2a] opacity-50 cursor-not-allowed"
-                                : "bg-[#333333] hover:bg-[#3a3a3a]"
-                            }`}
+                            className={` ${isLocked
+                              ? "bg-[#2a2a2a] opacity-50 cursor-not-allowed"
+                              : "bg-[#333333] hover:bg-[#3a3a3a]"
+                              }`}
                           >
                             <Link
                               href={`/master-class/${lesson.id}`}
