@@ -4,8 +4,15 @@ import type React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useUserProfileQuery } from "@/Redux/feature/userSlice";
 
 export default function MyProfile() {
+
+  const { data } = useUserProfileQuery(undefined)
+  console.log(data?.data, 'profile')
+  const user = data?.data
+
+  const IMAGE = process.env.NEXT_PUBLIC_API_URL
 
   return (
     <div className="min-h-screen w-full  text-white flex items-center justify-center">
@@ -20,16 +27,22 @@ export default function MyProfile() {
       >
         <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 lg:py-24 ">
           <div className="flex flex-col items-center justify-center  gap-8">
-            <div className="w-full max-w-[740px] bg-gradient-to-b border border-[#62C1BF]  from-[#161616] via-[#2c2c2c] to-[#3f3d3d] rounded-3xl shadow-xl p-6 sm:p-8">
+            <div className="w-full max-w-[840px] bg-gradient-to-b border border-[#62C1BF]  from-[#161616] via-[#2c2c2c] to-[#3f3d3d] rounded-3xl shadow-xl p-6 sm:p-8">
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
                 <div className="w-[200px] h-[240px] sm:w-[250px] sm:h-[300px] md:w-[300px] md:h-[370px] flex-shrink-0">
+               {
+                user?.image ? (
                   <Image
-                    src="/images/Profile.png"
-                    height={900}
-                    width={900}
-                    alt="profile"
-                    className="w-full h-full object-cover "
+                    src={`${IMAGE}${user?.image}`}
+                    alt="Profile"
+                    width={250}
+                    height={300}
+                    className="w-full h-full object-cover rounded-lg"
                   />
+                ) : (
+                  <p>No Image</p>
+                )
+               }
                 </div>
                 <div className="flex flex-col gap-6 sm:gap-8 justify-center items-start">
                   <div className="flex flex-col gap-1">
@@ -37,15 +50,15 @@ export default function MyProfile() {
                       Name:
                     </h1>
                     <p className="text-lg sm:text-xl md:text-[23px] font-medium text-[#E6F9FD]">
-                      Marvin McKinney
+                      {user?.full_name}
                     </p>
                   </div>
                   <div className="flex flex-col gap-1">
                     <h1 className="text-lg sm:text-xl md:text-[23px] font-medium">
                       Email:
                     </h1>
-                    <p className="text-lg sm:text-xl md:text-[23px] font-medium text-[#E6F9FD]">
-                      sharifmahamud@gmail.com
+                    <p className="text-lg  sm:text-xl md:text-[23px] font-medium text-[#E6F9FD]">
+                      {user?.email}
                     </p>
                   </div>
                   <div>

@@ -7,7 +7,7 @@ export const baseApi = createApi({
   }),
   tagTypes: [
     "User",
-    "Session",
+   
   ],
   endpoints: () => ({}),
 });

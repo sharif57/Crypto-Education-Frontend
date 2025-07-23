@@ -10,9 +10,9 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { useVerifyEmailMutation } from "@/Redux/feature/authSlice";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
-export default function ForgotOTP() {
+ function ForgotOTP() {
   // const router = useRouter();
 
   // const handleVerify = async (e: React.FormEvent) => {
@@ -136,5 +136,13 @@ export default function ForgotOTP() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ForgotOTP />
+    </Suspense>
   );
 }

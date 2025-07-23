@@ -10,12 +10,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useVerifyEmailMutation } from "@/Redux/feature/authSlice";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { toast } from "sonner";
 
 
 
-export default function VerifyEmail() {
+ function VerifyOTP() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const [otp, setOtp] = useState("");
@@ -132,5 +132,13 @@ export default function VerifyEmail() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function VerifyEmail() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyOTP />
+    </Suspense>
   );
 }

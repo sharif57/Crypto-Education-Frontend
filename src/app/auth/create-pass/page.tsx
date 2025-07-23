@@ -124,7 +124,7 @@
 // }
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -135,7 +135,7 @@ import { useResetPasswordMutation } from "@/Redux/feature/authSlice";
 import { toast } from "sonner";
 
 
-export default function CreatePass() {
+ function CreatePass() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
@@ -273,5 +273,13 @@ export default function CreatePass() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CreatePass />
+    </Suspense>
   );
 }
