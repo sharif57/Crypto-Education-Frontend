@@ -25,7 +25,7 @@ export default function VideoDetailPage() {
 
   const { data, isLoading, isError } = useSingleCategoryVideoQuery(id);
 
-  console.log(data?.related_videos, 'data')
+  console.log(data?.related_videos, 'related videos');
 
   const toggleModule = (moduleId: string) => {
     setExpandedModule(prev => prev === moduleId ? null : moduleId);
@@ -111,6 +111,7 @@ export default function VideoDetailPage() {
             </h1>
             <div className="text-text">
               <p>Duration: {Math.floor(video.duration_seconds / 60)}m {video.duration_seconds % 60}s</p>
+              {/* <p>Duration: {video.duration_seconds} S</p> */}
             </div>
           </div>
           <div className="">
