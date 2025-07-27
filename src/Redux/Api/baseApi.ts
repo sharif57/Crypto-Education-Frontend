@@ -9,6 +9,7 @@ export const baseApi = createApi({
     "User",
     'LiveClass',
     "Category",
+    "Privacy",
    
   ],
   endpoints: () => ({}),

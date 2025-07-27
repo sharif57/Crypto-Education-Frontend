@@ -53,7 +53,7 @@ export default function MasterClass() {
   );
   const { data, isLoading } = useLiveClassQuery(undefined)
 
-  const { data: categoryVideo } = useCategoryVideoQuery(undefined);
+  const { data: categoryVideo , isLoading: categoryVideoLoading} = useCategoryVideoQuery(undefined);
 
 
 
@@ -85,7 +85,7 @@ export default function MasterClass() {
               <Skeleton className="w-20 h-8 rounded-md" />
             </div>
           ) : (
-            <div className="bg-[#333333] rounded-xl mb-6 shadow-lg overflow-hidden">
+            <div className="bg-[#333333] rounded-xl mb-6 shadow-lg overflow-hidden" title="Live Class">
               <div
                 className="flex items-center justify-between p-4 cursor-pointer group"
                 onClick={() => toggleModule("live")}
@@ -161,7 +161,7 @@ export default function MasterClass() {
 
         <div >
           {
-            isLoading ? (
+            categoryVideoLoading ? (
               <div className="space-y-4">
                 {Array.from({ length: 7 }).map((_, index) => (
                   <div
@@ -188,6 +188,7 @@ export default function MasterClass() {
                     <div
                       key={module.id}
                       className="bg-[#2a2a2a] rounded-xl overflow-hidden"
+                      title={module.name}
                     >
                       {/* Module Header */}
                       <Button
