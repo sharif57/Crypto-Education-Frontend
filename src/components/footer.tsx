@@ -90,19 +90,19 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-6">Legal</h3>
             <nav className="space-y-4">
               <Link
-                href="/about-us"
+                href="/condition/services"
                 className="block text-gray-300 hover:text-[#4ade80] transition-colors duration-200 text-sm"
               >
                 Terms of Service
               </Link>
               <Link
-                href="/about-us"
+                href="/condition/privacy"
                 className="block text-gray-300 hover:text-[#4ade80] transition-colors duration-200 text-sm"
               >
                 Privacy Policy
               </Link>
               <Link
-                href="/about-us"
+                href="/condition/about-us"
                 className="block text-gray-300 hover:text-[#4ade80] transition-colors duration-200 text-sm"
               >
                 About Us

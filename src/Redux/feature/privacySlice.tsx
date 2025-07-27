@@ -26,9 +26,20 @@ export const privacyApi = baseApi.injectEndpoints({
 
             providesTags: ["Privacy"],
         }),
+        terms: builder.query({
+            query: () => ({
+                url: "/settings/terms_conditions/",
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+                },
+            }),
+
+            providesTags: ["Privacy"],
+        }),
 
 
     }),
 });
 
-export const { usePrivacyQuery , useAboutQuery} = privacyApi;
+export const { usePrivacyQuery , useAboutQuery, useTermsQuery} = privacyApi;

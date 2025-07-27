@@ -1,5 +1,6 @@
 'use client';
-import { useAboutQuery } from "@/Redux/feature/privacySlice"
+import Loading from "@/components/Loading";
+import {   useTermsQuery } from "@/Redux/feature/privacySlice"
 import Image from "next/image"
 
 interface title {
@@ -7,10 +8,15 @@ interface title {
   content: string;
 }
 
-export default function Component() {
-  const {data} = useAboutQuery(undefined)
+export default function Services() {
+  const {data, isLoading} = useTermsQuery(undefined)
+
+  if(isLoading){
+    return <><Loading /></>
+  }
+
   return (
-    <div className="relative min-h-screen w-full overflow-hidden">
+    <div className="relative min-h-svh w-full overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image src="/images/BG.png" alt="About Us Background" fill className="object-cover" priority />
