@@ -45,6 +45,7 @@ export default function LoginPage() {
 
             toast.success(res.message || "Login successful!");
             localStorage.setItem("access_token", res.access_token);
+            localStorage.setItem("language", res?.data?.language);
             await refetch();
 
             router.push("/");

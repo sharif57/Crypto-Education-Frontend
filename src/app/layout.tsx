@@ -30,6 +30,7 @@ export default function RootLayout({
         className={`${poppins.variable} antialiased`}
         style={{ fontFamily: "var(--font-poppins)" }}
         cz-shortcut-listen="true"
+        
         data-new-gr-c-s-check-loaded="14.1240.0"
       >
         <Providers>

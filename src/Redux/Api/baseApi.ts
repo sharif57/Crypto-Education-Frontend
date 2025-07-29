@@ -10,6 +10,7 @@ export const baseApi = createApi({
     'LiveClass',
     "Category",
     "Privacy",
+    'Chat'
    
   ],
   endpoints: () => ({}),
