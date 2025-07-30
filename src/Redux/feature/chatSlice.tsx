@@ -1,26 +1,4 @@
-// "use client";
 
-// import baseApi from "../Api/baseApi";
-
-// export const chatApi = baseApi.injectEndpoints({
-//     endpoints: (builder) => ({
-//         // /ask_global_question/?language=en
-//         askChat: builder.mutation({
-//             query: (data) => ({
-//                 url: `/ask_global_question/`,
-//                 method: "POST",
-//                 headers: {
-//                     Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-//                 },
-//             }),
-//             invalidatesTags: ["Chat"],
-//         }),
-
-
-//     }),
-// });
-
-// export const { useAskChatMutation } = chatApi;
 "use client";
 
 import baseApi from "../Api/baseApi";

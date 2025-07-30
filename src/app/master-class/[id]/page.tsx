@@ -14,6 +14,7 @@ interface RelatedVideo {
   duration_seconds: number;
   video_file?: string;
   [key: string]: unknown;
+  object_id?: string;
 }
 
 
@@ -25,7 +26,7 @@ export default function VideoDetailPage() {
 
   const { data, isLoading, isError } = useSingleCategoryVideoQuery(id);
 
-  console.log(data?.related_videos, 'related videos');
+  console.log(data, 'related videos');
 
   const toggleModule = (moduleId: string) => {
     setExpandedModule(prev => prev === moduleId ? null : moduleId);
@@ -59,6 +60,7 @@ export default function VideoDetailPage() {
   const video = data.data;
   const relatedVideos = data.related_videos || [];
   const totalVideos = relatedVideos.length + 1;
+  console.log('idssssssssssssd', video?.subtitle_object_id);
 
   return (
     <div className="container mt-[100px] lg:mt-[120px] mx-auto lg:px-8 px-4 text-white relative">
@@ -115,7 +117,7 @@ export default function VideoDetailPage() {
             </div>
           </div>
           <div className="">
-            <Chat />
+            <Chat videoId={video?.subtitle_object_id} />
           </div>
         </div>
 
@@ -129,10 +131,10 @@ export default function VideoDetailPage() {
             className="bg-[#2a2a2a] rounded-xl overflow-hidden transition-all"
           >
             <button
-              onClick={() => toggleModule(data.data.id.toString())}
+              onClick={() => toggleModule(data?.data?.object_id?.toString())}
               className="w-full p-4 flex items-center justify-between hover:bg-[#333333]"
-              aria-expanded={expandedModule === data.data.id.toString()}
-              aria-controls={`module-${data.data.id}-content`}
+              aria-expanded={expandedModule === data?.data?.object_id.toString()}
+              aria-controls={`module-${data?.data?.object_id}-content`}
             >
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
@@ -146,7 +148,7 @@ export default function VideoDetailPage() {
                 </div>
               </div>
               <span className="text-gray-400">
-                {expandedModule === data.data.id.toString() ? (
+                {expandedModule === data?.data?.object_id?.toString() ? (
                   <ChevronUp className="w-5 h-5" />
                 ) : (
                   <ChevronDown className="w-5 h-5" />
@@ -154,9 +156,9 @@ export default function VideoDetailPage() {
               </span>
             </button>
 
-            {expandedModule === data.data.id.toString() && (
+            {expandedModule === data?.data?.object_id?.toString() && (
               <div
-                id={`module-${data.data.id}-content`}
+                id={`module-${data?.data?.object_id}-content`}
                 className="px-4 pb-4 space-y-2"
               >
                 <div
@@ -176,14 +178,15 @@ export default function VideoDetailPage() {
           {/* Related Videos as additional modules */}
           {data.related_videos?.map((video: RelatedVideo) => (
             <div
-              key={video.id}
+              key={video?.object_id}
               className="bg-[#2a2a2a] rounded-xl overflow-hidden transition-all"
             >
               <button
-                onClick={() => toggleModule(video.id.toString())}
+                // onClick={() => toggleModule(video?.object_id?.toString())}
+                onClick={() => toggleModule(video?.object_id?.toString() ?? '')}
                 className="w-full p-4 flex items-center justify-between hover:bg-[#333333]"
-                aria-expanded={expandedModule === video.id.toString()}
-                aria-controls={`module-${video.id}-content`}
+                aria-expanded={expandedModule === video?.object_id?.toString()}
+                aria-controls={`module-${video.object_id}-content`}
               >
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center">
@@ -197,7 +200,7 @@ export default function VideoDetailPage() {
                   </div>
                 </div>
                 <span className="text-gray-400">
-                  {expandedModule === video.id.toString() ? (
+                  {expandedModule === video?.object_id?.toString() ? (
                     <ChevronUp className="w-5 h-5" />
                   ) : (
                     <ChevronDown className="w-5 h-5" />
@@ -205,9 +208,9 @@ export default function VideoDetailPage() {
                 </span>
               </button>
 
-              {expandedModule === video.id.toString() && (
+              {expandedModule === video?.object_id?.toString() && (
                 <div
-                  id={`module-${video.id}-content`}
+                  id={`module-${video?.object_id}-content`}
                   className="px-4 pb-4 space-y-2"
                 >
                   <div
@@ -216,7 +219,7 @@ export default function VideoDetailPage() {
                     tabIndex={0}
                     onClick={() => {
                       // You might want to handle navigation to this video
-                      router.push(`/master-class/${video.id}`)
+                      router.push(`/master-class/${video?.object_id}`)
                     }}
                   >
                     <div className="w-8 h-8 bg-[#4ade80] rounded-full flex items-center justify-center">

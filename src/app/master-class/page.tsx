@@ -12,7 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 
 interface Lesson {
-  id: string;
+  object_id: string;
   title: string;
   duration: string;
   duration_seconds?: number;
@@ -39,6 +39,7 @@ interface Module {
 
 interface LiveClass {
   id: string;
+  
   title: string;
   date_time: string;
   duration_minutes: number;
@@ -244,11 +245,11 @@ export default function MasterClass() {
                           <div className="space-y-2">
                             {module.videos?.map((lesson, index) => (
                               <div
-                                key={lesson.id}
+                                key={lesson?.object_id}
                                 className="bg-[#333333] hover:bg-[#3a3a3a] rounded-lg transition-colors duration-200"
                               >
                                 <Link
-                                  href={`/master-class/${lesson.id}`}
+                                  href={`/master-class/${lesson?.object_id}`}
                                   className="flex items-center gap-3 p-3"
                                 >
                                   <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
