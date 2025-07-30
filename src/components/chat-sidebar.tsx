@@ -6,6 +6,7 @@ import { Search } from "lucide-react";
 import Link from "next/link";
 import { useAllSessionsQuery, useCreateSessionMutation, useDeleteSessionMutation, useEditSessionMutation } from "@/Redux/feature/chatSlice";
 import { toast } from "sonner";
+import { useUserProfileQuery } from "@/Redux/feature/userSlice";
 
 interface ChatSession {
   object_id: string;
@@ -38,6 +39,9 @@ export default function ChatSidebar({
   const [createSession] = useCreateSessionMutation();
   const [deleteSession] = useDeleteSessionMutation();
   const [editSession] =useEditSessionMutation();
+    const { data: userProfileData } = useUserProfileQuery(undefined)
+    console.log(userProfileData?.data, 'profile')
+    const user = userProfileData?.data
 
   const handleCreateSession = async () => {
     try {
@@ -324,14 +328,14 @@ export default function ChatSidebar({
           <Link href="/profile/my-profile" className="p-4 border-t border-[#006A82] flex items-center">
             <div className="w-8 h-8 rounded-full bg-gray-400 mr-3 overflow-hidden">
               <Image
-                src="/placeholder.svg?height=32&width=32"
+                src={user?.image || ""}
                 alt="User avatar"
                 width={32}
                 height={32}
                 className="object-cover"
               />
             </div>
-            <span className="text-sm">Marvin McKinney</span>
+            <span className="text-sm">{user?.full_name || "User"}</span>
           </Link>
         </div>
       </div>
