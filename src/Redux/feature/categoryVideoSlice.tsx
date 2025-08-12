@@ -5,8 +5,8 @@ import baseApi from "../Api/baseApi";
 export const categoryVideoApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         categoryVideo: builder.query({
-            query: () => ({
-                url: "/tutorials/category_videos/",
+            query: (id) => ({
+                url: `/tutorials/categories/courses/${id}/`,
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -27,8 +27,30 @@ export const categoryVideoApi = baseApi.injectEndpoints({
             providesTags: ["Category"],
         }),
 
+        allCourse: builder.query({
+            query: () => ({
+                url: "/tutorials/courses/",
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+                },
+            }),
+            providesTags: ["Category"],
+        }),
+
+        categoryWiseVideo: builder.query({
+            query: (id) => ({
+                url: `/tutorials/category_videos/${id}/`,
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+                },
+            }),
+            providesTags: ["Category"],
+        }),
+
 
     }),
 });
 
-export const { useCategoryVideoQuery , useSingleCategoryVideoQuery} = categoryVideoApi;
+export const { useCategoryVideoQuery , useSingleCategoryVideoQuery, useAllCourseQuery, useCategoryWiseVideoQuery } = categoryVideoApi;
