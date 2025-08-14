@@ -40,7 +40,7 @@ export default function Masterclass() {
             </div>
 
             <div className="flex justify-center lg:justify-start">
-              <Link href={"/master-class"}>
+              <Link href={"/courses"}>
                 {" "}
                 <Button
                   size="lg"
