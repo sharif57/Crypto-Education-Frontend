@@ -87,7 +87,8 @@ export default function PricingSection() {
       }
     } catch (error) {
       console.error("Subscription error:", error);
-      toast.error(error?.data?.error || "An error occurred while processing your subscription.");
+      // toast.error(error?.data?.error || "An error occurred while processing your subscription.");
+      toast.error("An error occurred while processing your subscription.");
     }
   };
 

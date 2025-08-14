@@ -39,7 +39,7 @@ export default function Banner() {
               >
                 Download App
               </Button>
-              <Link href={'/master-class'}>
+              <Link href={'/courses'}>
                 {" "}
                 <Button
                   variant="outline"
