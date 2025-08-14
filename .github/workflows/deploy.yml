@@ -18,7 +18,7 @@ jobs:
           key: ${{ secrets.VPS_PASS_KEY }}
           port: ${{ secrets.VPS_PORT }}
           script: |
-            cd ${{ secrets.APP_DIR }}/${{ secrets.APP_NAME }}
+            cd /root/crypto-eduction-frontend
             git pull origin main
             npm install
             npm run build
