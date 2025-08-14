@@ -13,6 +13,7 @@ import { useGoogleLoginMutation, useLoginMutation } from "@/Redux/feature/authSl
 import { toast } from "sonner";
 import { useUserProfileQuery } from "@/Redux/feature/userSlice";
 import { GoogleLogin } from "@react-oauth/google";
+import { saveTokens } from "@/service/authService";
 
 
 export default function LoginPage() {
@@ -46,7 +47,9 @@ export default function LoginPage() {
             toast.success(res.message || "Login successful!");
             localStorage.setItem("access_token", res.access_token);
             localStorage.setItem("language", res?.data?.language);
+            await saveTokens(res.access_token);
             await refetch();
+
 
             router.push("/");
             window.location.href = "/";
@@ -79,6 +82,8 @@ export default function LoginPage() {
             }).unwrap();
 
             localStorage.setItem("access_token", response?.access);
+            await saveTokens(response.access);
+
             console.log(response);
             toast.success("Google login successful!");
 

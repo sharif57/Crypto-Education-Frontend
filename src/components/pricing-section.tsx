@@ -1,10 +1,26 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useBuySubscriptionMutation } from "@/Redux/feature/subscriptionSlice";
+import { useUserProfileQuery } from "@/Redux/feature/userSlice";
 import { Check } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
+interface Plan {
+  name: string;
+  price: number;
+  description: string;
+  features: string[];
+  featured: boolean;
+}
+
 
 export default function PricingSection() {
-  const plans = [
+
+  const router = useRouter();
+
+  const PLANS: Plan[] = [
     {
       name: "Basic",
       price: 56,
@@ -45,6 +61,36 @@ export default function PricingSection() {
     },
   ];
 
+  const [buySubscription] = useBuySubscriptionMutation();
+
+    const { data } = useUserProfileQuery(undefined)
+    console.log(data?.data, 'profile')
+    const user = data?.data
+
+
+
+  const handleBuySubscription = async (planName: string) => {
+
+    if (!user) {
+      router.push("/auth/login");
+      toast.error("Please log in to buy a subscription.");
+      return;
+    }
+
+    try {
+      const plan = PLANS.find((p) => p.name === planName);
+
+      const res = await buySubscription({ plan: plan!.name.toLowerCase() }).unwrap();
+      if (res?.sessionId) {
+        window.open(res?.checkoutUrl as string, "_blank");
+        window.open(res?.checkoutUrl as string, "_blank");
+      }
+    } catch (error) {
+      console.error("Subscription error:", error);
+      toast.error(error?.data?.error || "An error occurred while processing your subscription.");
+    }
+  };
+
   return (
     <section id="prices" className="relative bg-[#1a1a1a] py-16 lg:py-24">
       {/* Background subtle pattern */}
@@ -73,7 +119,7 @@ export default function PricingSection() {
 
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 xl:gap-8 ">
-          {plans.map((plan) => (
+          {PLANS.map((plan: Plan) => (
             <div
               key={plan.name}
               className={
@@ -138,7 +184,7 @@ export default function PricingSection() {
                   className={
                     "w-full !py-6 rounded-full text-lg font-medium transition-all duration-300  bg-text hover:bg-text cursor-pointer  text-black shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40"
                   }
-                >
+                  onClick={() => handleBuySubscription(plan.name)}>
                   Choose Plan
                 </Button>
               </div>

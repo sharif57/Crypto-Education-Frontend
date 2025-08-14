@@ -49,8 +49,19 @@ export const categoryVideoApi = baseApi.injectEndpoints({
             providesTags: ["Category"],
         }),
 
+        singleVideo: builder.query({
+            query: (id) => ({
+                url: `/tutorials/videos/${id}/`,
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+                },
+            }),
+            providesTags: ["Category"],
+        }),
+
 
     }),
 });
 
-export const { useCategoryVideoQuery , useSingleCategoryVideoQuery, useAllCourseQuery, useCategoryWiseVideoQuery } = categoryVideoApi;
+export const { useCategoryVideoQuery , useSingleCategoryVideoQuery, useAllCourseQuery, useCategoryWiseVideoQuery, useSingleVideoQuery } = categoryVideoApi;
