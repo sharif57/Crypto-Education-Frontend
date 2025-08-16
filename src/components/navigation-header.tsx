@@ -355,9 +355,12 @@ export default function Header() {
 
   const handleLOut = async () => {
     localStorage.removeItem("access_token");
+    localStorage.removeItem("language");
+    localStorage.removeItem("session_id");
+    localStorage.removeItem("video_session");
     await logout()
     await refetch();
-    window.location.href = "/";
+    window.location.href = "https://theclue.io/";
   };
 
   // 3. Define navigation items (memoized for stable reference)
@@ -366,9 +369,9 @@ export default function Header() {
       { name: "Home", href: "https://theclue.io/" },
       { name: "Courses", href: "/courses" },
       { name: "AI Assistance", href: "/chat" },
-      { name: "Features", href: "/#features" },
+      // { name: "Features", href: "/#features" },
       { name: "Pricing", href: "https://theclue.io/#pricing" },
-      { name: "Testimonials", href: "/#testimonials" },
+      // { name: "Testimonials", href: "/#testimonials" },
     ],
     []
   );
@@ -478,7 +481,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
+            {/* <Link href="/" className="flex items-center space-x-2"> */}
               <Image
                 src="/images/logo.png"
                 alt="Logo"
@@ -486,7 +489,7 @@ export default function Header() {
                 height={400}
                 className="w-[110px]"
               />
-            </Link>
+            {/* </Link> */}
           </div>
 
           {/* Desktop Navigation */}

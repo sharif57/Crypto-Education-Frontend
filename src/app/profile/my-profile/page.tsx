@@ -60,6 +60,14 @@ export default function MyProfile() {
                       {user?.email}
                     </p>
                   </div>
+                  <div className="flex flex-col gap-1">
+                    <h1 className="text-lg sm:text-xl md:text-[23px] font-medium">
+                      Language:
+                    </h1>
+                    <p className="text-lg  sm:text-xl md:text-[23px] font-medium text-[#E6F9FD]">
+                      {user?.language}
+                    </p>
+                  </div>
                   <div>
                     <Link href="/profile/edit-profile">
                       <Button

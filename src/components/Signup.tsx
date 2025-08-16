@@ -24,6 +24,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [language, setLanguage] = useState("");
 
   const [register] = useRegisterMutation();
   const [googleLogin] = useGoogleLoginMutation()
@@ -50,6 +51,7 @@ export default function SignUp() {
         full_name: fullName,
         email,
         password,
+        language,
         confirm_password: confirmPassword,
       }).unwrap(); // Use .unwrap() to handle RTK Query response properly
 
@@ -98,7 +100,7 @@ export default function SignUp() {
       console.log(response);
       toast.success("Google login successful!");
 
-      window.location.href = ("/");
+      window.location.href = ("/courses");
 
     } catch (error: unknown) {
       console.error("Google login error:", error);
@@ -169,6 +171,23 @@ export default function SignUp() {
                 className="bg-[#535353] border-gray-600 text-white placeholder:text-gray-400 focus:border-teal-500 focus:ring-teal-500"
                 required
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label
+                htmlFor="signup-email"
+                className="text-sm font-medium text-gray-300"
+              >
+                Select Language
+              </Label>
+             <select
+                className="bg-[#535353] w-full py-2 border-gray-600 rounded-lg text-white placeholder:text-gray-400 focus:border-teal-500 focus:ring-teal-500"
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+              >
+                <option value="english">English</option>
+                <option value="german">German</option>
+              </select>
             </div>
 
             <div className="space-y-2">

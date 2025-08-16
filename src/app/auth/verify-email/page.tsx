@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import {  useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useVerifyEmailMutation } from "@/Redux/feature/authSlice";
 import { Suspense, useState } from "react";
 import { toast } from "sonner";
@@ -16,13 +16,14 @@ import { saveTokens } from "@/service/authService";
 
 
 
- function VerifyOTP() {
+function VerifyOTP() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [verifyEmail] = useVerifyEmailMutation();
-  // const router = useRouter();
+
+  const router = useRouter();
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +53,14 @@ import { saveTokens } from "@/service/authService";
       toast.success(res.message || "Verification successful!");
       localStorage.setItem("access_token", res.access_token);
       await saveTokens(res.access_token);
-      window.location.href = ("/courses");
+
+      if (res?.data?.subscription === "basic" || res?.data?.subscription === "pro" || res?.data?.subscription === "elite") {
+        return router.push("/courses");
+      }
+      else {
+        return router.push("https://theclue.io/#pricing");
+      }
+      // window.location.href = ("/courses");
     } catch (error: unknown) {
       let errorMessage = "Verification failed. Please try again.";
       if (

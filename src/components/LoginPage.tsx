@@ -23,8 +23,10 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [login] = useLoginMutation();
-    const { refetch } = useUserProfileQuery(undefined)
+    const {data, refetch } = useUserProfileQuery(undefined)
+    console.log(data?.data, 'data------------------');
     const [googleLogin] = useGoogleLoginMutation()
+
 
     const handleSignIn = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -50,9 +52,16 @@ export default function LoginPage() {
             await saveTokens(res.access_token);
             await refetch();
 
+            if(res?.data?.subscription === "basic" || res?.data?.subscription === "pro" || res?.data?.subscription === "elite") {
+                 return window.location.href = ("/courses");
+            }
+            else{
+                return router.push("https://theclue.io/#pricing");
+            }
 
-            router.push("/courses");
-            window.location.href = "/courses";
+            // router.push("/courses");
+
+            // window.location.href = "/courses";
 
         } catch (error) {
             const errorMessage = (error as { data?: { message?: string } })?.data?.message || "Login failed. Please try again.";
@@ -88,7 +97,7 @@ export default function LoginPage() {
             toast.success("Google login successful!");
 
             await refetch();
-            window.location.href = ("/");
+            window.location.href = ("/courses");
 
         } catch (error: unknown) {
             console.error("Google login error:", error);
