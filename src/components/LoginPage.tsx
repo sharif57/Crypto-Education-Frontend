@@ -93,10 +93,10 @@ export default function LoginPage() {
             localStorage.setItem("access_token", response?.access);
             await saveTokens(response.access);
 
-            console.log(response);
+            console.log(response?.user?.subscription);
             toast.success("Google login successful!");
 
-            if(response?.data?.subscription === "basic" || response?.data?.subscription === "pro" || response?.data?.subscription === "elite") {
+            if(response?.user?.subscription === "basic" || response?.user?.subscription === "pro" || response?.user?.subscription === "elite") {
                  return window.location.href = ("/courses");
             }
             else{
