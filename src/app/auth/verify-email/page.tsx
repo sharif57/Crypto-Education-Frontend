@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { useRouter, useSearchParams } from "next/navigation";
+import {  useSearchParams } from "next/navigation";
 import { useVerifyEmailMutation } from "@/Redux/feature/authSlice";
 import { Suspense, useState } from "react";
 import { toast } from "sonner";
@@ -22,7 +22,7 @@ import { saveTokens } from "@/service/authService";
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [verifyEmail] = useVerifyEmailMutation();
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();

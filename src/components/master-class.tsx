@@ -12,7 +12,7 @@ export default function Masterclass() {
   console.log(user, 'user');
 
 
-      const isSubscribed = user?.subscription && ["basic", "pro", "elite"].includes(user.subscription);
+      // const isSubscribed = user?.subscription && ["basic", "pro", "elite"].includes(user.subscription);
 
     // if (itemName === "Courses" || itemName === "AI Assistance") {
     //   if (!isSubscribed) {
