@@ -12,6 +12,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useVerifyEmailMutation } from "@/Redux/feature/authSlice";
 import { Suspense, useState } from "react";
 import { toast } from "sonner";
+import { saveTokens } from "@/service/authService";
 
 
 
@@ -50,7 +51,8 @@ import { toast } from "sonner";
 
       toast.success(res.message || "Verification successful!");
       localStorage.setItem("access_token", res.access_token);
-      router.push("/");
+      await saveTokens(res.access_token);
+      window.location.href = ("/courses");
     } catch (error: unknown) {
       let errorMessage = "Verification failed. Please try again.";
       if (

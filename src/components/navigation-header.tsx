@@ -363,11 +363,11 @@ export default function Header() {
   // 3. Define navigation items (memoized for stable reference)
   const navigationItems = useMemo<{ name: string; href: string }[]>(
     () => [
-      { name: "Home", href: "/" },
+      { name: "Home", href: "https://theclue.io/" },
       { name: "Courses", href: "/courses" },
       { name: "AI Assistance", href: "/chat" },
       { name: "Features", href: "/#features" },
-      { name: "Pricing", href: "/#prices" },
+      { name: "Pricing", href: "https://theclue.io/#pricing" },
       { name: "Testimonials", href: "/#testimonials" },
     ],
     []

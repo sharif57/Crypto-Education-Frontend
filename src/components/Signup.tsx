@@ -290,7 +290,7 @@ export default function SignUp() {
             theme="outline"
             size="large"
             text="continue_with"
-            width="400"
+            // width="400"
           />
 
           <div className="text-center">

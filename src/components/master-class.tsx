@@ -1,9 +1,35 @@
+'use client';
 import { Button } from "@/components/ui/button";
+import { useUserProfileQuery } from "@/Redux/feature/userSlice";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Masterclass() {
+
+  const {data} = useUserProfileQuery(undefined)
+  const user = data?.data;
+  console.log(user, 'user');
+
+
+      const isSubscribed = user?.subscription && ["basic", "pro", "elite"].includes(user.subscription);
+
+    // if (itemName === "Courses" || itemName === "AI Assistance") {
+    //   if (!isSubscribed) {
+    //     // Redirect to pricing page if not subscribed
+    //     if (pathname === "/") {
+    //       const element = document.getElementById("prices");
+    //       if (element) {
+    //         element.scrollIntoView({ behavior: "smooth", block: "start" });
+    //       }
+    //       setActiveItem("Pricing");
+    //     } else {
+    //       router.push("/#prices");
+    //     }
+    //     return;
+    //   }
+    // }
+
   return (
     <section className="relative bg-[#1a1a1a] py-16 lg:py-24 overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
