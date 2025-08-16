@@ -96,8 +96,15 @@ export default function LoginPage() {
             console.log(response);
             toast.success("Google login successful!");
 
-            await refetch();
-            window.location.href = ("/courses");
+            if(response?.data?.subscription === "basic" || response?.data?.subscription === "pro" || response?.data?.subscription === "elite") {
+                 return window.location.href = ("/courses");
+            }
+            else{
+                return router.push("https://theclue.io/#pricing");
+            }
+
+            // await refetch();
+            // window.location.href = ("/courses");
 
         } catch (error: unknown) {
             console.error("Google login error:", error);

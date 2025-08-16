@@ -100,7 +100,12 @@ export default function SignUp() {
       console.log(response);
       toast.success("Google login successful!");
 
-      window.location.href = ("/courses");
+      if (response?.data?.subscription === "basic" || response?.data?.subscription === "pro" || response?.data?.subscription === "elite") {
+        return window.location.href = ("/courses");
+      }
+      else {
+        return router.push("https://theclue.io/#pricing");
+      }
 
     } catch (error: unknown) {
       console.error("Google login error:", error);
@@ -180,7 +185,7 @@ export default function SignUp() {
               >
                 Select Language
               </Label>
-             <select
+              <select
                 className="bg-[#535353] w-full py-2 border-gray-600 rounded-lg text-white placeholder:text-gray-400 focus:border-teal-500 focus:ring-teal-500"
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
@@ -309,7 +314,7 @@ export default function SignUp() {
             theme="outline"
             size="large"
             text="continue_with"
-            // width="400"
+          // width="400"
           />
 
           <div className="text-center">
