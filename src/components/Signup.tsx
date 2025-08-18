@@ -103,7 +103,7 @@ export default function SignUp() {
       if (response?.user?.subscription === "basic" || response?.user?.subscription === "pro" || response?.user?.subscription === "elite") {
         return window.location.href = ("/courses");
       }
-      else {
+      else {                
         return router.push("https://theclue.io/#pricing");
       }
 

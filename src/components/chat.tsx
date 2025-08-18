@@ -212,7 +212,7 @@ export default function Chat({ videoId }: ChatProps) {
       </div>
 
       {isAIModalOpen && (
-        <div className="absolute lg:top-2/4 top-0 h-[485px] border-text lg:right-12 right-0 lg:w-[400px] w-full m-0 lg:m-5 z-20 rounded-xl border flex flex-col">
+        <div className="absolute lg:top-[600px] top-0 h-[485px] border-text lg:right-12 right-0 lg:w-[400px] w-full m-0 lg:m-5 z-20 rounded-xl border flex flex-col">
           <div className="flex items-center justify-between p-4 bg-[#62C1BF] rounded-t-xl text-[#224443]">
             <div className="flex items-center gap-2">
               <svg
