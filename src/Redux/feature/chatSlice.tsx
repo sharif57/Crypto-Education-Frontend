@@ -24,7 +24,7 @@ export const chatApi = baseApi.injectEndpoints({
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
-        body: data, 
+        body: data,
       }),
       invalidatesTags: ["Chat"],
     }),
@@ -74,9 +74,21 @@ export const chatApi = baseApi.injectEndpoints({
         body: data,
       }),
       invalidatesTags: ["Chat"],
-    })
+    }),
+
+    searchChat: builder.query({
+      query: (query) => ({
+        url: `/ai/search_session/?search=${query}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      }),
+      providesTags: ["Chat"],
+    }
+    ),
 
   }),
 });
 
-export const { useAskChatMutation , useCreateSessionMutation, useSingleSessionQuery, useAllSessionsQuery, useDeleteSessionMutation, useEditSessionMutation} = chatApi;
+export const { useAskChatMutation, useCreateSessionMutation, useSingleSessionQuery, useAllSessionsQuery, useDeleteSessionMutation, useEditSessionMutation , useSearchChatQuery } = chatApi;
