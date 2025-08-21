@@ -97,6 +97,7 @@ export default function SignUp() {
       }).unwrap();
 
       localStorage.setItem("access_token", response?.access);
+      localStorage.setItem("language", response?.user?.language);
       console.log(response);
       toast.success("Google login successful!");
 

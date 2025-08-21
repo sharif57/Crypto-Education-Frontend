@@ -91,6 +91,7 @@ export default function LoginPage() {
             }).unwrap();
 
             localStorage.setItem("access_token", response?.access);
+            localStorage.setItem("language", response?.user?.language);
             await saveTokens(response.access);
 
             console.log(response?.user?.subscription);
