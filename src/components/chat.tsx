@@ -4,7 +4,7 @@ import { Send, X } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from './ui/button';
 import Loading from './Loading';
-import {  useVideoAskChatWithIdMutation, useVideoSessionCreateMutation } from '@/Redux/feature/videoChatSlice';
+import { useVideoAskChatWithIdMutation, useVideoSessionCreateMutation } from '@/Redux/feature/videoChatSlice';
 
 interface Message {
   id: string;
@@ -15,11 +15,11 @@ interface Message {
 
 interface ChatProps {
   videoId: string;
+  videoResource: string;
 }
 
 export default function Chat({ videoId }: ChatProps) {
 
-  console.log("pdf id", videoId);
   const [language, setLanguage] = useState<string>('');
   const [isAIModalOpen, setIsAIModalOpen] = useState<boolean>(false);
   const [videoSessionId, setVideoSessionId] = useState<string | null>(null);
@@ -67,14 +67,14 @@ export default function Chat({ videoId }: ChatProps) {
   };
 
   // localStorage get session_id
-  useEffect(()=>{
+  useEffect(() => {
     const sessionId = localStorage.getItem('video_session');
     if (sessionId) {
       setVideoSessionId(sessionId);
     } else {
       createSession();
     }
-  },[videoSessionId, createSession]);
+  }, [videoSessionId, createSession]);
 
   console.log('Video Session ID:', videoSessionId);
 
@@ -154,7 +154,9 @@ export default function Chat({ videoId }: ChatProps) {
 
   return (
     <div>
-      <div className="lg:flex items-center justify-between  space-y-8">
+      <div className="lg:flex gap-2 items-center justify-between  space-y-8">
+  
+
         <Button
           onClick={() => {
             setIsAIModalOpen(true);
@@ -304,8 +306,8 @@ export default function Chat({ videoId }: ChatProps) {
                   )}
                   <div
                     className={`p-3 rounded-r-3xl rounded-bl-3xl text-sm leading-relaxed ${message.isUser
-                        ? 'bg-[#373737] text-[12px] font-normal text-[#E0E0E0]'
-                        : 'bg-[#62C1BF] text-[12px] font-normal text-[#373737]'
+                      ? 'bg-[#373737] text-[12px] font-normal text-[#E0E0E0]'
+                      : 'bg-[#62C1BF] text-[12px] font-normal text-[#373737]'
                       }`}
                   >
                     {message.text}

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, ChevronUp, ChevronDown, Play } from "lucide-react";
 import Loading from "@/components/Loading";
 import Chat from "@/components/chat";
+import Link from "next/link";
 
 interface RelatedVideo {
   id: number | string;
@@ -15,6 +16,7 @@ interface RelatedVideo {
   video_file?: string;
   [key: string]: unknown;
   object_id?: string;
+
 }
 
 
@@ -116,8 +118,21 @@ export default function VideoDetailPage() {
               {/* <p>Duration: {video.duration_seconds} S</p> */}
             </div>
           </div>
-          <div className="">
-            <Chat videoId={video?.subtitle_object_id} />
+          <div className="flex  gap-4 mt-3">
+            <Link
+              href={video.video_resource}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block "
+            >
+              <Button
+                className="px-4 py-2 bg-[#62C1BF] text-[#224443] cursor-pointer rounded-full 
+                           text-sm font-medium transition-colors hover:bg-[#4CA7A5]"
+              >
+                Video Resource
+              </Button>
+            </Link>
+            <Chat videoId={video?.subtitle_object_id} videoResource={video?.video_resource} />
           </div>
         </div>
 
