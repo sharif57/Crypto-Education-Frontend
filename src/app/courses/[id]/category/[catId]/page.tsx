@@ -48,7 +48,7 @@
 //           </div>
 //         ) : (
 //           <div className="space-y-3">
-       
+
 //             {categoryVideo?.data?.videos?.map((lesson: Lesson, index: number) => {
 //               const isExpanded = expandedVideo === lesson.object_id;
 //               return (
@@ -150,7 +150,7 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import {  useSingleVideoQuery } from "@/Redux/feature/categoryVideoSlice";
+import { useSingleVideoQuery } from "@/Redux/feature/categoryVideoSlice";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ChevronUp, ChevronDown, Play } from "lucide-react";
 import Loading from "@/components/Loading";
@@ -174,7 +174,7 @@ export default function VideoDetailPage() {
 
   const { data, isLoading, isError } = useSingleVideoQuery(id);
 
-  console.log(data, 'related videoss');
+  console.log(data, 'related videoss==========');
 
   const toggleModule = (moduleId: string) => {
     setExpandedModule(prev => prev === moduleId ? null : moduleId);
@@ -264,7 +264,11 @@ export default function VideoDetailPage() {
               {/* <p>Duration: {video.duration_seconds} S</p> */}
             </div>
           </div>
-          <div className="">
+          <div className="flex gap-4 mt-3">
+            <a href={video.video_resource} target="_blank" rel="noopener noreferrer">
+            <Button className="px-4 py-2 mb-8 bg-[#62C1BF] text-[#224443] cursor-pointer rounded-full text-sm font-medium transition-colors"
+            >Video Resource</Button>
+            </a>
             <Chat videoId={video?.subtitle_object_id} />
           </div>
         </div>

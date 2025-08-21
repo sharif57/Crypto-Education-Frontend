@@ -154,7 +154,7 @@ export default function Chat({ videoId }: ChatProps) {
 
   return (
     <div>
-      <div className="lg:flex items-center justify-between border-b border-text space-y-8">
+      <div className="lg:flex items-center justify-between  space-y-8">
         <Button
           onClick={() => {
             setIsAIModalOpen(true);
