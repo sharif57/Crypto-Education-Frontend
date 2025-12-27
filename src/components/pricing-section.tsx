@@ -78,13 +78,12 @@ export default function PricingSection() {
       return;
     }
 
-    // Now correctly using 'tier' instead of name
     const payload = {
-      plan: plan.name.toLowerCase(), // "pro" or "elite"
-      billing_cycle: plan.billingCycle?.toLowerCase() || "", // fallback if somehow missing
+      plan: plan.name.toLowerCase(),
+      billing_cycle: plan.billingCycle?.toLowerCase() || "", 
     };
 
-    console.log("SUBSCRIPTION PAYLOAD 👉", payload);
+    // console.log("SUBSCRIPTION PAYLOAD 👉", payload);
 
     try {
       setLoadingPlan(`${plan.name}-${plan.billingCycle}`);

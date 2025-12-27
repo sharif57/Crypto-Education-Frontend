@@ -65,7 +65,7 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-6">Site Navigation</h3>
             <nav className="space-y-4">
               <Link
-                href="https://theclue.io/"
+                href="/"
                 className="block text-gray-300 hover:text-[#4ade80] transition-colors duration-200 text-sm"
               >
                 Home
@@ -83,19 +83,19 @@ export default function Footer() {
                 AI Assistance
               </Link> */}
               <Link
-                href="https://theclue.io/#features"
+                href="/#features"
                 className="block text-gray-300 hover:text-[#4ade80] transition-colors duration-200 text-sm"
               >
                 Features
               </Link>
               <Link
-                href="https://theclue.io/#pricing"
+                href="/#pricing"
                 className="block text-gray-300 hover:text-[#4ade80] transition-colors duration-200 text-sm"
               >
                 Pricing
               </Link>
               <Link
-                href="https://theclue.io/#testimonials"
+                href="/#testimonials"
                 className="block text-gray-300 hover:text-[#4ade80] transition-colors duration-200 text-sm"
               >
                 Testimonials

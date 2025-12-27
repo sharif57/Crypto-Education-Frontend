@@ -150,13 +150,13 @@ export default function Header() {
       if (!isSubscribed) {
         // Redirect to pricing page if not subscribed
         if (pathname === "/") {
-          const element = document.getElementById("prices");
+          const element = document.getElementById("pricing");
           if (element) {
             element.scrollIntoView({ behavior: "smooth", block: "start" });
           }
           setActiveItem("Pricing");
         } else {
-          router.push("/#prices");
+          router.push("/#pricing");
         }
         return;
       }
@@ -169,7 +169,7 @@ export default function Header() {
         router.push(href); // Navigate to /chat after session creation
       } catch (error) {
         console.error("Failed to create session:", error);
-        router.push("/#prices"); // Redirect to pricing on error
+        router.push("/#pricing"); // Redirect to pricing on error
       }
     } else if (href.startsWith("/#")) {
       if (pathname === "/") {

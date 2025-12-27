@@ -7,6 +7,7 @@ import Footer from "@/components/footer";
 import Providers from "@/Providers/Providers";
 import { Toaster } from "sonner";
 import Message from "@/components/message";
+import ProtectedLayout from "@/hook/ProtectedLayout";
 
 // Load Poppins with `variable` option
 const poppins = Poppins({
@@ -31,13 +32,13 @@ export default function RootLayout({
         className={`${poppins.variable} antialiased`}
         style={{ fontFamily: "var(--font-poppins)" }}
         cz-shortcut-listen="true"
-
-        data-new-gr-c-s-check-loaded="14.1240.0"
       >
         <Providers>
           <Toaster />
           <Header />
-          {children}
+          <ProtectedLayout>
+            {children}
+          </ProtectedLayout>
           <Message />
           <Footer />
         </Providers>

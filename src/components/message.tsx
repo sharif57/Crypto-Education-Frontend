@@ -1,18 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+
 "use client";
 
-import type React from "react";
-import { useState, useRef, useEffect } from "react";
-import { Bot, MoreVertical, X, Send } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useAskAssistentQuestionMutation } from "@/Redux/feature/chatSlice";
+import { useUserProfileQuery } from "@/Redux/feature/userSlice";
+import { Bot, Send, X } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { Button } from "./ui/button";
+
+
 
 type Message = {
   id: number;
   text: string;
   isUser: boolean;
 };
-
-// AIzaSyAAqfA0f2nbOjMPPKKGR_qQh2K3Ag3X2w0
 
 export default function Message() {
   const pathname = usePathname();
@@ -24,187 +28,101 @@ export default function Message() {
       isUser: false,
     },
   ]);
+
+  const { data: profileData } = useUserProfileQuery(undefined);
+  const language = profileData?.data?.language || "english";
+
+  const [askAssistentQuestion, { isLoading: isAsking }] = useAskAssistentQuestionMutation(language);
+
   const [newMessage, setNewMessage] = useState("");
-  const [isLoading,] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // "/auth/create-pass",
-  //     "/auth/forgot-otp",
-  //     "/auth/forgot-pass",
-  //     "/auth/signup",
-  //     "/auth/login",
-  //     "/auth/verify-email",
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-  if (pathname === "/auth/create-pass" ||
+  // Hide chat on auth pages
+  if (
+    pathname === "/auth/create-pass" ||
     pathname === "/auth/forgot-otp" ||
     pathname === "/auth/forgot-pass" ||
     pathname === "/auth/signup" ||
     pathname === "/auth/login" ||
-    pathname === "/auth/verify-email") {
+    pathname === "/auth/verify-email"
+  ) {
     return null;
   }
 
-  const handleSendMessage = async () => {
-    if (newMessage.trim() === "") return;
 
-    // Add user message
+
+  // Auto-scroll to bottom when new messages arrive
+
+  const handleSendMessage = async () => {
+    if (newMessage.trim() === "" || isAsking) return;
+
     const userMessage: Message = {
-      id: messages.length + 1,
-      text: newMessage,
+      id: Date.now(),
+      text: newMessage.trim(),
       isUser: true,
     };
-    setMessages([...messages, userMessage]);
+
+    // Add user message immediately
+    setMessages((prev) => [...prev, userMessage]);
     setNewMessage("");
 
-    // Get bot response
+    try {
+      // Call backend API
+      const response = await askAssistentQuestion({
+        data: {
+          question: userMessage.text
+        },
+        language: language,
+      }).unwrap();
 
+      const botMessage: Message = {
+        id: Date.now() + 1,
+        text: response.content || "Sorry, I couldn't process that.",
+        isUser: false,
+      };
 
+      setMessages((prev) => [...prev, botMessage]);
+    } catch (error: any) {
+      console.error("AI Assistant Error:", error);
+
+      const errorText =
+        error?.data?.message ||
+        error?.message ||
+        "Sorry, something went wrong. Please try again later.";
+
+      const botMessage: Message = {
+        id: Date.now() + 1,
+        text: errorText,
+        isUser: false,
+      };
+
+      setMessages((prev) => [...prev, botMessage]);
+    }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
   };
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };
 
-  console.log(messages);
-
   return (
     <div className="z-[999]">
-      {isOpen && (
-        <div className="">
-          <div className="fixed bottom-[120px] z-[999] lg:right-8  w-full max-w-md rounded-lg overflow-hidden shadow-lg bg-[#FFF0E6] border border-text">
-            <div className="bg-text p-3 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="bg-text p-1.5 rounded-full">
-                  <Bot className="h-5 w-5 text-white" />
-                </div>
-                <span className="font-medium text-white">
-                  Personal Assistant
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 rounded-full"
-                >
-                  <MoreVertical className="h-5 w-5" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 rounded-full"
-                  onClick={toggleChat}
-                >
-                  <X className="h-5 w-5" />
-                </Button>
-              </div>
-            </div>
-
-            <div className="h-96 overflow-y-auto p-3 bg-[#FFF0E6]">
-              <div className="flex flex-col gap-3">
-                {messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={`flex ${message.isUser ? "justify-end" : "justify-start"
-                      }`}
-                  >
-                    {!message.isUser && (
-                      <div className="mr-2 bg-text p-1.5 rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0">
-                        <Bot className="h-5 w-5 text-white" />
-                      </div>
-                    )}
-                    <div
-                      className={`max-w-[80%] p-1 rounded-lg ${message.isUser
-                        ? "bg-white text-black"
-                        : "bg-text text-white"
-                        }`}
-                    >
-                      {/* <p className='text-sm'>{message.text}</p>  */}
-
-                      {/* formatted response */}
-                      <div
-                        className={`max-w-full p-1 rounded-xl leading-relaxed text-sm ${message.isUser ? "bg-white text-black" : " text-white"
-                          }`}
-                        dangerouslySetInnerHTML={{
-                          __html: message.text
-                            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-                            .replace(/- (.*?)\n/g, "<li>$1</li>")
-                            .replace(/\n{2,}/g, "<br/><br/>")
-                            .replace(/\n/g, "<br/>"),
-                        }}
-                      />
-                    </div>
-                  </div>
-                ))}
-                {isLoading && (
-                  <div className="flex justify-start">
-                    <div className="mr-2 bg-text p-1.5 rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0">
-                      <Bot className="h-5 w-5 text-white" />
-                    </div>
-                    <div className="max-w-[80%] p-3 rounded-lg bg-text text-white">
-                      <div className="flex gap-1">
-                        <div className="w-2 h-2 rounded-full bg-white animate-bounce"></div>
-                        <div
-                          className="w-2 h-2 rounded-full bg-white animate-bounce"
-                          style={{ animationDelay: "0.2s" }}
-                        ></div>
-                        <div
-                          className="w-2 h-2 rounded-full bg-white animate-bounce"
-                          style={{ animationDelay: "0.4s" }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                <div ref={messagesEndRef} />
-              </div>
-            </div>
-
-            {/* {/ Input area /} */}
-            <div className="p-3 border-t border-[#FFD0B0] bg-[#FFF0E6]">
-              <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  placeholder="Your message..."
-                  className="flex-1 p-3 text-black rounded-full border border-[#FFD0B0] bg-white focus:outline-none focus:ring-2 focus:ring-text"
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  disabled={isLoading}
-                />
-                <Button
-                  onClick={handleSendMessage}
-                  className="bg-transparent hover:bg-transparent p-2"
-                  disabled={isLoading}
-                >
-                  <Send className="h-6 w-6 text-text" />
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* {/ Chat button /} */}
+      {/* Floating Chat Button */}
       <button
         onClick={toggleChat}
-        className="fixed z-[999] bottom-0 right-3  text-white p-4 rounded-full transition-colors cursor-pointer"
+        className="fixed bottom-6 right-6 z-[999] text-white rounded-full transition-all hover:scale-110 cursor-pointer shadow-2xl"
+        aria-label="Open AI Assistant"
       >
-        {/* <div className='relative'>
-          <Bot className='h-6 w-6' /> gfgd
-        </div> */}
-
         <svg
           width="110"
           height="110"
@@ -213,15 +131,7 @@ export default function Message() {
           xmlns="http://www.w3.org/2000/svg"
         >
           <g filter="url(#filter0_d_580_256)">
-            <rect
-              x="15"
-              y="5"
-              width="80"
-              height="80"
-              rx="40"
-              fill="#62C1BF"
-              shapeRendering="crispEdges"
-            />
+            <rect x="15" y="5" width="80" height="80" rx="40" fill="#62C1BF" />
             <path
               d="M73.1815 38.6365C73.1815 32.1095 67.8903 26.8184 61.3633 26.8184C57.5763 26.8184 54.2053 28.6044 52.0424 31.3769C61.2671 31.7336 68.6361 39.3245 68.6361 48.6365C68.6361 48.8371 68.6326 49.0369 68.6259 49.2358L69.23 49.3974C70.9869 49.8675 72.5943 48.2601 72.1242 46.5032L71.8926 45.6377C71.7056 44.9385 71.818 44.1998 72.1187 43.5415C72.8012 42.0474 73.1815 40.3864 73.1815 38.6365Z"
               fill="white"
@@ -257,21 +167,114 @@ export default function Message() {
                 type="matrix"
                 values="0 0 0 0 0.391667 0 0 0 0 0.169396 0 0 0 0 0.0212153 0 0 0 0.18 0"
               />
-              <feBlend
-                mode="normal"
-                in2="BackgroundImageFix"
-                result="effect1_dropShadow_580_256"
-              />
-              <feBlend
-                mode="normal"
-                in="SourceGraphic"
-                in2="effect1_dropShadow_580_256"
-                result="shape"
-              />
+              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_580_256" />
+              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_580_256" result="shape" />
             </filter>
           </defs>
         </svg>
       </button>
+
+      {/* Chat Window */}
+      {isOpen && (
+        <div className="fixed bottom-[140px] right-6 z-[999] w-full max-w-md rounded-2xl overflow-hidden shadow-2xl bg-[#1B1B1B]  ">
+          {/* Header */}
+          <div className="bg-[#62C1BF] p-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="bg-white/20 p-2 rounded-full">
+                <Bot className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-black">Personal Assistant</h3>
+                <p className="text-xs text-black/80">Usually responds instantly</p>
+              </div>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 rounded-full text-white hover:bg-white/20"
+              onClick={toggleChat}
+            >
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+
+          {/* Messages Area */}
+          <div className="h-96 overflow-y-auto p-4 ">
+            <div className="flex flex-col gap-4">
+              {messages.map((message) => (
+                <div
+                  key={message.id}
+                  className={`flex ${message.isUser ? "justify-end" : "justify-start"}`}
+                >
+                  {!message.isUser && (
+                    <div className="mr-3 bg-[#62C1BF] p-2 rounded-full h-9 w-9 flex items-center justify-center flex-shrink-0">
+                      <Bot className="h-5 w-5 text-white" />
+                    </div>
+                  )}
+                  <div
+                    className={`max-w-[85%] px-4 py-3 rounded-2xl ${message.isUser
+                      ? "bg-white text-black shadow-md"
+                      : "bg-[#62C1BF] text-black"
+                      }`}
+                  >
+                    <div
+                      className="text-sm leading-relaxed"
+                      dangerouslySetInnerHTML={{
+                        __html: message.text
+                          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+                          .replace(/^\d+\.\s+(.*?)$/gm, "<li class='ml-4'>$1</li>")
+                          .replace(/\n\n/g, "<br/><br/>")
+                          .replace(/\n/g, "<br/>"),
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+
+              {/* Loading Indicator */}
+              {isAsking && (
+                <div className="flex justify-start">
+                  <div className="mr-3 bg-[#62C1BF] p-2 rounded-full h-9 w-9 flex items-center justify-center">
+                    <Bot className="h-5 w-5 text-white" />
+                  </div>
+                  <div className="bg-[#62C1BF] text-white px-4 py-3 rounded-2xl">
+                    <div className="flex gap-1">
+                      <div className="w-2 h-2 bg-white rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-white rounded-full animate-bounce delay-100"></div>
+                      <div className="w-2 h-2 bg-white rounded-full animate-bounce delay-200"></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+
+              <div ref={messagesEndRef} />
+            </div>
+          </div>
+
+          {/* Input Area */}
+          <div className="p-4  bg-text">
+            <div className="flex items-center gap-3">
+              <input
+                type="text"
+                placeholder="Type your message..."
+                className="flex-1 px-4 py-3 rounded-full bg-white border border-[#FFD0B0] focus:outline-none focus:ring-2 focus:ring-[#62C1BF] text-black placeholder-gray-500"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                onKeyDown={handleKeyDown}
+                disabled={isAsking}
+              />
+              <Button
+                onClick={handleSendMessage}
+                disabled={isAsking || newMessage.trim() === ""}
+                className="bg-black hover:bg-[#52a9a7] text-white rounded-full p-2 shadow-md disabled:opacity-50"
+              >
+                <Send className="h-" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

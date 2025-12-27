@@ -1,9 +1,49 @@
 'use client';
 import { Button } from "@/components/ui/button";
+import { useUserProfileQuery } from "@/Redux/feature/userSlice";
 import Image from "next/image";
-import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Banner() {
+
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const { data, isLoading } = useUserProfileQuery(undefined);
+  const user = data?.data;
+
+  const isSubscribed = user?.subscription && ["basic", "pro", "elite"].includes(user.subscription.toLowerCase());
+
+  const handleStartLearning = () => {
+    if (!isSubscribed) {
+      if (pathname === "/") {
+        const element = document.getElementById("pricing");
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      } else {
+        router.push("/#pri");
+      }
+    } else {
+      // Subscribed → go to courses
+      router.push("/courses");
+    }
+  };
+
+  useEffect(() => {
+    if (!isLoading && !isSubscribed && pathname.includes("#pricing")) {
+      const element = document.getElementById("pricing");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  }, [isLoading, isSubscribed, pathname]);
+
+  if (isLoading) {
+    return null;
+  }
+
   return (
     <section className="relative  bg-[#1a1a1a] overflow-hidden">
       {/* Background Image */}
@@ -34,7 +74,7 @@ export default function Banner() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <a href="https://apps.apple.com/gb/app/theclue-crypto-education/id6752632864" target="_blank" rel="noopener noreferrer">
+              <a href="https://apps.apple.com/gb/app/theclue-crypto-education/id6752632864" target="_blank" rel="noopener noreferrer" >
                 <Button
                   size="lg"
                   className="bg-text cursor-pointer hover:bg-text text-[#224443] font-medium px-8 py-6 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40"
@@ -42,16 +82,17 @@ export default function Banner() {
                   Download App
                 </Button>
               </a>
-              <Link href={'/courses'}>
-                {" "}
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-2 w-full cursor-pointer border-gray-600 text-white hover:text-text hover:bg-gray-800 hover:border-gray-500 px-8 py-6 rounded-full text-lg font-medium transition-all duration-300"
-                >
-                  Start learning
-                </Button>{" "}
-              </Link>
+              {/* <Link href={'/courses'}> */}
+              {" "}
+              <Button
+                variant="outline"
+                onClick={handleStartLearning}
+                size="lg"
+                className="border-2  cursor-pointer border-gray-600 text-white hover:text-text hover:bg-gray-800 hover:border-gray-500 px-8 py-6 rounded-full text-lg font-medium transition-all duration-300"
+              >
+                Start learning
+              </Button>{" "}
+              {/* </Link> */}
             </div>
           </div>
 

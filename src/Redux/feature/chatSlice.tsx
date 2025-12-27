@@ -87,8 +87,17 @@ export const chatApi = baseApi.injectEndpoints({
       providesTags: ["Chat"],
     }
     ),
+    // /ai/ask_assistent_question/?language=english
+    askAssistentQuestion: builder.mutation({
+      query: ({ data, language }) => ({
+        url: `/ai/ask_assistent_question/?language=${language}`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Chat"],
+    })
 
   }),
 });
 
-export const { useAskChatMutation, useCreateSessionMutation, useSingleSessionQuery, useAllSessionsQuery, useDeleteSessionMutation, useEditSessionMutation , useSearchChatQuery } = chatApi;
+export const { useAskChatMutation, useCreateSessionMutation, useSingleSessionQuery, useAllSessionsQuery, useDeleteSessionMutation, useEditSessionMutation, useSearchChatQuery , useAskAssistentQuestionMutation } = chatApi;

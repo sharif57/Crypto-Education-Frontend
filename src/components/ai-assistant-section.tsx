@@ -1,11 +1,49 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useUserProfileQuery } from "@/Redux/feature/userSlice";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function AIAssistantSection() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const { data, isLoading } = useUserProfileQuery(undefined);
+  const user = data?.data;
+
+  const isSubscribed = user?.subscription && ["basic", "pro", "elite"].includes(user.subscription.toLowerCase());
+
+  const handleStartLearning = () => {
+    if (!isSubscribed) {
+      if (pathname === "/") {
+        const element = document.getElementById("pricing");
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      } else {
+        router.push("/#pri");
+      }
+    } else {
+      // Subscribed → go to courses
+      router.push("/courses");
+    }
+  };
+
+  useEffect(() => {
+    if (!isLoading && !isSubscribed && pathname.includes("#pricing")) {
+      const element = document.getElementById("pricing");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  }, [isLoading, isSubscribed, pathname]);
+
+  if (isLoading) {
+    return null;
+  }
   return (
     <section className="relative bg-[#1a1a1a] py-16 lg:py-24 overflow-hidden">
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,15 +66,16 @@ export default function AIAssistantSection() {
             </div>
 
             <div className="flex justify-center lg:justify-start">
-              <Link href="/chat">
-                <Button
-                  size="lg"
-                  className="bg-text cursor-pointer text-[#224443] font-medium !px-8 py-6 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40 group"
-                >
-                  Ask the AI Now
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                </Button>
-              </Link>
+              {/* <Link href="/chat"> */}
+              <Button
+                onClick={handleStartLearning}
+                size="lg"
+                className="bg-text cursor-pointer text-[#224443] font-medium !px-8 py-6 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40 group"
+              >
+                Ask the AI Now
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+              </Button>
+              {/* </Link> */}
             </div>
           </div>
 

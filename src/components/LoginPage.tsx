@@ -23,7 +23,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [login] = useLoginMutation();
-    const {data, refetch } = useUserProfileQuery(undefined)
+    const { data, refetch } = useUserProfileQuery(undefined)
     console.log(data?.data, 'data------------------');
     const [googleLogin] = useGoogleLoginMutation()
 
@@ -39,7 +39,6 @@ export default function LoginPage() {
             return;
         }
 
-
         try {
             const res = await login({
                 email,
@@ -48,15 +47,22 @@ export default function LoginPage() {
 
             toast.success(res.message || "Login successful!");
             localStorage.setItem("access_token", res.access_token);
+            localStorage.setItem('subscription', res?.data?.subscription);
             localStorage.setItem("language", res?.data?.language);
-            await saveTokens(res.access_token);
+            // await saveTokens(res.access_token);
+            await saveTokens(
+                res.access_token,
+            );
+
+            window.location.href = "/courses";
+
             await refetch();
 
-            if(res?.data?.subscription === "basic" || res?.data?.subscription === "pro" || res?.data?.subscription === "elite") {
-                 return window.location.href = ("/courses");
+            if (res?.data?.subscription === "basic" || res?.data?.subscription === "pro" || res?.data?.subscription === "elite") {
+                return window.location.href = ("/courses");
             }
-            else{
-                return router.push("https://theclue.io/#pricing");
+            else {
+                return router.push("/#pricing");
             }
 
             // router.push("/courses");
@@ -92,16 +98,18 @@ export default function LoginPage() {
 
             localStorage.setItem("access_token", response?.access);
             localStorage.setItem("language", response?.user?.language);
-            await saveTokens(response.access);
+            await saveTokens(
+                response.access_token,
+            );
 
             console.log(response?.user?.subscription);
             toast.success("Google login successful!");
 
-            if(response?.user?.subscription === "basic" || response?.user?.subscription === "pro" || response?.user?.subscription === "elite") {
-                 return window.location.href = ("/courses");
+            if (response?.user?.subscription === "basic" || response?.user?.subscription === "pro" || response?.user?.subscription === "elite") {
+                return window.location.href = ("/courses");
             }
-            else{
-                return router.push("https://theclue.io/#pricing");
+            else {
+                return router.push("/#pricing");
             }
 
             // await refetch();
@@ -233,7 +241,7 @@ export default function LoginPage() {
                         theme="outline"
                         size="large"
                         text="continue_with"
-                        // width="400"
+                    // width="400"
                     />
 
                     <div className="text-center">
