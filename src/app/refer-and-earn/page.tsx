@@ -17,7 +17,6 @@ export default function ReferEarnCard() {
     const link = `https://main.theclue.io/signup?reff_id=${datas?.referral_id || ""}`
 
     const [amount, setAmount] = useState<number>();
-    console.log(amount)
 
     const [referralWithdrawalRequest, { isLoading }] = useReferralWithdrawalRequestMutation();
 
@@ -121,6 +120,8 @@ export default function ReferEarnCard() {
                                     <Input
                                         id="number"
                                         type="number"
+                                        min={1}
+
                                         placeholder="Enter your amount"
                                         className="text-white"
                                         value={amount}

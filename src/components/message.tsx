@@ -241,7 +241,7 @@ export default function Message() {
               width="112"
               height="121"
               filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
+              colorInterpolationFilters="sRGB"
             >
               <feFlood floodOpacity="0" result="BackgroundImageFix" />
               <feColorMatrix
