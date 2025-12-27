@@ -7,21 +7,22 @@
 import { useState } from "react"
 import { Copy } from "lucide-react"
 import { useAffiliateDetailsQuery, useReferralWithdrawalRequestMutation } from "@/Redux/feature/referralSlice"
-import { 
-  Dialog, 
-  DialogClose, 
-  DialogContent, 
-  DialogDescription, 
-  DialogFooter, 
-  DialogHeader, 
-  DialogTitle, 
-  DialogTrigger 
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useUpdateProfileMutation, useUserProfileQuery } from "@/Redux/feature/userSlice";
+import Bouns from "@/components/bouns";
 
 export default function ReferEarnCard() {
     const { data: profileData, refetch: refetchProfile } = useUserProfileQuery(undefined);
@@ -33,7 +34,7 @@ export default function ReferEarnCard() {
 
     const currentWallet = profileWallet ?? affiliateWallet ?? null;
 
-    const link = `https://main.theclue.io/signup?reff_id=${datas?.referral_id || ""}`
+    const link = `https://theclue.io/signup?reff_id=${datas?.referral_id || ""}`
 
     const [amount, setAmount] = useState<number | undefined>(undefined);
 
@@ -108,148 +109,155 @@ export default function ReferEarnCard() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen">
-            <div className="w-full max-w-xl h-[530px] p-4">
-                <div className="rounded-3xl bg-gradient-to-b border border-[#62C1BF] from-[#161616] via-[#2c2c2c] to-[#3f3d3d] p-6 sm:p-8 shadow-2xl">
-                    <h1 className="text-center text-3xl sm:text-5xl font-medium text-[#EFF9F9] mb-6 sm:mb-8 tracking-tight">
-                        Refer & Earn
-                    </h1>
+        <div className="  max-w-6xl mx-auto min-h-screen mt-[100px]">
+            <div className="flex items-center justify-center ">
+                <div className="w-full max-w-xl h-[530px] p-4">
+                    <div className="rounded-3xl bg-gradient-to-b border border-[#62C1BF] from-[#161616] via-[#2c2c2c] to-[#3f3d3d] p-6 sm:p-8 shadow-2xl">
+                        <h1 className="text-center text-3xl sm:text-5xl font-medium text-[#EFF9F9] mb-6 sm:mb-8 tracking-tight">
+                            Refer & Earn
+                        </h1>
 
-                    {/* Referral Code */}
-                    <div className="mb-6 sm:mb-8">
-                        <h2 className="text-lg font-semibold text-[#F3F3F3] mb-3 tracking-wider">Your Referral Code</h2>
-                        <div className="flex items-center gap-2 sm:gap-3">
-                            <input
-                                type="text"
-                                value={link}
-                                readOnly
-                                className="flex-1 rounded-lg bg-[#535353] px-4 py-3 text-center text-sm sm:text-base font-mono text-gray-200"
-                            />
-                            <button
-                                onClick={handleCopy}
-                                className="rounded-lg bg-[#535353] hover:bg-slate-600 p-3 text-[#62C1BF] transition-all"
-                            >
-                                <Copy size={20} />
-                            </button>
+                        {/* Referral Code */}
+                        <div className="mb-6 sm:mb-8">
+                            <h2 className="text-lg font-semibold text-[#F3F3F3] mb-3 tracking-wider">Your Referral Code</h2>
+                            <div className="flex items-center gap-2 sm:gap-3">
+                                <input
+                                    type="text"
+                                    value={link}
+                                    readOnly
+                                    className="flex-1 rounded-lg bg-[#535353] px-4 py-3 text-center text-sm sm:text-base font-mono text-gray-200"
+                                />
+                                <button
+                                    onClick={handleCopy}
+                                    className="rounded-lg bg-[#535353] hover:bg-slate-600 p-3 text-[#62C1BF] transition-all"
+                                >
+                                    <Copy size={20} />
+                                </button>
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Wallet Address Section */}
-                    <div className="mb-6 sm:mb-8">
-                        <div className="flex items-center justify-between mb-2">
-                            <Label className="text-lg font-semibold text-[#F3F3F3] tracking-wider">
-                                Your Wallet Address
-                            </Label>
-                            {currentWallet && (
-                                <Button variant="outline" size="sm" className="text-white" onClick={openWalletEdit}>
-                                    Edit
+                        {/* Wallet Address Section */}
+                        <div className="mb-6 sm:mb-8">
+                            <div className="flex items-center justify-between mb-2">
+                                <Label className="text-lg font-semibold text-[#F3F3F3] tracking-wider">
+                                    Your Wallet Address
+                                </Label>
+                                {currentWallet && (
+                                    <Button variant="outline" size="sm" className="text-white" onClick={openWalletEdit}>
+                                        Edit
+                                    </Button>
+                                )}
+                            </div>
+
+                            {currentWallet ? (
+                                <div className="rounded-lg bg-[#535353] px-4 py-3 text-sm text-gray-200 break-all">
+                                    {currentWallet}
+                                </div>
+                            ) : (
+                                <Button className="w-full text-black" onClick={() => setOpenWalletDialog(true)}>
+                                    Add Wallet Address
                                 </Button>
                             )}
                         </div>
 
-                        {currentWallet ? (
-                            <div className="rounded-lg bg-[#535353] px-4 py-3 text-sm text-gray-200 break-all">
-                                {currentWallet}
+                        {/* Stats */}
+                        <div className="grid grid-cols-2 gap-4 mb-8">
+                            <div className="rounded-lg bg-[#535353] p-5 text-center">
+                                <div className="text-3xl font-normal text-white">{successfulSignups}</div>
+                                <p className="text-sm text-[#FFFFFF] font-medium">Successful Signups</p>
                             </div>
-                        ) : (
-                            <Button className="w-full text-black" onClick={() => setOpenWalletDialog(true)}>
-                                Add Wallet Address
-                            </Button>
-                        )}
-                    </div>
-
-                    {/* Stats */}
-                    <div className="grid grid-cols-2 gap-4 mb-8">
-                        <div className="rounded-lg bg-[#535353] p-5 text-center">
-                            <div className="text-3xl font-normal text-white">{successfulSignups}</div>
-                            <p className="text-sm text-[#FFFFFF] font-medium">Successful Signups</p>
+                            <div className="rounded-lg bg-[#535353] p-5 text-center">
+                                <div className="text-3xl font-normal text-white">${bonusEarned}</div>
+                                <p className="text-sm text-[#FFFFFF] font-medium">Bonus Earned</p>
+                            </div>
                         </div>
-                        <div className="rounded-lg bg-[#535353] p-5 text-center">
-                            <div className="text-3xl font-normal text-white">${bonusEarned}</div>
-                            <p className="text-sm text-[#FFFFFF] font-medium">Bonus Earned</p>
+
+                        <div className="rounded-lg bg-[#535353] p-6 mb-8 text-center">
+                            <div className="text-3xl font-normal text-white">${withdrawableBonus}</div>
+                            <p className="text-sm text-[#FFFFFF] font-medium">Withdrawable Bonus</p>
                         </div>
+
+                        {/* Withdraw Dialog */}
+                        <Dialog open={openWithdrawDialog} onOpenChange={setOpenWithdrawDialog}>
+                            <DialogTrigger asChild>
+                                <button className="w-full rounded-full bg-[#62C1BF] py-3 font-medium text-[#224443] text-lg hover:scale-105 transition-all">
+                                    Withdraw
+                                </button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-md">
+                                <DialogHeader>
+                                    <DialogTitle className="text-white">Withdraw</DialogTitle>
+                                    <DialogDescription>Minimum withdrawal amount is $100</DialogDescription>
+                                </DialogHeader>
+                                <form onSubmit={handleWithdraw}>
+                                    <div className="grid gap-4 py-4">
+                                        <Label htmlFor="amount" className="text-white">Amount</Label>
+                                        <Input
+                                            id="amount"
+                                            type="number"
+                                            placeholder="Enter amount"
+                                            value={amount || ""}
+                                            onChange={(e) => setAmount(Number(e.target.value) || undefined)}
+                                            className="text-white"
+                                            required
+                                        />
+                                    </div>
+                                    <DialogFooter>
+                                        <DialogClose asChild>
+                                            <Button type="button" variant="secondary">Cancel</Button>
+                                        </DialogClose>
+                                        <Button type="submit" disabled={isWithdrawing} className="text-black">
+                                            {isWithdrawing ? "Withdrawing..." : "Withdraw"}
+                                        </Button>
+                                    </DialogFooter>
+                                </form>
+                            </DialogContent>
+                        </Dialog>
                     </div>
 
-                    <div className="rounded-lg bg-[#535353] p-6 mb-8 text-center">
-                        <div className="text-3xl font-normal text-white">${withdrawableBonus}</div>
-                        <p className="text-sm text-[#FFFFFF] font-medium">Withdrawable Bonus</p>
-                    </div>
-
-                    {/* Withdraw Dialog */}
-                    <Dialog open={openWithdrawDialog} onOpenChange={setOpenWithdrawDialog}>
-                        <DialogTrigger asChild>
-                            <button className="w-full rounded-full bg-[#62C1BF] py-3 font-medium text-[#224443] text-lg hover:scale-105 transition-all">
-                                Withdraw
-                            </button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-md">
-                            <DialogHeader>
-                                <DialogTitle className="text-white">Withdraw</DialogTitle>
-                                <DialogDescription>Minimum withdrawal amount is $100</DialogDescription>
-                            </DialogHeader>
-                            <form onSubmit={handleWithdraw}>
-                                <div className="grid gap-4 py-4">
-                                    <Label htmlFor="amount" className="text-white">Amount</Label>
-                                    <Input
-                                        id="amount"
-                                        type="number"
-                                        placeholder="Enter amount"
-                                        value={amount || ""}
-                                        onChange={(e) => setAmount(Number(e.target.value) || undefined)}
-                                        className="text-white"
-                                        required
-                                    />
-                                </div>
-                                <DialogFooter>
-                                    <DialogClose asChild>
-                                        <Button type="button" variant="secondary">Cancel</Button>
-                                    </DialogClose>
-                                    <Button type="submit" disabled={isWithdrawing} className="text-black">
-                                        {isWithdrawing ? "Withdrawing..." : "Withdraw"}
-                                    </Button>
-                                </DialogFooter>
-                            </form>
-                        </DialogContent>
-                    </Dialog>
+                    <p className="text-center text-[#FFFFFF] text-xs sm:text-sm mt-6 px-2">
+                        Share your code and earn rewards on every successful signup
+                    </p>
                 </div>
 
-                <p className="text-center text-[#FFFFFF] text-xs sm:text-sm mt-6 px-2">
-                    Share your code and earn rewards on every successful signup
-                </p>
-            </div>
+                {/* Wallet Address Dialog */}
+                <Dialog open={openWalletDialog} onOpenChange={setOpenWalletDialog}>
+                    <DialogContent className="sm:max-w-md">
+                        <DialogHeader>
+                            <DialogTitle className="text-white">
+                                {currentWallet ? "Update" : "Add"} Wallet Address
+                            </DialogTitle>
+                            <DialogDescription>
+                                This address will be used for all withdrawal requests.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <div className="grid gap-4 py-4">
+                            <Label htmlFor="wallet" className="text-white">Wallet Address</Label>
+                            <Input
+                                id="wallet"
+                                placeholder="e.g. TZ1r.......SV8CRnHq"
+                                value={walletInput}
+                                className="text-white"
+                                onChange={(e) => setWalletInput(e.target.value)}
+                                autoFocus
+                            />
+                        </div>
+                        <DialogFooter>
+                            <Button variant="secondary" onClick={() => setOpenWalletDialog(false)}>
+                                Cancel
+                            </Button>
+                            <Button onClick={handleSaveWallet} disabled={isUpdatingWallet} className="text-black">
+                                {isUpdatingWallet ? "Saving..." : "Save"}
+                            </Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
 
-            {/* Wallet Address Dialog */}
-            <Dialog open={openWalletDialog} onOpenChange={setOpenWalletDialog}>
-                <DialogContent className="sm:max-w-md">
-                    <DialogHeader>
-                        <DialogTitle className="text-white">
-                            {currentWallet ? "Update" : "Add"} Wallet Address
-                        </DialogTitle>
-                        <DialogDescription>
-                            This address will be used for all withdrawal requests.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                        <Label htmlFor="wallet" className="text-white">Wallet Address</Label>
-                        <Input
-                            id="wallet"
-                            placeholder="e.g. TZ1r.......SV8CRnHq"
-                            value={walletInput}
-                            className="text-white"
-                            onChange={(e) => setWalletInput(e.target.value)}
-                            autoFocus
-                        />
-                    </div>
-                    <DialogFooter>
-                        <Button variant="secondary" onClick={() => setOpenWalletDialog(false)}>
-                            Cancel
-                        </Button>
-                        <Button onClick={handleSaveWallet} disabled={isUpdatingWallet} className="text-black">
-                            {isUpdatingWallet ? "Saving..." : "Save"}
-                        </Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
+
+            </div>
+            <div className="mt-[250px]">
+                <Bouns />
+            </div>
         </div>
     )
 }

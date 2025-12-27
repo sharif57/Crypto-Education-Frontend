@@ -178,35 +178,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+
 import { useUserProfileQuery } from "@/Redux/feature/userSlice";
-import { useAffiliateEarningsQuery } from "@/Redux/feature/referralSlice";
 import { BadgeCheckIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function MyProfile() {
-  // Fetch user profile
   const { data: userData, isLoading: userLoading } = useUserProfileQuery(undefined);
   const user = userData?.data;
 
-  // Fetch referral earnings
-  const { data: referralData, isLoading: referralLoading } = useAffiliateEarningsQuery(undefined);
-  const referrals = referralData?.data || [];
-
-  // Fetch invoices dynamically if your API provides them, otherwise fallback
-  const invoices = user?.invoices || []; // replace with your API field
-
-  if (userLoading || referralLoading) {
-    return <div className="min-h-screen flex justify-center items-center text-white">Loading...</div>;
+  if (userLoading) {
+    return <div className="flex items-center justify-center">Loading...</div>;
   }
 
   return (
@@ -221,7 +203,6 @@ export default function MyProfile() {
         }}
       >
 
-        {/* Profile Card */}
         <div className="flex flex-col items-center justify-center mb-12 mt-16">
           <div className="w-full max-w-[840px] bg-gradient-to-b border border-[#62C1BF]  from-[#161616] via-[#2c2c2c] to-[#3f3d3d] rounded-3xl shadow-xl p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
@@ -291,96 +272,8 @@ export default function MyProfile() {
             </div>
           </div>
         </div>
-        <h1 className="text-2xl font-semibold text-[#62C1BF] " >Referral Bonus history</h1>
 
-        {/* Invoices Table */}
-        {invoices?.length > 0 && (
-          <div className="mt-12 overflow-x-auto">
-            <Table className="min-w-full border border-gray-700 rounded-xl">
-              <TableHeader className="text-white">
-                <TableRow className="bg-[#1c1c1c] text-white">
-                  <TableHead className="w-[100px] text-white">Invoice</TableHead>
-                  <TableHead className="text-white">Status</TableHead>
-                  <TableHead className="text-white">Method</TableHead>
-                  <TableHead className="text-right text-white">Amount</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {invoices.map((invoice: any) => (
-                  <TableRow key={invoice.invoice_id || invoice.invoice} className="even:bg-[#1a1a1a]">
-                    <TableCell className="font-medium">{invoice.invoice || invoice.invoice_id}</TableCell>
-                    <TableCell>{invoice.payment_status}</TableCell>
-                    <TableCell>{invoice.payment_method}</TableCell>
-                    <TableCell className="text-right">{invoice.total_amount}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        )}
 
-        {/* Referral Earnings Table */}
-        {/* Invoices Table */}
-        {invoices?.length > 0 && (
-          <div className="mt-12 overflow-x-auto">
-            <Table className="min-w-full border border-gray-700 rounded-xl">
-              <TableCaption className="text-gray-400 text-sm">Your recent invoices</TableCaption>
-              <TableHeader>
-                <TableRow className="bg-[#1c1c1c] text-white">
-                  <TableHead className="w-[100px] text-white">Invoice</TableHead>
-                  <TableHead className="text-white">Status</TableHead>
-                  <TableHead className="text-white">Method</TableHead>
-                  <TableHead className="text-right text-white">Amount</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {invoices.map((invoice: any) => (
-                  <TableRow key={invoice.invoice_id || invoice.invoice} className="even:bg-[#1a1a1a]">
-                    <TableCell className="font-medium text-white">{invoice.invoice || invoice.invoice_id}</TableCell>
-                    <TableCell className="text-white">{invoice.payment_status}</TableCell>
-                    <TableCell className="text-white">{invoice.payment_method}</TableCell>
-                    <TableCell className="text-right text-white">{invoice.total_amount}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        )}
-
-        {/* Referral Earnings Table */}
-        {referrals?.length > 0 && (
-          <div className="mt-12 overflow-x-auto">
-            <Table className="min-w-full border border-gray-700 rounded-xl">
-              <TableCaption className="text-gray-400 text-sm">Your referral earnings</TableCaption>
-              <TableHeader>
-                <TableRow className="bg-[#1c1c1c] text-white">
-                  <TableHead className="text-white">Name</TableHead>
-                  <TableHead className="text-white">Email</TableHead>
-                  <TableHead className="text-white">Commission</TableHead>
-                  <TableHead className="text-white">Date</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {referrals.map((ref: any) => (
-                  <TableRow key={ref.id} className="even:bg-[#1a1a1a]">
-                    <TableCell className="font-medium text-white">{ref.referred_name}</TableCell>
-                    <TableCell className="text-white">{ref.referred_email}</TableCell>
-                    <TableCell className="text-white">${ref.commission_earned}</TableCell>
-                    <TableCell className="text-white">{new Date(ref.created_at).toLocaleDateString()}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-              <TableFooter>
-                <TableRow className="bg-[#1c1c1c]">
-                  <TableCell colSpan={2} className="font-semibold text-white">Total Commission</TableCell>
-                  <TableCell colSpan={2} className="text-right font-semibold text-white">
-                    ${referrals.reduce((sum: number, r: any) => sum + parseFloat(r.commission_earned), 0).toFixed(2)}
-                  </TableCell>
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </div>
-        )}
 
       </main>
     </div>
