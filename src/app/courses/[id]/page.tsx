@@ -39,6 +39,8 @@ export default function Category () {
   const [expandedModule, setExpandedModule] = useState<string | null>(null);
   const { data: categoryVideo, isLoading: categoryVideoLoading } = useCategoryVideoQuery(id);
 
+  console.log('======================== category video', categoryVideo);
+
   const toggleModule = (moduleId: string) => {
     setExpandedModule(expandedModule === moduleId ? null : moduleId);
   };

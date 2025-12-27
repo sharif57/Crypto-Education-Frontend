@@ -62,7 +62,7 @@ export default function VideoDetailPage() {
   const video = data.data;
   const relatedVideos = data.related_videos || [];
   const totalVideos = relatedVideos.length + 1;
-  console.log('idssssssssssssd', video?.subtitle_object_id);
+  console.log('======================== subtitle id', video?.subtitle_object_id);
 
   return (
     <div className="container mt-[100px] lg:mt-[120px] mx-auto lg:px-8 px-4 text-white relative">

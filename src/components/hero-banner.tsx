@@ -34,12 +34,14 @@ export default function Banner() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button
-                size="lg"
-                className="bg-text cursor-pointer hover:bg-text text-[#224443] font-medium px-8 py-6 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40"
-              >
-                Download App
-              </Button>
+              <a href="https://apps.apple.com/gb/app/theclue-crypto-education/id6752632864" target="_blank" rel="noopener noreferrer">
+                <Button
+                  size="lg"
+                  className="bg-text cursor-pointer hover:bg-text text-[#224443] font-medium px-8 py-6 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40"
+                >
+                  Download App
+                </Button>
+              </a>
               <Link href={'/courses'}>
                 {" "}
                 <Button

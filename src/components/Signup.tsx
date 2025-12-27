@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,23 +8,28 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Eye, EyeOff } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useGoogleLoginMutation, useRegisterMutation } from "@/Redux/feature/authSlice";
 import { toast } from "sonner";
 import { GoogleLogin } from "@react-oauth/google";
 
 
 
-export default function SignUp() {
+function SignUp() {
   const router = useRouter();
+  // http://localhost:3000/auth/signup?reff_id=799989
+  const searchParams = useSearchParams();
+  const reffId = searchParams.get("reff_id");
+  console.log(reffId)
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [fullName, setFullName] = useState("");
+  const [referralCode, setReferralCode] = useState(reffId || "");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [language, setLanguage] = useState("");
+  const [language, setLanguage] = useState("english");
 
   const [register] = useRegisterMutation();
   const [googleLogin] = useGoogleLoginMutation()
@@ -52,6 +57,7 @@ export default function SignUp() {
         email,
         password,
         language,
+        referrer_id: referralCode || reffId,
         confirm_password: confirmPassword,
       }).unwrap(); // Use .unwrap() to handle RTK Query response properly
 
@@ -104,7 +110,7 @@ export default function SignUp() {
       if (response?.user?.subscription === "basic" || response?.user?.subscription === "pro" || response?.user?.subscription === "elite") {
         return window.location.href = ("/courses");
       }
-      else {                
+      else {
         return router.push("https://theclue.io/#pricing");
       }
 
@@ -262,6 +268,20 @@ export default function SignUp() {
               </div>
             </div>
 
+            <div className="space-y-2">
+              <Label htmlFor="refer" className="text-sm font-medium text-gray-300">
+                Referral code (Optional)
+              </Label>
+              <Input
+                id="refer"
+                type="number"
+                value={referralCode}
+                onChange={(e) => setReferralCode(e.target.value)}
+                placeholder="Enter referral code"
+                className="bg-[#535353] border-gray-600 text-white placeholder:text-gray-400 focus:border-teal-500 focus:ring-teal-500"
+              />
+            </div>
+
             <Button
               type="submit"
               className="w-full cursor-pointer bg-text hover:bg-text rounded-full text-black font-medium py-2.5 transition-colors"
@@ -333,4 +353,10 @@ export default function SignUp() {
       </Card>
     </div>
   );
+}
+
+export default function Create() {
+  return (<Suspense fallback={<div>Loading...</div>}>
+    <SignUp />
+  </Suspense>);
 }

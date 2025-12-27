@@ -3,8 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    // baseUrl: "http://194.59.165.181:8080/api/v1",
-    baseUrl: "https://api.theclue.io/api/v1",
+    baseUrl: "http://10.10.12.49:8009/api/v1", // Use the local development URL here
+    // baseUrl: "https://api.theclue.io/api/v1", // Use the production URL here
   }),
   tagTypes: [
     "User",
@@ -12,7 +12,8 @@ export const baseApi = createApi({
     "Category",
     "Privacy",
     'Chat',
-    'Subscription'
+    'Subscription',
+    "Referral"
    
   ],
   endpoints: () => ({}),

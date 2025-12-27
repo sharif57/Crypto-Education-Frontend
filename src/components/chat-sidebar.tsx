@@ -221,7 +221,7 @@ export default function ChatSidebar({
         <div className="flex flex-col h-full">
           {/* Sidebar Header */}
           <div className="p-4">
-            <Link href="https://theclue.io/">
+            <Link href="/">
               <Image
                 src="/images/sidebatlogo.png"
                 alt="Logo"

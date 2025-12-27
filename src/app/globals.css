@@ -22,6 +22,10 @@
   display: none;
 }
 
+/* .skiptranslate{
+  display: none !important;
+} */
+
 :root {
   --primary: white;
   --text:#62C1BF;

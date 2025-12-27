@@ -18,7 +18,10 @@ interface ChatProps {
   videoResource: string;
 }
 
-export default function Chat({ videoId }: ChatProps) {
+export default function Chat({ videoId, videoResource }: ChatProps) {
+
+  console.log('Video ID:', videoId);
+  console.log('Video Resource:', videoResource);
 
   const [language, setLanguage] = useState<string>('');
   const [isAIModalOpen, setIsAIModalOpen] = useState<boolean>(false);

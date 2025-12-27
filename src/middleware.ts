@@ -24,5 +24,6 @@ export const config = {
     '/courses/:page',
     "/chat",
     "/chat/:page",
+    '/refer-and-earn'
   ],
 };
