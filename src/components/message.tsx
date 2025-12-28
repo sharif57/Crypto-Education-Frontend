@@ -10,8 +10,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
 
-
-
 type Message = {
   id: number;
   text: string;
@@ -116,11 +114,11 @@ export default function Message() {
   };
 
   return (
-    <div className="z-[999]">
+    <div className="z-[999] ">
       {/* Floating Chat Button */}
       <button
         onClick={toggleChat}
-        className="fixed bottom-6 right-6 z-[999] text-white rounded-full transition-all hover:scale-110 cursor-pointer shadow-2xl"
+        className="fixed bottom-6 right-6 z-[999] text-white rounded-full transition-all hover:scale-110 cursor-pointer "
         aria-label="Open AI Assistant"
       >
         <svg
@@ -179,9 +177,10 @@ export default function Message() {
         // <div className="fixed bottom-[140px] right-6 z-[999] w-full max-w-md rounded-2xl overflow-hidden shadow-2xl bg-[#1B1B1B]  " >
         <div
           className="
-    fixed bottom-[140px] right-6 z-[999]
+    fixed bottom-[140px] right-0
+ lg:right-6 z-[999]
     w-full max-w-md rounded-2xl overflow-hidden
-    shadow-2xl
+    shadow-2xl 
     bg-[url('/images/crypto.jpg')]
     bg-cover bg-center bg-no-repeat
   "

@@ -5,7 +5,7 @@
 "use client"
 
 import { useState } from "react"
-import { Copy } from "lucide-react"
+import { Check, Clipboard, Copy } from "lucide-react"
 import { useAffiliateDetailsQuery, useReferralWithdrawalRequestMutation } from "@/Redux/feature/referralSlice"
 import {
     Dialog,
@@ -27,6 +27,7 @@ import Bouns from "@/components/bouns";
 export default function ReferEarnCard() {
     const { data: profileData, refetch: refetchProfile } = useUserProfileQuery(undefined);
     const profileWallet = profileData?.data?.wallet_address;
+    const [copied, setCopied] = useState(false);
 
     const { data: affiliateData, refetch: refetchAffiliate } = useAffiliateDetailsQuery(undefined);
     const affiliateWallet = affiliateData?.data?.wallet_address;
@@ -55,9 +56,14 @@ export default function ReferEarnCard() {
     const handleCopy = async () => {
         try {
             await navigator.clipboard.writeText(link)
+            setCopied(true)
             toast.success("Referral link copied!")
-            // No need for copied state if you prefer toast
-        } catch (err: any) {
+
+            // reset icon after 2 seconds
+            setTimeout(() => {
+                setCopied(false)
+            }, 2000)
+        } catch (err) {
             toast.error("Failed to copy")
         }
     }
@@ -129,9 +135,10 @@ export default function ReferEarnCard() {
                                 />
                                 <button
                                     onClick={handleCopy}
+                                    disabled={copied}
                                     className="rounded-lg bg-[#535353] hover:bg-slate-600 p-3 text-[#62C1BF] transition-all"
                                 >
-                                    <Copy size={20} />
+                                    {copied ? <Check size={20} /> : <Copy size={20} /> }
                                 </button>
                             </div>
                         </div>
