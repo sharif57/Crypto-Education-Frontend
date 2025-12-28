@@ -176,7 +176,17 @@ export default function Message() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-[140px] right-6 z-[999] w-full max-w-md rounded-2xl overflow-hidden shadow-2xl bg-[#1B1B1B]  ">
+        // <div className="fixed bottom-[140px] right-6 z-[999] w-full max-w-md rounded-2xl overflow-hidden shadow-2xl bg-[#1B1B1B]  " >
+        <div
+          className="
+    fixed bottom-[140px] right-6 z-[999]
+    w-full max-w-md rounded-2xl overflow-hidden
+    shadow-2xl
+    bg-[url('/images/crypto.jpg')]
+    bg-cover bg-center bg-no-repeat
+  "
+        >
+
           {/* Header */}
           <div className="bg-[#62C1BF] p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -212,22 +222,25 @@ export default function Message() {
                     </div>
                   )}
                   <div
-                    className={`max-w-[85%] px-4 py-3 rounded-2xl ${message.isUser
-                      ? "bg-white text-black shadow-md"
-                      : "bg-[#62C1BF] text-black"
-                      }`}
+                    className={`max-w-[85%] px-4 py-3 shadow-md
+    ${message.isUser
+                        ? "bg-[#373737] text-white rounded-2xl rounded-br-sm"
+                        : "bg-[#62C1BF] text-black rounded-2xl rounded-bl-sm"
+                      }
+  `}
                   >
                     <div
                       className="text-sm leading-relaxed"
                       dangerouslySetInnerHTML={{
                         __html: message.text
                           .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-                          .replace(/^\d+\.\s+(.*?)$/gm, "<li class='ml-4'>$1</li>")
+                          .replace(/^\d+\.\s+(.*?)$/gm, "<li class='ml-4 list-disc'>$1</li>")
                           .replace(/\n\n/g, "<br/><br/>")
                           .replace(/\n/g, "<br/>"),
                       }}
                     />
                   </div>
+
                 </div>
               ))}
 
@@ -246,7 +259,7 @@ export default function Message() {
                   </div>
                 </div>
               )}
-              
+
 
               <div ref={messagesEndRef} />
             </div>
@@ -258,7 +271,7 @@ export default function Message() {
               <input
                 type="text"
                 placeholder="Type your message..."
-                className="flex-1 px-4 py-3 rounded-full bg-white border border-[#FFD0B0] focus:outline-none focus:ring-2 focus:ring-[#62C1BF] text-black placeholder-gray-500"
+                className="flex-1 px-4 py-3 rounded-full bg-white border border-text focus:outline-none focus:ring-2 focus:ring-[#62C1BF] text-black placeholder-gray-500"
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyDown={handleKeyDown}
