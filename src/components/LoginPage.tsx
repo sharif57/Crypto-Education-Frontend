@@ -98,6 +98,7 @@ export default function LoginPage() {
 
             localStorage.setItem("access_token", response?.access);
             localStorage.setItem("language", response?.user?.language);
+            localStorage.setItem('subscription', response?.user?.subscription);
             await saveTokens(
                 response.access_token,
             );
