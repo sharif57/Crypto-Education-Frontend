@@ -100,12 +100,22 @@ export default function LoginPage() {
             localStorage.setItem("language", response?.user?.language);
             localStorage.setItem('subscription', response?.user?.subscription);
             await saveTokens(
-                response.access_token,
+                response.access,
             );
-            window.location.href = ("/");
+            // window.location.href = ("/");
 
-            console.log(response?.user?.subscription);
-            toast.success("Google login successful!");
+            // console.log(response?.user?.subscription);
+            // toast.success("Google login successful!");
+
+            // if (response?.user?.subscription === "basic" || response?.user?.subscription === "pro" || response?.user?.subscription === "elite") {
+            //     return window.location.href = ("/courses");
+            // }
+            // else {
+            //     return router.push("/#pricing");
+            // }
+            window.location.href = "/courses";
+
+            await refetch();
 
             if (response?.user?.subscription === "basic" || response?.user?.subscription === "pro" || response?.user?.subscription === "elite") {
                 return window.location.href = ("/courses");
@@ -113,7 +123,6 @@ export default function LoginPage() {
             else {
                 return router.push("/#pricing");
             }
-
             // await refetch();
 
         } catch (error: unknown) {
