@@ -102,6 +102,7 @@ export default function LoginPage() {
             await saveTokens(
                 response.access_token,
             );
+            window.location.href = ("/");
 
             console.log(response?.user?.subscription);
             toast.success("Google login successful!");
@@ -114,7 +115,6 @@ export default function LoginPage() {
             }
 
             // await refetch();
-            // window.location.href = ("/courses");
 
         } catch (error: unknown) {
             console.error("Google login error:", error);
