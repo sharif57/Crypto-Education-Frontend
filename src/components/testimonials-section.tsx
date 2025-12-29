@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 
 "use client";
 import Image from "next/image";
@@ -45,14 +46,11 @@ export default function TestimonialsSection() {
                     />
                   </div>
                   <span className="font-semibold text-lg text-white">
-                    Theresa Webb
+                 Jasmin K.
                   </span>
                 </div>
                 <p className="text-gray-300 font-normal text-lg leading-relaxed">
-                  TheClue‘s Telegram group is a total game-changer! Being part
-                  of this community allows me to access the latest tips and
-                  insights before anyone else. The instant updates and lively
-                  discussions keep me informed and...
+                  TheClue's Telegram group is a total game-changer! Being part of this community allows me to access the latest tips and insights before anyone else. The instant updates and lively discussions keep me informed and inspired, giving me an edge in my learning journey."
                 </p>
               </div>
 
@@ -69,13 +67,13 @@ export default function TestimonialsSection() {
                     />
                   </div>
                   <span className="font-semibold text-lg text-white">
-                    Dianne Russell
+                    Maria S.
                   </span>
                 </div>
                 <p className="text-gray-300 text-lg font-normal leading-relaxed">
-                  Being part of this community has completely transformed how I
-                  approach challenges. The shared knowledge and diverse
-                  perspectives have opened my eyes to new strategies and...
+                The energy in the weekly Q&A sessions is absolutely contagious! Each meeting is filled with vibrant discussions and insightful questions that inspire me to dive deeper into the topics. I always leave feeling motivated and eager to learn more.
+
+
                 </p>
               </div>
             </div>
@@ -95,14 +93,13 @@ export default function TestimonialsSection() {
                     />
                   </div>
                   <span className="font-semibold text-lg text-white">
-                    Cameron Williamson
+                    Feliz M.
+
                   </span>
                 </div>
                 <p className="text-gray-300 text-lg font-normal leading-relaxed">
-                  Joining TheClue was the best decision I ever made! The 360°
-                  learning experience offered here is truly unparalleled. From
-                  engaging workshops to hands-on projects, every aspect is
-                  designed to enhance...
+                 Being part of this community has completely transformed how I approach challenges. The shared knowledge and constant encouragement push me to grow every day. It’s empowering to know I’m not doing this alone.
+
                 </p>
               </div>
 
@@ -119,14 +116,13 @@ export default function TestimonialsSection() {
                     />
                   </div>
                   <span className="font-semibold text-lg text-white">
-                    Darlene Robertson
+                    Manuel F.
+
                   </span>
                 </div>
                 <p className="text-gray-300 text-lg font-normal leading-relaxed">
-                  The clarity and direction I get from the live sessions are
-                  unmatched. Every question is met with thoughtful answers that
-                  actually move me forward. It‘s like having a personal mentor
-                  right there guiding...
+                 I’ve never felt so supported in an online space before. The combination of expert advice and genuine peer connection creates an environment where I feel safe to ask, explore, and grow at my own pace.
+
                 </p>
               </div>
             </div>
@@ -146,14 +142,13 @@ export default function TestimonialsSection() {
                     />
                   </div>
                   <span className="font-semibold text-lg text-white">
-                    Darrell Steward
+                    John B.
+
                   </span>
                 </div>
                 <p className="text-gray-300 text-lg font-normal leading-relaxed">
-                  The energy in the weekly Q&A sessions is absolutely
-                  contagious! Each meeting is filled with vibrant discussions
-                  and insightful questions that inspire me to dive deeper into
-                  the topics. I always leave feeling...
+                  The clarity and direction I get from the live sessions are unmatched. Every question is met with thoughtful answers that actually move me forward. It’s like having a personal mentor right there with me.
+
                 </p>
               </div>
 
@@ -174,9 +169,8 @@ export default function TestimonialsSection() {
                   </span>
                 </div>
                 <p className="text-gray-300 text-lg font-normal leading-relaxed">
-                  I&lsquo;ve never felt so supported in an online space before. The
-                  combination of expert advice and genuine peer connections
-                  creates an environment where I feel safe to ask questions...
+                 The clarity and direction I get from the live sessions are unmatched. Every question is met with thoughtful answers that actually move me forward. It’s like having a personal mentor right there with me.
+
                 </p>
               </div>
             </div>
