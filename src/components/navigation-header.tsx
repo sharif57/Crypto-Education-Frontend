@@ -67,19 +67,41 @@ export default function Header() {
   };
 
   // 3. Define navigation items (memoized for stable reference)
-  const navigationItems = useMemo<{ name: string; href: string }[]>(
-    () => [
+  // const navigationItems = useMemo<{ name: string; href: string }[]>(
+  //   () => [
+  //     { name: "Home", href: "/" },
+  //     { name: "Courses", href: "/courses" },
+  //     { name: "AI Assistance", href: "/chat" },
+  //     // { name: "Features", href: "/#features" },
+  //     { name: "Pricing", href: "/#pricing" },
+  //     // { name: "Testimonials", href: "/#testimonials" },
+  //     { name: "Refer & Earn", href: "/refer-and-earn" },
+  //     { name: "Withdraw History", href: "/withdrawal-history" },
+  //   ],
+  //   []
+  // );
+
+  const navigationItems = useMemo<{ name: string; href: string }[]>(() => {
+    const items = [
       { name: "Home", href: "/" },
       { name: "Courses", href: "/courses" },
       { name: "AI Assistance", href: "/chat" },
-      // { name: "Features", href: "/#features" },
       { name: "Pricing", href: "/#pricing" },
-      // { name: "Testimonials", href: "/#testimonials" },
       { name: "Refer & Earn", href: "/refer-and-earn" },
-      { name: "Withdraw History", href: "/withdrawal-history" },
-    ],
-    []
-  );
+    ];
+
+    // 👇 Only logged-in users can see Withdraw History
+    if (user) {
+      items.push({
+        name: "Withdraw History",
+        href: "/withdrawal-history",
+      });
+    }
+
+    return items;
+  }, [user]);
+
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20); // adjust trigger point
@@ -119,8 +141,8 @@ export default function Header() {
       const match = navigationItems.find(
         (item) =>
           item.href === pathname ||
-          (item.href !== "/"  && pathname.startsWith(item.href))
-      ); 
+          (item.href !== "/" && pathname.startsWith(item.href))
+      );
       if (match) {
         setActiveItem(match.name);
       } else {

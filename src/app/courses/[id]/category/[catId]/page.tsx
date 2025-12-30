@@ -100,7 +100,7 @@ export default function VideoDetailPage() {
                 controlsList="nodownload"
                 autoPlay
               >
-                <source src={video.video_file} type="video/mp4" />
+                <source src={video?.video_file} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             )}
@@ -114,13 +114,13 @@ export default function VideoDetailPage() {
               {video.title}
             </h1>
             <div className="text-text">
-              <p>Duration: {Math.floor(video.duration_seconds / 60)}m {video.duration_seconds % 60}s</p>
+              <p>Duration: {Math.floor(video?.duration_seconds / 60)}m {video?.duration_seconds % 60}s</p>
               {/* <p>Duration: {video.duration_seconds} S</p> */}
             </div>
           </div>
           <div className="flex gap-4 mt-3">
-            <Link
-              href={video.video_resource}
+            {/* <Link
+              href={video?.video_resource || null}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block "
@@ -131,8 +131,35 @@ export default function VideoDetailPage() {
               >
                 Video Resource
               </Button>
-            </Link>
-            <Chat videoId={video?.subtitle_object_id} videoResource={video?.video_resource} />
+            </Link> */}
+            {typeof video?.video_resource === "string" &&
+              video.video_resource.trim() !== "" && (
+                <Link
+                  href={video.video_resource}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block"
+                >
+                  <Button
+                    className="px-4 py-2 bg-[#62C1BF] text-[#224443] cursor-pointer rounded-full 
+                   text-sm font-medium transition-colors hover:bg-[#4CA7A5]"
+                  >
+                    Video Resource
+                  </Button>
+                </Link>
+              )}
+
+
+            {/* <Chat videoId={video?.subtitle_object_id} videoResource={video?.video_resource} /> */}
+            <Chat
+              videoId={video?.subtitle_object_id ?? ""}
+              videoResource={
+                typeof video?.video_resource === "string"
+                  ? video.video_resource
+                  : ""
+              }
+            />
+
           </div>
         </div>
 
@@ -142,11 +169,12 @@ export default function VideoDetailPage() {
 
           {/* Current Video as first module */}
           <div
-            key={data.data.id}
+            key={data?.data?.id}
             className="bg-[#2a2a2a] rounded-xl overflow-hidden transition-all"
           >
             <button
               onClick={() => toggleModule(data?.data?.object_id?.toString())}
+
               className="w-full p-4 flex items-center justify-between hover:bg-[#333333]"
               aria-expanded={expandedModule === data?.data?.object_id.toString()}
               aria-controls={`module-${data?.data?.object_id}-content`}
@@ -198,7 +226,13 @@ export default function VideoDetailPage() {
             >
               <button
                 // onClick={() => toggleModule(video?.object_id?.toString())}
-                onClick={() => toggleModule(video?.object_id?.toString() ?? '')}
+                // onClick={() => toggleModule(video?.object_id?.toString() ?? '')}
+                onClick={() => {
+                  if (video?.object_id) {
+                    toggleModule(video.object_id.toString());
+                  }
+                }}
+
                 className="w-full p-4 flex items-center justify-between hover:bg-[#333333]"
                 aria-expanded={expandedModule === video?.object_id?.toString()}
                 aria-controls={`module-${video.object_id}-content`}
@@ -232,10 +266,16 @@ export default function VideoDetailPage() {
                     className="flex items-center gap-3 p-3 bg-[#333333] rounded-lg hover:bg-[#3a3a3a] transition-colors cursor-pointer"
                     role="button"
                     tabIndex={0}
+                    // onClick={() => {
+                    //   // You might want to handle navigation to this video
+                    //   router.push(`/master-class/${video?.object_id}`)
+                    // }}
                     onClick={() => {
-                      // You might want to handle navigation to this video
-                      router.push(`/master-class/${video?.object_id}`)
+                      if (video?.object_id) {
+                        router.push(`/master-class/${video.object_id}`);
+                      }
                     }}
+
                   >
                     <div className="w-8 h-8 bg-[#4ade80] rounded-full flex items-center justify-center">
                       <Play className="w-4 h-4 text-black fill-black ml-0.5" />

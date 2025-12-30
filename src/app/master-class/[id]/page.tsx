@@ -119,7 +119,24 @@ export default function VideoDetailPage() {
             </div>
           </div>
           <div className="flex  gap-4 mt-3">
-            <Link
+            {typeof video?.video_resource === "string" &&
+              video.video_resource.trim() !== "" && (
+                <Link
+                  href={video.video_resource}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block"
+                >
+                  <Button
+                    className="px-4 py-2 bg-[#62C1BF] text-[#224443] cursor-pointer rounded-full 
+                   text-sm font-medium transition-colors hover:bg-[#4CA7A5]"
+                  >
+                    Video Resource
+                  </Button>
+                </Link>
+              )}
+
+            {/* <Link
               href={video.video_resource}
               target="_blank"
               rel="noopener noreferrer"
@@ -131,7 +148,7 @@ export default function VideoDetailPage() {
               >
                 Video Resource
               </Button>
-            </Link>
+            </Link> */}
             <Chat videoId={video?.subtitle_object_id} videoResource={video?.video_resource} />
           </div>
         </div>
