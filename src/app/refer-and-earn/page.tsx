@@ -34,8 +34,8 @@ export default function ReferEarnCard() {
     const datas = affiliateData?.data || {};
 
     const currentWallet = profileWallet ?? affiliateWallet ?? null;
-
-    const link = `https://theclue.io/signup?reff_id=${datas?.referral_id || ""}`
+    // main.theclue.io
+    const link = `https://main.theclue.io/auth/signup?reff_id=${datas?.referral_id || ""}`
 
     const [amount, setAmount] = useState<number | undefined>(undefined);
 
@@ -138,7 +138,7 @@ export default function ReferEarnCard() {
                                     disabled={copied}
                                     className="rounded-lg bg-[#535353] hover:bg-slate-600 p-3 text-[#62C1BF] transition-all"
                                 >
-                                    {copied ? <Check size={20} /> : <Copy size={20} /> }
+                                    {copied ? <Check size={20} /> : <Copy size={20} />}
                                 </button>
                             </div>
                         </div>
