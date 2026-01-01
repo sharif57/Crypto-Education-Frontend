@@ -53,7 +53,7 @@ export default function ReferEarnCard() {
     const bonusEarned = datas?.total_commission_earned || 0
     const withdrawableBonus = datas?.withdrawable_amount || 0
 
-    const handleCopy = async () => {
+    const handleCopy = async () => {        
         try {
             await navigator.clipboard.writeText(link)
             setCopied(true)
