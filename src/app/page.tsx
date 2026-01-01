@@ -1,5 +1,6 @@
 import AIAssistantSection from "@/components/ai-assistant-section";
 import MobileShowcase from "@/components/app-showcase";
+import Everyone from "@/components/everyone";
 import Faq from "@/components/faq";
 import FeaturesSection from "@/components/features-section";
 import Hero from "@/components/hero";
@@ -23,6 +24,7 @@ export default function Home() {
       <FeaturesSection />
       <PricingSection />
       <TestimonialsSection />
+      <Everyone />
       <Faq />
       <Transform />
       <Trainer />
