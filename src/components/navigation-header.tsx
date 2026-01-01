@@ -243,8 +243,8 @@ export default function Header() {
                   key={item.name}
                   href={item.href}
                   className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full ${isActive
-                    ? "bg-[#373737] text-white px-6 py-2 text-lg font-normal rounded-full"
-                    : "text-[#999999] hover:text-white hover:bg-gray-800/50"
+                    ? "bg-white/10 backdrop-blur-xl text-white px-6 py-2 text-lg font-normal rounded-full  shadow-xl"
+                    : "text-[#c2bebe]  hover:text-white hover:bg-gray-800/50"
                     }`}
                   onClick={(e) => handleNavigationClick(e, item.href, item.name)}
                 >
