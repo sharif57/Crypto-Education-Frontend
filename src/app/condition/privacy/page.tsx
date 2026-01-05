@@ -16,7 +16,7 @@ export default function Privacy() {
   }
 
   return (
-    <div className="relative min-h-svh w-full overflow-hidden">
+    <div className="relative min-h-svh w-full overflow-hidden mt-20">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image src="/images/BG.png" alt="About Us Background" fill className="object-cover" priority />
