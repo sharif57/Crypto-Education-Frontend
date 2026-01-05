@@ -30,7 +30,7 @@ export default function PaymentSuccessful() {
         <p
           className="text-base md:text-lg text-gray-400 dark:text-gray-300 mb-6 max-w-lg mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 delay-400"
         >
-          Thank you for your donation! Your support means the world to us. 
+          Thank you for your payment! Your support means the world to us. 
         </p>
 
        

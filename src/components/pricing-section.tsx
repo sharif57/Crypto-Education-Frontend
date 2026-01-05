@@ -80,7 +80,7 @@ export default function PricingSection() {
 
     const payload = {
       plan: plan.name.toLowerCase(),
-      billing_cycle: plan.billingCycle?.toLowerCase() || "", 
+      billing_cycle: plan.billingCycle?.toLowerCase() || "",
     };
 
     // console.log("SUBSCRIPTION PAYLOAD 👉", payload);
@@ -104,7 +104,6 @@ export default function PricingSection() {
 
   return (
     <section id="pricing" className="relative bg-[#1a1a1a] py-16 lg:py-24">
-      {/* Background subtle pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
           className="absolute inset-0"
@@ -117,7 +116,7 @@ export default function PricingSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16 lg:mb-20">
+        {/* <div className="text-center mb-16 lg:mb-20">
           <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-medium leading-tight mb-6">
             <span className="text-white">Simple Plans. Serious </span>
             <span className="text-text">Value</span>
@@ -125,10 +124,20 @@ export default function PricingSection() {
           <p className="text-gray-300 text-lg sm:text-xl lg:text-2xl font-normal leading-relaxed mx-auto">
             Choose a plan that fits your learning journey — upgrade anytime as you grow.
           </p>
+        </div> */}
+        <div>
+          <h1 className="text-3xl font-normal w-full  mx-auto text-[60px] text-white text-center">
+            Simple Plans. Serious <span className="bg-gradient-to-r from-[#94ecea] to-[#307574] bg-clip-text text-transparent font-normal">
+              Value
+            </span>
+          </h1>
+          <p className="text-[16px] font-normal text-[#B4B4B4] pt-2 w-full lg:w-4xl mx-auto text-center text-balance">
+           Choose a plan that fits your learning journey — upgrade anytime as you grow.
+          </p>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 xl:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 xl:gap-8 mt-14">
           {PLANS.map((plan) => (
             <div
               key={`${plan.billingCycle}`}

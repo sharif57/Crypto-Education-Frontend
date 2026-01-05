@@ -46,7 +46,7 @@ export default function Category () {
   };
 
   return (
-    <div className="min-h-screen mt-[100px] lg:mt-[100px] p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen pt-[100px] lg:pt-[100px] p-4 sm:p-6 lg:p-8 w-full  bg-gradient-to-b from-[#326866] to-[#1B1B1B]">
       <div className="max-w-3xl mx-auto space-y-5">
    
         {/* Modules Section */}

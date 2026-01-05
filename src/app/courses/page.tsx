@@ -35,7 +35,9 @@ export default function Courses() {
 
 
   return (
-    <div className="min-h-screen mt-20">
+    <div className="min-h-screen pt-20 w-full  bg-gradient-to-b from-[#326866] to-[#1B1B1B]"> 
+      {/* <div className="w-full min-h-screen bg-gradient-to-b from-[#326866] to-[#1B1B1B]"> */}
+
       {/* Header Section */}
 
       <div className="container mx-auto px-14 py-16">
@@ -97,7 +99,7 @@ export default function Courses() {
             </GlowCard>
           )}
 
-         
+
 
 
           {courses?.data?.map((course: Course) => (

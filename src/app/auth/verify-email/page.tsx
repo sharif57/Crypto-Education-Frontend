@@ -52,13 +52,15 @@ function VerifyOTP() {
 
       toast.success(res.message || "Verification successful!");
       localStorage.setItem("access_token", res.access_token);
+      localStorage.setItem('subscription', res?.data?.subscription);
+      localStorage.setItem("language", res?.data?.language);
       await saveTokens(res.access_token);
 
       if (res?.data?.subscription === "basic" || res?.data?.subscription === "pro" || res?.data?.subscription === "elite") {
         return router.push("/courses");
       }
       else {
-        return router.push("https://theclue.io/#pricing");
+        return router.push("/#pricing");
       }
       // window.location.href = ("/courses");
     } catch (error: unknown) {

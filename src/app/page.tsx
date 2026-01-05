@@ -1,10 +1,11 @@
 import AIAssistantSection from "@/components/ai-assistant-section";
-import MobileShowcase from "@/components/app-showcase";
+// import MobileShowcase from "@/components/app-showcase";
 import Everyone from "@/components/everyone";
 import Faq from "@/components/faq";
-import FeaturesSection from "@/components/features-section";
+// import FeaturesSection from "@/components/features-section";
 import Hero from "@/components/hero";
-import Banner from "@/components/hero-banner";
+// import Banner from "@/components/hero-banner";
+import MasterAi from "@/components/master-ai";
 import MasterClass from "@/components/master-class";
 import PricingSection from "@/components/pricing-section";
 import TestimonialsSection from "@/components/testimonials-section";
@@ -21,14 +22,15 @@ export default function Home() {
       <TheClue />
       <MasterClass />
       <AIAssistantSection></AIAssistantSection>
-      <FeaturesSection />
+      {/* <FeaturesSection /> */}
       <PricingSection />
+      <MasterAi />
       <TestimonialsSection />
       <Everyone />
       <Faq />
       <Transform />
       <Trainer />
-      <MobileShowcase />
+      {/* <MobileShowcase /> */}
     </div>
   );
 }

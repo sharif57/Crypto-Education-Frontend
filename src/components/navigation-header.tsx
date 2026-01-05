@@ -88,6 +88,7 @@ export default function Header() {
       { name: "AI Assistance", href: "/chat" },
       { name: "Pricing", href: "/#pricing" },
       { name: "Refer & Earn", href: "/refer-and-earn" },
+      { name: "Contact", href: "/contact" }
     ];
 
     // 👇 Only logged-in users can see Withdraw History

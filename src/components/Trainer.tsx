@@ -1,7 +1,49 @@
+'use client';
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { Button } from './ui/button';
+import { usePathname, useRouter } from 'next/navigation';
+import { useUserProfileQuery } from '@/Redux/feature/userSlice';
+import { ArrowRight } from 'lucide-react';
 
 export default function Trainer() {
+
+    const pathname = usePathname();
+    const router = useRouter();
+
+    const { data, isLoading } = useUserProfileQuery(undefined);
+    const user = data?.data;
+
+    const isSubscribed = user?.subscription && ["basic", "pro", "elite"].includes(user.subscription.toLowerCase());
+
+    const handleStartLearning = () => {
+        if (!isSubscribed) {
+            if (pathname === "/") {
+                const element = document.getElementById("pricing");
+                if (element) {
+                    element.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            } else {
+                router.push("/#pri");
+            }
+        } else {
+            // Subscribed → go to courses
+            router.push("/courses");
+        }
+    };
+
+    useEffect(() => {
+        if (!isLoading && !isSubscribed && pathname.includes("#pricing")) {
+            const element = document.getElementById("pricing");
+            if (element) {
+                element.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        }
+    }, [isLoading, isSubscribed, pathname]);
+
+    if (isLoading) {
+        return null;
+    }
 
     const items = [
         {
@@ -43,7 +85,7 @@ export default function Trainer() {
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal leading-tight text-white text-start">
                     The Clue®: AI <br />
                     <span className="bg-gradient-to-r from-[#94ecea] to-[#307574] bg-clip-text text-transparent font-normal">
-                         Crypto Trainer
+                        Crypto Trainer
                     </span>
                 </h1>
                 <div className='mt-4'>
@@ -59,6 +101,16 @@ export default function Trainer() {
                                 </div>
                             ))
                         }
+                    </div>
+                    <div className='pt-5'>
+                        <Button
+                            onClick={handleStartLearning}
+                            size="lg"
+                            className="bg-text cursor-pointer text-[#224443] font-medium !px-8 py-6 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40 group"
+                        >
+                            AI Assistance
+                            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                        </Button>
                     </div>
                 </div>
             </div>

@@ -192,90 +192,89 @@ export default function MyProfile() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#121212] text-white flex justify-center items-start py-12">
-      <main
-        className="w-full max-w-[1200px] px-4 sm:px-6 lg:px-8"
-        style={{
-          backgroundImage: "url('/sideGradin.png')",
-          backgroundPosition: "top right",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "auto 100%",
-        }}
-      >
+    <div className="w-full min-h-screen bg-gradient-to-b from-[#326866] to-[#1B1B1B]">
+      <div className="min-h-screen w-full  text-white flex justify-center items-start py-12">
+        <main
+          className="w-full max-w-[1200px] px-4 sm:px-6 lg:px-8"
+          style={{
+            backgroundImage: "url('/sideGradin.png')",
+            backgroundPosition: "top right",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "auto 100%",
+          }}
+        >
 
-        <div className="flex flex-col items-center justify-center mb-12 mt-16">
-          <div className="w-full max-w-[840px] bg-gradient-to-b border border-[#62C1BF]  from-[#161616] via-[#2c2c2c] to-[#3f3d3d] rounded-3xl shadow-xl p-6 sm:p-8">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
-              <div className="w-[200px] h-[240px] sm:w-[250px] sm:h-[300px] md:w-[300px] md:h-[370px] flex-shrink-0 relative">
-                {user?.image ? (
-                  <>
-                    <Image
-                      src={user?.image}
-                      alt="Profile"
-                      width={300}
-                      height={370}
-                      className="w-full h-full object-cover rounded-2xl"
-                    />
+          <div className="flex flex-col items-center justify-center mb-12 mt-16">
+            <div className="w-full max-w-[840px] bg-gradient-to-b border border-[#62C1BF]  from-[#161616] via-[#2c2c2c] to-[#3f3d3d] rounded-3xl shadow-xl p-6 sm:p-8">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
+                <div className="w-[200px] h-[240px] sm:w-[250px] sm:h-[300px] md:w-[300px] md:h-[370px] flex-shrink-0 relative">
+                  {user?.image ? (
+                    <>
+                      <Image
+                        src={user?.image}
+                        alt="Profile"
+                        width={300}
+                        height={370}
+                        className="w-full h-full object-cover rounded-2xl"
+                      />
 
-                    {/* Badge */}
-                    <Badge
-                      variant="secondary"
-                      className="absolute top-3 right-3 flex items-center gap-1 
+                      {/* Badge */}
+                      <Badge
+                        variant="secondary"
+                        className="absolute top-3 right-3 flex items-center gap-1 
                    bg-blue-500 text-white dark:bg-blue-600 px-3 py-1"
-                    >
-                      <BadgeCheckIcon className="w-4 h-4" />
-                      {user?.subscription}
-                    </Badge>
-                  </>
-                ) : (
-                  <p>No Image</p>
-                )}
-              </div>
+                      >
+                        <BadgeCheckIcon className="w-4 h-4" />
+                        {user?.subscription}
+                      </Badge>
+                    </>
+                  ) : (
+                    <p>No Image</p>
+                  )}
+                </div>
 
-              <div className="flex flex-col gap-6 sm:gap-8 justify-center items-start">
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-6 sm:gap-8 justify-center items-start">
+                  <div className="flex flex-col gap-1">
 
-                  <h1 className="text-lg sm:text-xl md:text-[23px] font-medium">
-                    Name:
-                  </h1>
-                  <p className="text-lg sm:text-xl md:text-[23px] font-medium text-[#E6F9FD]">
-                    {user?.full_name}
-                  </p>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <h1 className="text-lg sm:text-xl md:text-[23px] font-medium">
-                    Email:
-                  </h1>
-                  <p className="text-lg  sm:text-xl md:text-[23px] font-medium text-[#E6F9FD]">
-                    {user?.email}
-                  </p>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <h1 className="text-lg sm:text-xl md:text-[23px] font-medium">
-                    Language:
-                  </h1>
-                  <p className="text-lg  sm:text-xl md:text-[23px] font-medium text-[#E6F9FD]">
-                    {user?.language}
-                  </p>
-                </div>
-                <div>
-                  <Link href="/profile/edit-profile">
-                    <Button
-                      className="px-6 !py-5 sm:px-8 sm:py-4 cursor-pointer 
+                    <h1 className="text-lg sm:text-xl md:text-[23px] font-medium">
+                      Name:
+                    </h1>
+                    <p className="text-lg sm:text-xl md:text-[23px] font-medium text-[#E6F9FD]">
+                      {user?.full_name}
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <h1 className="text-lg sm:text-xl md:text-[23px] font-medium">
+                      Email:
+                    </h1>
+                    <p className="text-lg  sm:text-xl md:text-[23px] font-medium text-[#E6F9FD]">
+                      {user?.email}
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <h1 className="text-lg sm:text-xl md:text-[23px] font-medium">
+                      Language:
+                    </h1>
+                    <p className="text-lg  sm:text-xl md:text-[23px] font-medium text-[#E6F9FD]">
+                      {user?.language}
+                    </p>
+                  </div>
+                  <div>
+                    <Link href="/profile/edit-profile">
+                      <Button
+                        className="px-6 !py-5 sm:px-8 sm:py-4 cursor-pointer 
                      bg-text hover:bg-text font-normal text-[#224443] rounded-2xl text-sm sm:text-[16px]"
-                    >
-                      Edit Profile
-                    </Button>
-                  </Link>
+                      >
+                        Edit Profile
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-
-
-      </main>
+        </main>
+      </div>
     </div>
   );
 }
