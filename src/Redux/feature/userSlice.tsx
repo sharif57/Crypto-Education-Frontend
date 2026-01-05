@@ -27,8 +27,17 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
-    
+
+    // /settings/contact/
+    userSendMessage: builder.mutation({
+      query: (data) => ({
+        url: "/settings/contact/",
+        method: "POST",
+        body: data,
+      }),
+    })
+
   }),
 });
 
-export const { useUserProfileQuery, useUpdateProfileMutation } = userApi;
+export const { useUserProfileQuery, useUpdateProfileMutation , useUserSendMessageMutation } = userApi;
