@@ -71,7 +71,7 @@ export default function Transform() {
                             </Button>
                             <Button
                                 size="lg"
-                                onClick={handleStartLearning}
+                                onClick={() => router.push("/contact")}
                                 className="bg-white hover:bg-white/90 cursor-pointer text-[#224443] font-medium !px-8 py-6 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40 group"
                             >
                                 Contact Us
