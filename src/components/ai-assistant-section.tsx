@@ -24,11 +24,11 @@ export default function AIAssistantSection() {
           element.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       } else {
-        router.push("/#pri");
+        router.push("/#pricing");
       }
     } else {
       // Subscribed → go to courses
-      router.push("/courses");
+      router.push("/chat");
     }
   };
 
