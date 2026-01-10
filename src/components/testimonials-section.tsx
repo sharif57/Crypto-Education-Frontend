@@ -60,7 +60,7 @@ export default function TestimonialsSection() {
           <div>
             <h1 className="text-3xl font-normal w-full lg:w-1/2 mx-auto text-[60px] text-white text-center">
               {t('testimonials_section_title')} <span className="bg-gradient-to-r from-[#94ecea] to-[#307574] bg-clip-text text-transparent font-normal">
-                
+
               </span>
             </h1>
             <p className="text-[16px] font-normal text-[#B4B4B4] pt-2 w-full lg:w-4xl mx-auto text-center text-balance">
@@ -69,7 +69,7 @@ export default function TestimonialsSection() {
           </div>
 
           <div className="grid grid-cols-1 -z-20 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 lg:mt-[100px] mt-[100px] ">
-           
+
             {
               reviews?.map((review, index) => (
                 <div key={index} className="bg-gradient-to-br from-[#1c1c1c] to-[#2e2e2e] rounded-3xl p-8 border border-[#3a3939] hover:border-[#242424]/90 cursor-pointer transition-all duration-300 group relative overflow-hidden hover:bg-text">

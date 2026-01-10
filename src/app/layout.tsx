@@ -39,7 +39,7 @@ export default function RootLayout({
             <Toaster />
             <Header />
             <ProtectedLayout>
-            {children}
+              {children}
             </ProtectedLayout>
             <Message />
             <Footer />

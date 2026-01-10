@@ -3,12 +3,14 @@
 ## Getting Started - 3 Steps
 
 ### 1. Import the hook
+
 ```typescript
-'use client';
-import { useTranslation } from '@/hooks/useTranslation';
+"use client";
+import { useTranslation } from "@/hooks/useTranslation";
 ```
 
 ### 2. Get the translation function
+
 ```typescript
 export function MyComponent() {
   const { t } = useTranslation();
@@ -17,6 +19,7 @@ export function MyComponent() {
 ```
 
 ### 3. Use translations
+
 ```typescript
 <h1>{t('hero_title')}</h1>
 <p>{t('hero_subtitle')}</p>
@@ -27,31 +30,36 @@ export function MyComponent() {
 ## Translation Methods
 
 ### Simple Text
+
 ```typescript
 const { t } = useTranslation();
-return <p>{t('nav_home')}</p>;
+return <p>{t("nav_home")}</p>;
 ```
 
 ### With Variables
+
 ```json
 {
   "welcome": "Welcome, {{name}}!"
 }
 ```
+
 ```typescript
-return <p>{t('welcome', { name: 'John' })}</p>;
+return <p>{t("welcome", { name: "John" })}</p>;
 ```
 
 ### Current Language
+
 ```typescript
 const { i18n } = useTranslation();
 console.log(i18n.language); // 'en' or 'de'
 ```
 
 ### Change Language
+
 ```typescript
 const { i18n } = useTranslation();
-i18n.changeLanguage('de');
+i18n.changeLanguage("de");
 ```
 
 ---
@@ -59,6 +67,7 @@ i18n.changeLanguage('de');
 ## Available Translation Keys
 
 ### Navigation
+
 - `nav_home` - Home
 - `nav_courses` - Courses
 - `nav_master_class` - Master Class
@@ -67,11 +76,13 @@ i18n.changeLanguage('de');
 - `nav_signup` - Sign Up
 
 ### Hero Section
+
 - `hero_title` - Master Cryptocurrency Education
 - `hero_subtitle` - Learn from industry experts...
 - `hero_cta` - Start Learning Today
 
 ### Features
+
 - `features_title` - Features
 - `features_24_7` - 24/7 Support
 - `features_certificate` - Certificate Programs
@@ -79,6 +90,7 @@ i18n.changeLanguage('de');
 - `features_mentorship` - 1-on-1 Mentorship
 
 ### Pricing
+
 - `pricing_title` - Our Plans
 - `pricing_subtitle` - Choose the perfect plan...
 - `pricing_basic` - Basic
@@ -86,6 +98,7 @@ i18n.changeLanguage('de');
 - `pricing_enterprise` - Enterprise
 
 ### Other
+
 - `testimonials_title` - What Our Students Say
 - `faq_title` - Frequently Asked Questions
 - `footer_about` - About Us
@@ -101,35 +114,37 @@ i18n.changeLanguage('de');
 ## Component Examples
 
 ### Example 1: Hero Section (Complete)
+
 ```typescript
-'use client';
-import { useTranslation } from '@/hooks/useTranslation';
+"use client";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function HeroI18n() {
   const { t } = useTranslation();
 
   return (
     <section className="py-20">
-      <h1 className="text-4xl font-bold">{t('hero_title')}</h1>
-      <p className="text-xl">{t('hero_subtitle')}</p>
-      <button>{t('hero_cta')}</button>
+      <h1 className="text-4xl font-bold">{t("hero_title")}</h1>
+      <p className="text-xl">{t("hero_subtitle")}</p>
+      <button>{t("hero_cta")}</button>
     </section>
   );
 }
 ```
 
 ### Example 2: Navigation with Language
+
 ```typescript
-'use client';
-import { useTranslation } from '@/hooks/useTranslation';
+"use client";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export function NavigationI18n() {
   const { t, i18n } = useTranslation();
 
   const navItems = [
-    { key: 'nav_home', href: '/' },
-    { key: 'nav_courses', href: '/courses' },
-    { key: 'nav_contact', href: '/contact' },
+    { key: "nav_home", href: "/" },
+    { key: "nav_courses", href: "/courses" },
+    { key: "nav_contact", href: "/contact" },
   ];
 
   return (
@@ -146,15 +161,16 @@ export function NavigationI18n() {
 ```
 
 ### Example 3: Modal with Translations
+
 ```typescript
-'use client';
-import { useTranslation } from '@/hooks/useTranslation';
+"use client";
+import { useTranslation } from "@/hooks/useTranslation";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 
 export function ContactModal({ open, onClose }: any) {
   const { t } = useTranslation();
@@ -163,7 +179,7 @@ export function ContactModal({ open, onClose }: any) {
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t('footer_contact')}</DialogTitle>
+          <DialogTitle>{t("footer_contact")}</DialogTitle>
         </DialogHeader>
         {/* Form content */}
       </DialogContent>
@@ -177,7 +193,9 @@ export function ContactModal({ open, onClose }: any) {
 ## Adding New Translations
 
 ### Step 1: Update JSON files
+
 **File: `public/locales/en/common.json`**
+
 ```json
 {
   "my_new_key": "My English Text"
@@ -185,6 +203,7 @@ export function ContactModal({ open, onClose }: any) {
 ```
 
 **File: `public/locales/de/common.json`**
+
 ```json
 {
   "my_new_key": "Mein deutscher Text"
@@ -192,9 +211,10 @@ export function ContactModal({ open, onClose }: any) {
 ```
 
 ### Step 2: Use in component
+
 ```typescript
 const { t } = useTranslation();
-return <p>{t('my_new_key')}</p>;
+return <p>{t("my_new_key")}</p>;
 ```
 
 ---
@@ -206,9 +226,10 @@ return <p>{t('my_new_key')}</p>;
 3. **Default to English** if not supported
 
 ### To programmatically set language:
+
 ```typescript
 const { i18n } = useTranslation();
-i18n.changeLanguage('de');
+i18n.changeLanguage("de");
 // Automatically saved to localStorage
 ```
 
@@ -217,24 +238,27 @@ i18n.changeLanguage('de');
 ## Common Patterns
 
 ### Conditional Text
+
 ```typescript
 const { t, i18n } = useTranslation();
-if (i18n.language === 'en') {
+if (i18n.language === "en") {
   // English-specific logic
 }
 ```
 
 ### List Translations
+
 ```typescript
 const { t } = useTranslation();
 const items = [
-  { label: t('features_24_7') },
-  { label: t('features_certificate') },
-  { label: t('features_community') },
+  { label: t("features_24_7") },
+  { label: t("features_certificate") },
+  { label: t("features_community") },
 ];
 ```
 
 ### Form Labels
+
 ```typescript
 <input placeholder={t('nav_login')} />
 <button>{t('nav_signup')}</button>
@@ -271,21 +295,24 @@ public/locales/
 ## Testing
 
 ### Check current language:
+
 ```typescript
 const { i18n } = useTranslation();
 console.log(`Current language: ${i18n.language}`);
 ```
 
 ### Check if translation exists:
+
 ```typescript
-const exists = t('any_key', { defaultValue: 'NOT_FOUND' });
+const exists = t("any_key", { defaultValue: "NOT_FOUND" });
 ```
 
 ### Force language:
+
 ```typescript
 const { i18n } = useTranslation();
-i18n.changeLanguage('de').then(() => {
-  console.log('Language changed to German');
+i18n.changeLanguage("de").then(() => {
+  console.log("Language changed to German");
 });
 ```
 
@@ -294,18 +321,20 @@ i18n.changeLanguage('de').then(() => {
 ## Browser DevTools Tips
 
 1. **Check localStorage**:
+
    - Open DevTools → Application → Local Storage
    - Look for key `i18nextLng` (contains current language)
 
 2. **Force language in console**:
+
    ```javascript
-   localStorage.setItem('i18nextLng', 'de');
+   localStorage.setItem("i18nextLng", "de");
    location.reload();
    ```
 
 3. **Clear language preference**:
    ```javascript
-   localStorage.removeItem('i18nextLng');
+   localStorage.removeItem("i18nextLng");
    location.reload();
    ```
 

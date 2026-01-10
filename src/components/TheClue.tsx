@@ -121,7 +121,7 @@ export default function TheClue() {
                                     {t('clue_card3_title')}
                                 </h3>
                                 <p className="text-gray-300 text-lg leading-relaxed">
-                                   {t('clue_card3_description')}
+                                    {t('clue_card3_description')}
                                 </p>
                             </div>
                         </div>

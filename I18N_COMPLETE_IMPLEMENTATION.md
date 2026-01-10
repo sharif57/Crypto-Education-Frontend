@@ -59,6 +59,7 @@ npm install next-i18next i18next i18next-browser-languagedetector
 **File: `i18n.config.ts`**
 
 Located in project root. Initializes i18next with:
+
 - Language resources (EN & DE)
 - Browser language detection
 - LocalStorage persistence
@@ -67,11 +68,13 @@ Located in project root. Initializes i18next with:
 ### 3. Translation Files
 
 **File: `public/locales/en/common.json`** (1,863 bytes)
+
 - 30+ English translation keys
 - All UI strings for the landing page
 - Variables support
 
 **File: `public/locales/de/common.json`** (1,960 bytes)
+
 - 30+ German translations
 - Parallel structure to English
 - Ready for language switching
@@ -81,6 +84,7 @@ Located in project root. Initializes i18next with:
 **File: `src/components/LanguageProvider.tsx`**
 
 Wraps your entire app with i18next context:
+
 ```typescript
 <LanguageProvider>
   <YourApp />
@@ -88,6 +92,7 @@ Wraps your entire app with i18next context:
 ```
 
 Handles:
+
 - Client-side initialization
 - i18n context injection
 - React integration
@@ -97,6 +102,7 @@ Handles:
 **File: `src/components/LanguageSwitcher.tsx`**
 
 Features:
+
 - Dropdown menu with EN/DE options
 - Current language display
 - Auto-saves to localStorage
@@ -107,11 +113,12 @@ Features:
 **File: `src/hooks/useTranslation.ts`**
 
 Simple wrapper for ease of use:
+
 ```typescript
 const { t, i18n } = useTranslation();
-t('hero_title');          // Get translation
-i18n.language;            // Current language
-i18n.changeLanguage('de'); // Switch language
+t("hero_title"); // Get translation
+i18n.language; // Current language
+i18n.changeLanguage("de"); // Switch language
 ```
 
 ### 7. Layout Integration
@@ -119,13 +126,12 @@ i18n.changeLanguage('de'); // Switch language
 **File: `src/app/layout.tsx` - Updated ✅**
 
 Added LanguageProvider wrapper:
+
 ```typescript
 <html lang="en">
   <body>
     <LanguageProvider>
-      <Providers>
-        {/* Your app */}
-      </Providers>
+      <Providers>{/* Your app */}</Providers>
     </LanguageProvider>
   </body>
 </html>
@@ -144,17 +150,17 @@ Added LanguageSwitcher component in the desktop navigation menu.
 ### Basic Component Template
 
 ```typescript
-'use client';
+"use client";
 
-import { useTranslation } from '@/hooks/useTranslation';
+import { useTranslation } from "@/hooks/useTranslation";
 
 export function MyComponent() {
   const { t, i18n } = useTranslation();
 
   return (
     <div>
-      <h1>{t('hero_title')}</h1>
-      <p>{t('hero_subtitle')}</p>
+      <h1>{t("hero_title")}</h1>
+      <p>{t("hero_subtitle")}</p>
       <small>Language: {i18n.language}</small>
     </div>
   );
@@ -164,20 +170,20 @@ export function MyComponent() {
 ### Pattern 1: Section with Heading
 
 ```typescript
-'use client';
-import { useTranslation } from '@/hooks/useTranslation';
+"use client";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export function FeaturesSection() {
   const { t } = useTranslation();
 
   return (
     <section>
-      <h2>{t('features_title')}</h2>
+      <h2>{t("features_title")}</h2>
       <ul>
-        <li>{t('features_24_7')}</li>
-        <li>{t('features_certificate')}</li>
-        <li>{t('features_community')}</li>
-        <li>{t('features_mentorship')}</li>
+        <li>{t("features_24_7")}</li>
+        <li>{t("features_certificate")}</li>
+        <li>{t("features_community")}</li>
+        <li>{t("features_mentorship")}</li>
       </ul>
     </section>
   );
@@ -187,16 +193,16 @@ export function FeaturesSection() {
 ### Pattern 2: Dynamic List
 
 ```typescript
-'use client';
-import { useTranslation } from '@/hooks/useTranslation';
+"use client";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export function PricingCards() {
   const { t } = useTranslation();
 
   const plans = [
-    { id: 'basic', key: 'pricing_basic', price: '$29' },
-    { id: 'pro', key: 'pricing_pro', price: '$79' },
-    { id: 'enterprise', key: 'pricing_enterprise', price: '$199' },
+    { id: "basic", key: "pricing_basic", price: "$29" },
+    { id: "pro", key: "pricing_pro", price: "$79" },
+    { id: "enterprise", key: "pricing_enterprise", price: "$199" },
   ];
 
   return (
@@ -215,21 +221,17 @@ export function PricingCards() {
 ### Pattern 3: With Conditional Logic
 
 ```typescript
-'use client';
-import { useTranslation } from '@/hooks/useTranslation';
+"use client";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export function LanguageInfo() {
   const { t, i18n } = useTranslation();
 
   return (
     <div>
-      <h1>{t('hero_title')}</h1>
-      {i18n.language === 'de' && (
-        <p>Sie sprechen Deutsch! 🇩🇪</p>
-      )}
-      {i18n.language === 'en' && (
-        <p>You're speaking English! 🇬🇧</p>
-      )}
+      <h1>{t("hero_title")}</h1>
+      {i18n.language === "de" && <p>Sie sprechen Deutsch! 🇩🇪</p>}
+      {i18n.language === "en" && <p>You're speaking English! 🇬🇧</p>}
     </div>
   );
 }
@@ -238,16 +240,14 @@ export function LanguageInfo() {
 ### Pattern 4: With Variables
 
 ```typescript
-'use client';
-import { useTranslation } from '@/hooks/useTranslation';
+"use client";
+import { useTranslation } from "@/hooks/useTranslation";
 
 // Translation file: "welcome": "Welcome, {{name}}!"
 export function Greeting() {
   const { t } = useTranslation();
 
-  return (
-    <h1>{t('welcome', { name: 'John Doe' })}</h1>
-  );
+  return <h1>{t("welcome", { name: "John Doe" })}</h1>;
 }
 ```
 
@@ -256,86 +256,94 @@ export function Greeting() {
 ## 📝 Available Translations
 
 ### Navigation Keys
-| Key | English | German |
-|-----|---------|--------|
-| nav_home | Home | Startseite |
-| nav_courses | Courses | Kurse |
+
+| Key              | English      | German        |
+| ---------------- | ------------ | ------------- |
+| nav_home         | Home         | Startseite    |
+| nav_courses      | Courses      | Kurse         |
 | nav_master_class | Master Class | Meisterklasse |
-| nav_contact | Contact | Kontakt |
-| nav_login | Login | Anmelden |
-| nav_signup | Sign Up | Registrieren |
+| nav_contact      | Contact      | Kontakt       |
+| nav_login        | Login        | Anmelden      |
+| nav_signup       | Sign Up      | Registrieren  |
 
 ### Hero Section Keys
-| Key | English | German |
-|-----|---------|--------|
-| hero_title | Master Cryptocurrency Education | Meistern Sie die Kryptowährungsausbildung |
-| hero_subtitle | Learn from industry experts... | Lernen Sie von Branchenexperten... |
-| hero_cta | Start Learning Today | Beginnen Sie heute zu lernen |
+
+| Key           | English                         | German                                    |
+| ------------- | ------------------------------- | ----------------------------------------- |
+| hero_title    | Master Cryptocurrency Education | Meistern Sie die Kryptowährungsausbildung |
+| hero_subtitle | Learn from industry experts...  | Lernen Sie von Branchenexperten...        |
+| hero_cta      | Start Learning Today            | Beginnen Sie heute zu lernen              |
 
 ### Features Keys
-| Key | English | German |
-|-----|---------|--------|
-| features_title | Features | Funktionen |
-| features_24_7 | 24/7 Support | 24/7 Unterstützung |
+
+| Key                  | English              | German               |
+| -------------------- | -------------------- | -------------------- |
+| features_title       | Features             | Funktionen           |
+| features_24_7        | 24/7 Support         | 24/7 Unterstützung   |
 | features_certificate | Certificate Programs | Zertifikatsprogramme |
-| features_community | Community Access | Community-Zugang |
-| features_mentorship | 1-on-1 Mentorship | 1-zu-1-Mentoring |
+| features_community   | Community Access     | Community-Zugang     |
+| features_mentorship  | 1-on-1 Mentorship    | 1-zu-1-Mentoring     |
 
 ### Pricing Keys
-| Key | English | German |
-|-----|---------|--------|
-| pricing_title | Our Plans | Unsere Pläne |
-| pricing_subtitle | Choose the perfect plan... | Wählen Sie den perfekten Plan... |
-| pricing_basic | Basic | Basis |
-| pricing_pro | Professional | Professionell |
-| pricing_enterprise | Enterprise | Unternehmen |
+
+| Key                | English                    | German                           |
+| ------------------ | -------------------------- | -------------------------------- |
+| pricing_title      | Our Plans                  | Unsere Pläne                     |
+| pricing_subtitle   | Choose the perfect plan... | Wählen Sie den perfekten Plan... |
+| pricing_basic      | Basic                      | Basis                            |
+| pricing_pro        | Professional               | Professionell                    |
+| pricing_enterprise | Enterprise                 | Unternehmen                      |
 
 ### Other Keys
-| Key | English | German |
-|-----|---------|--------|
-| testimonials_title | What Our Students Say | Was unsere Schüler sagen |
-| faq_title | Frequently Asked Questions | Häufig gestellte Fragen |
-| footer_about | About Us | Über uns |
-| footer_privacy | Privacy Policy | Datenschutz |
-| footer_terms | Terms of Service | Nutzungsbedingungen |
-| footer_contact | Contact Us | Kontaktiere uns |
-| language | Language | Sprache |
-| english | English | Englisch |
-| german | German | Deutsch |
+
+| Key                | English                    | German                   |
+| ------------------ | -------------------------- | ------------------------ |
+| testimonials_title | What Our Students Say      | Was unsere Schüler sagen |
+| faq_title          | Frequently Asked Questions | Häufig gestellte Fragen  |
+| footer_about       | About Us                   | Über uns                 |
+| footer_privacy     | Privacy Policy             | Datenschutz              |
+| footer_terms       | Terms of Service           | Nutzungsbedingungen      |
+| footer_contact     | Contact Us                 | Kontaktiere uns          |
+| language           | Language                   | Sprache                  |
+| english            | English                    | Englisch                 |
+| german             | German                     | Deutsch                  |
 
 ---
 
 ## 🔄 Language Detection & Persistence
 
 ### Automatic Detection
+
 1. First checks `localStorage['i18nextLng']`
 2. Falls back to browser language (`navigator.language`)
 3. Defaults to English if not supported
 
 ### Manual Language Switch
+
 ```typescript
 const { i18n } = useTranslation();
 
 // Switch to German
-await i18n.changeLanguage('de');
+await i18n.changeLanguage("de");
 
 // Switch to English
-await i18n.changeLanguage('en');
+await i18n.changeLanguage("en");
 
 // Get current language
 console.log(i18n.language); // 'en' or 'de'
 ```
 
 ### Direct localStorage Access
+
 ```javascript
 // Check current language
-localStorage.getItem('i18nextLng');
+localStorage.getItem("i18nextLng");
 
 // Set language
-localStorage.setItem('i18nextLng', 'de');
+localStorage.setItem("i18nextLng", "de");
 
 // Clear language preference
-localStorage.removeItem('i18nextLng');
+localStorage.removeItem("i18nextLng");
 ```
 
 ---
@@ -343,13 +351,15 @@ localStorage.removeItem('i18nextLng');
 ## ✅ Testing the Implementation
 
 ### Test 1: Basic Translation
+
 ```typescript
 // In any component with 'use client'
 const { t } = useTranslation();
-console.log(t('hero_title'));
+console.log(t("hero_title"));
 ```
 
 ### Test 2: Language Switching
+
 1. Open the app in browser
 2. Click the language switcher (globe icon) in header
 3. Select English or German
@@ -357,27 +367,27 @@ console.log(t('hero_title'));
 5. Refresh page - language should persist
 
 ### Test 3: Browser Console Test
+
 ```javascript
 // In browser DevTools console
-localStorage.getItem('i18nextLng') // Check current
-localStorage.setItem('i18nextLng', 'de');
+localStorage.getItem("i18nextLng"); // Check current
+localStorage.setItem("i18nextLng", "de");
 location.reload(); // Should be German now
 ```
 
 ### Test 4: Component Integration
+
 ```typescript
-'use client';
-import { useTranslation } from '@/hooks/useTranslation';
+"use client";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export function Test() {
   const { t, i18n } = useTranslation();
   return (
     <div>
       <p>Current: {i18n.language}</p>
-      <p>{t('hero_title')}</p>
-      <button onClick={() => i18n.changeLanguage('de')}>
-        Deutsch
-      </button>
+      <p>{t("hero_title")}</p>
+      <button onClick={() => i18n.changeLanguage("de")}>Deutsch</button>
     </div>
   );
 }
@@ -390,6 +400,7 @@ export function Test() {
 ### Step-by-Step Process
 
 **1. Add to English file** (`public/locales/en/common.json`)
+
 ```json
 {
   "my_new_key": "My English Text Here"
@@ -397,6 +408,7 @@ export function Test() {
 ```
 
 **2. Add to German file** (`public/locales/de/common.json`)
+
 ```json
 {
   "my_new_key": "Mein deutscher Text hier"
@@ -404,9 +416,10 @@ export function Test() {
 ```
 
 **3. Use in component**
+
 ```typescript
 const { t } = useTranslation();
-return <p>{t('my_new_key')}</p>;
+return <p>{t("my_new_key")}</p>;
 ```
 
 **4. Test both languages**
@@ -416,26 +429,31 @@ return <p>{t('my_new_key')}</p>;
 ## 📚 Example Components
 
 ### Complete Hero Component
+
 ```typescript
-'use client';
-import { useTranslation } from '@/hooks/useTranslation';
+"use client";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function HeroI18n() {
   const { t } = useTranslation();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center 
-                        bg-gradient-to-br from-blue-600 to-purple-700">
+    <section
+      className="relative min-h-screen flex items-center justify-center 
+                        bg-gradient-to-br from-blue-600 to-purple-700"
+    >
       <div className="text-center px-4 max-w-5xl mx-auto">
         <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-          {t('hero_title')}
+          {t("hero_title")}
         </h1>
         <p className="text-xl md:text-2xl text-blue-100 mb-8">
-          {t('hero_subtitle')}
+          {t("hero_subtitle")}
         </p>
-        <button className="bg-white text-blue-600 px-8 py-4 rounded-lg 
-                          font-bold text-lg hover:bg-blue-50 transition-colors">
-          {t('hero_cta')}
+        <button
+          className="bg-white text-blue-600 px-8 py-4 rounded-lg 
+                          font-bold text-lg hover:bg-blue-50 transition-colors"
+        >
+          {t("hero_cta")}
         </button>
       </div>
     </section>
@@ -444,24 +462,25 @@ export default function HeroI18n() {
 ```
 
 ### Complete Features Component
+
 ```typescript
-'use client';
-import { useTranslation } from '@/hooks/useTranslation';
+"use client";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export function FeaturesI18n() {
   const { t } = useTranslation();
 
   const features = [
-    t('features_24_7'),
-    t('features_certificate'),
-    t('features_community'),
-    t('features_mentorship'),
+    t("features_24_7"),
+    t("features_certificate"),
+    t("features_community"),
+    t("features_mentorship"),
   ];
 
   return (
     <section className="py-20 px-4 max-w-6xl mx-auto">
       <h2 className="text-4xl font-bold text-center mb-12">
-        {t('features_title')}
+        {t("features_title")}
       </h2>
       <div className="grid md:grid-cols-2 gap-8">
         {features.map((feature, idx) => (
@@ -484,6 +503,7 @@ export function FeaturesI18n() {
 ## 🚀 Next Steps
 
 ### Immediate Actions
+
 1. ✅ Setup is complete!
 2. Review the example components in `src/components/`
 3. Test language switching in your browser
@@ -491,12 +511,14 @@ export function FeaturesI18n() {
 5. Replace hardcoded strings with `t()` calls
 
 ### Short Term
+
 1. Convert all major components to use translations
 2. Test all pages in both English and German
 3. Add more languages if needed
 4. Set up translation management system (optional)
 
 ### Long Term
+
 1. Consider using Locize or similar service for translations
 2. Implement SEO-friendly language routing (optional)
 3. Add more languages (Spanish, French, etc.)
@@ -507,7 +529,9 @@ export function FeaturesI18n() {
 ## 🐛 Troubleshooting
 
 ### Issue: Translations not showing
+
 **Solutions:**
+
 - Add 'use client' to component
 - Check import: `from '@/hooks/useTranslation'`
 - Verify key exists in both JSON files
@@ -515,7 +539,9 @@ export function FeaturesI18n() {
 - Browser console for errors
 
 ### Issue: Language not persisting
+
 **Solutions:**
+
 - Ensure localStorage is enabled
 - Check `localStorage['i18nextLng']` in DevTools
 - Verify LanguageProvider wraps entire app
@@ -523,14 +549,18 @@ export function FeaturesI18n() {
 - Try incognito mode
 
 ### Issue: LanguageSwitcher not showing
+
 **Solutions:**
+
 - Verify it's imported in navigation-header
 - Check network tab for UI component errors
 - Ensure DropdownMenu component exists
 - Check lucide-react icons are installed
 
 ### Issue: i18n initialization error
+
 **Solutions:**
+
 - Verify i18n.config.ts exists in project root
 - Check translation files are valid JSON
 - Verify file paths in imports
@@ -542,6 +572,7 @@ export function FeaturesI18n() {
 ## 📖 File Reference
 
 ### Created Files
+
 - ✅ `i18n.config.ts` - Main configuration
 - ✅ `src/components/LanguageProvider.tsx` - Provider
 - ✅ `src/components/LanguageSwitcher.tsx` - Switcher
@@ -559,6 +590,7 @@ export function FeaturesI18n() {
 - ✅ `I18N_COMPLETE_IMPLEMENTATION.md` - This file
 
 ### Modified Files
+
 - ✅ `src/app/layout.tsx` - Added LanguageProvider
 - ✅ `src/components/navigation-header.tsx` - Added LanguageSwitcher
 
@@ -575,7 +607,7 @@ You now have a **complete, production-ready internationalization system** with:
 ✅ Language switcher in navigation  
 ✅ 30+ pre-translated strings  
 ✅ Example components  
-✅ Comprehensive documentation  
+✅ Comprehensive documentation
 
 Everything is configured and ready to use! Start converting your components to use translations today.
 

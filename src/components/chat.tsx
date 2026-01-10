@@ -158,7 +158,7 @@ export default function Chat({ videoId, videoResource }: ChatProps) {
   return (
     <div>
       <div className="lg:flex gap-2 items-center justify-between  space-y-8">
-  
+
 
         <Button
           onClick={() => {
