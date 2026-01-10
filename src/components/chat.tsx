@@ -1,7 +1,7 @@
 'use client';
 
 import { Send, X } from 'lucide-react';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Button } from './ui/button';
 import Loading from './Loading';
 import { useVideoAskChatWithIdMutation, useVideoSessionCreateMutation } from '@/Redux/feature/videoChatSlice';
@@ -60,14 +60,14 @@ export default function Chat({ videoId, videoResource }: ChatProps) {
     }
   }, []);
 
-  const createSession = async () => {
+  const createSession = useCallback(async () => {
     try {
       const res = await videoSessionCreate({}).unwrap();
       localStorage.setItem('video_session', res?.session_id);
     } catch (error) {
       console.error('Failed to create video session:', error);
     }
-  };
+  }, [videoSessionCreate]);
 
   // localStorage get session_id
   useEffect(() => {

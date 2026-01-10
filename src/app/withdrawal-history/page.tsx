@@ -59,12 +59,11 @@ const getStatusBadge = (status: WithdrawalRequest["status"]) => {
 export default function WithdrawalTable() {
   const { data, isLoading, error } = useWithdrawalHistoryQuery(undefined)
 
-  /* ✅ NORMALIZE API RESPONSE (CRITICAL FIX) */
-  const withdrawals: WithdrawalRequest[] = Array.isArray(data)
-    ? data
-    : Array.isArray(data?.data)
-      ? data.data
-      : []
+  const withdrawals: WithdrawalRequest[] = useMemo(() => {
+    if (Array.isArray(data)) return data
+    if (Array.isArray(data?.data)) return data.data
+    return []
+  }, [data])
 
   const [sortKey, setSortKey] = useState<SortKey>("requested_at")
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc")

@@ -1,13 +1,16 @@
+"use client";
 import Heading from '@/hook/heading'
 import Image from 'next/image'
 import React from 'react'
+import { useTranslation } from '@/hooks/useTranslation'
 
 export default function TheClue() {
+    const { t } = useTranslation();
     return (
         <div>
             <Heading
-                title="Unlock Your Potential with TheClue®"
-                subtitle="Discover the key to your success with TheClue® — the next-gen learning platform combining AI technology with expert human support. Whether you're just starting out or leveling up your trading skills, our platform empowers you with everything you need to navigate the crypto world with confidence."
+                title={t('clue_title')}
+                subtitle={t('clue_description')}
             />
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -48,10 +51,10 @@ export default function TheClue() {
                                         </svg>
                                     </div>
                                     <h3 className="text-2xl lg:text-2xl font-medium text-white">
-                                        🎓 Weekly Expert-Led Live Calls
+                                        {t('clue_card1_title')}
                                     </h3>
                                     <p className="text-gray-300 text-lg leading-relaxed">
-                                        Join our trading and Web3 professionals for real-time insights, Q&A, and mentoring.
+                                        {t('clue_card1_description')}
                                     </p>
                                 </div>
 
@@ -92,10 +95,10 @@ export default function TheClue() {
                                     className="size-[68px] mb-5"
                                 />
                                 <h3 className="text-2xl font-medium text-white mb-4">
-                                    150 Action-Packed Video Lessons
+                                    {t('clue_card2_title')}
                                 </h3>
                                 <p className="text-gray-300 text-lg leading-relaxed">
-                                    Explore our massive library of dynamic videos that break down complex cryptoconcepts into easy-to-understand lessons.
+                                    {t('clue_card2_description')}
                                 </p>
                             </div>
                         </div>
@@ -115,10 +118,10 @@ export default function TheClue() {
                                     className="size-[68px] mb-5"
                                 />
                                 <h3 className="text-2xl font-medium text-white mb-4">
-                                    Telegram Group with other Members
+                                    {t('clue_card3_title')}
                                 </h3>
                                 <p className="text-gray-300 text-lg leading-relaxed">
-                                   Become part of an elite community! Our Telegram group is buzzing with daily tradingtips, signals and market news.
+                                   {t('clue_card3_description')}
                                 </p>
                             </div>
                         </div>
@@ -139,10 +142,10 @@ export default function TheClue() {
                                     className="size-[68px] mb-5"
                                 />
                                 <h3 className="text-2xl font-medium text-white mb-4">
-                                    Lucrative Referral Program
+                                    {t('clue_card4_title')}
                                 </h3>
                                 <p className="text-gray-300 text-lg leading-relaxed">
-                                    Why keep the treasure to yourself? Share TheClue with friends and unlock amazingrewards. The more you share, the more you earn!
+                                    {t('clue_card4_description')}
                                 </p>
                             </div>
                         </div>
@@ -162,10 +165,10 @@ export default function TheClue() {
                                     className="size-[68px] mb-5"
                                 />
                                 <h3 className="text-2xl font-medium text-white mb-4">
-                                    Outstanding Support for best results
+                                    {t('clue_card5_title')}
                                 </h3>
                                 <p className="text-gray-300 text-lg leading-relaxed">
-                                    Get expert guidance when you need it most to achieve your goals faster and with greater confidence.
+                                    {t('clue_card5_description')}
                                 </p>
                             </div>
                         </div>

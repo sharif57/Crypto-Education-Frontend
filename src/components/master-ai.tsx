@@ -1,64 +1,50 @@
-// import React from "react";
-// import { Button } from "./ui/button";
 
-// export default function MasterAi() {
-//   return (
-//     <section className="relative container mx-auto bg-gradient-to-r from-[#202020] to-[#307574]  overflow-hidden rounded-3xl bg-[#1B1B1B]">
+"use client";
 
-//       {/* Background Image */}
-//       <div
-//         className="
-//           absolute inset-0
-//           border
-//           bg-[url('/images/masterclass.png')]
-//           bg-no-repeat
-//           bg-[position:100%]
-//           bg-contain
-//           lg:bg-[length:520px]
-//           opacity-90
-//           pointer-events-none
-//         "
-//       />
-
-//       {/* Content */}
-//       <div className="relative z-10 max-w-5xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-2 items-center gap-10">
-
-//         {/* Left Content */}
-//         <div className="text-white space-y-6 text-center lg:text-left">
-//           <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight">
-//             Join our Masterclass
-//           </h1>
-
-//           <p className="text-[#B5B5B5] text-base md:text-lg max-w-xl mx-auto lg:mx-0">
-//             The crypto world is evolving fast. With TheClue, you&apos;ll not only
-//             keep up but lead the way. This is more than just learning; it&apos;s
-//             an exhilarating adventure into the future of finance.
-//           </p>
-
-//           <Button
-//             size="lg"
-//             className="
-//               bg-text text-[#224443]
-//               font-medium px-8 py-6 rounded-full text-lg
-//               transition-all duration-300
-//               shadow-lg shadow-cyan-400/25
-//               hover:shadow-cyan-400/40
-//             "
-//           >
-//             To the Crypto-Masterclass
-//           </Button>
-//         </div>
-
-//         {/* Spacer */}
-//         <div className="hidden lg:block" />
-//       </div>
-//     </section>
-//   );
-// }
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "./ui/button";
+import { useTranslation } from "@/hooks/useTranslation";
+import { usePathname, useRouter } from "next/navigation";
+import { useUserProfileQuery } from "@/Redux/feature/userSlice";
 
 export default function MasterAi() {
+  const { t } = useTranslation();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const { data, isLoading } = useUserProfileQuery(undefined);
+  const user = data?.data;
+
+  const isSubscribed = user?.subscription && ["basic", "pro", "elite"].includes(user.subscription.toLowerCase());
+
+  const handleStartLearning = () => {
+    if (!isSubscribed) {
+      if (pathname === "/") {
+        const element = document.getElementById("pricing");
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      } else {
+        router.push("/#pri");
+      }
+    } else {
+      // Subscribed → go to courses
+      router.push("/courses");
+    }
+  };
+
+  useEffect(() => {
+    if (!isLoading && !isSubscribed && pathname.includes("#pricing")) {
+      const element = document.getElementById("pricing");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  }, [isLoading, isSubscribed, pathname]);
+
+  if (isLoading) {
+    return null;
+  }
   return (
     <section className="relative max-w-7xl mx-auto overflow-hidden rounded-3xl bg-gradient-to-r from-[#202020] to-[#307574] px-4 sm:px-6 lg:px-10">
       {/* Background Image */}
@@ -84,18 +70,17 @@ export default function MasterAi() {
         {/* Left Content */}
         <div className="text-center lg:text-left text-white space-y-6">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal leading-tight">
-            Join our Masterclass
+            {t('masterclass_title')}
           </h1>
 
           <p className="text-sm sm:text-base md:text-lg text-[#D1D1D1] max-w-xl mx-auto lg:mx-0 leading-relaxed">
-            The crypto world is evolving fast. With TheClue, you&apos;ll not only
-            keep up but lead the way. This is more than just learning; it&apos;s
-            an exhilarating adventure into the future of finance.
+            {t('masterclass_description')}
           </p>
 
           <div className="pt-2">
             <Button
               size="lg"
+              onClick={handleStartLearning}
               className="
                 bg-[#62C1BF] hover:bg-[#52a9a7] cursor-pointer text-[#224443]
                 px-8 py-6 rounded-full text-base sm:text-lg font-medium
@@ -105,7 +90,7 @@ export default function MasterAi() {
                 hover:scale-105
               "
             >
-              To the Crypto-Masterclass
+              {t('masterclass_button')}
             </Button>
           </div>
         </div>

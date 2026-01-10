@@ -15,15 +15,17 @@ import {
     DialogClose,
 } from './ui/dialog'
 import { X } from 'lucide-react'
+import { useTranslation } from '@/hooks/useTranslation'
 
 export default function Everyone() {
+    const { t } = useTranslation();
     const [open, setOpen] = useState(false)
 
     return (
         <div className="py-12">
             <Heading
-                title="TheClue® is for everyone"
-                subtitle="No matter your background or experience, TheClue empowers you to grow, connect, and succeed—your journey starts here."
+                title={t('everyone_title')}
+                subtitle={t('everyone_subtitle')}
             />
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-10 ">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
@@ -68,12 +70,11 @@ export default function Everyone() {
                             <ShieldPlus className="text-white w-6 h-6" />
 
                             <h1 className="text-xl font-normal text-white">
-                                The Clue is fully secured
+                                {t('everyone_secure_title')}
                             </h1>
 
                             <p className="text-[16px] font-normal text-[#B4B4B4] leading-relaxed">
-                                Your data is safe with us—TheClue uses top-tier encryption and
-                                security standards to protect your privacy at all times.
+                                {t('everyone_secure_description')}
                             </p>
 
                             <Badge
@@ -81,7 +82,7 @@ export default function Everyone() {
                                 className="mt-6 rounded-full px-6 py-2 w-fit text-sm flex items-center gap-2 text-white border-white"
                             >
                                 <ShieldPlus className="w-4 h-4 text-white " />
-                                Secure
+                                {t('everyone_secure_badge')}
                             </Badge>
                         </div>
                     </div>
@@ -95,9 +96,9 @@ export default function Everyone() {
                         {/* TOP CONTENT */}
                         <div className="absolute top-4 left-4 right-4 z-10 text-white space-y-3">
                             <User className="w-6 h-6" />
-                            <h1 className="text-xl font-normal">24/7 support</h1>
+                            <h1 className="text-xl font-normal">{t('everyone_support_title')}</h1>
                             <p className="text-[16px] text-[#B4B4B4] leading-relaxed">
-                                Round-the-clock support whenever you need it—because your journey doesn’t keep office hours.
+                                {t('everyone_support_description')}
                             </p>
                         </div>
 
@@ -129,10 +130,9 @@ export default function Everyone() {
                         {/* TEXT CONTENT */}
                         <div className="absolute top-4 left-4 right-4 z-10 text-white space-y-3">
                             <Users className="w-6 h-6" />
-                            <h1 className="text-xl font-normal">Meet other people</h1>
+                            <h1 className="text-xl font-normal">{t('everyone_meet_title')}</h1>
                             <p className="text-[16px] text-[#B4B4B4] leading-relaxed max-w-xl">
-                                Connect with like-minded people, share your journey, and grow together
-                                in a vibrant, supportive community.
+                                {t('everyone_meet_description')}
                             </p>
                         </div>
                     </div>

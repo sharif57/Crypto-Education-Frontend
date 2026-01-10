@@ -8,6 +8,7 @@ import Providers from "@/Providers/Providers";
 import { Toaster } from "sonner";
 import Message from "@/components/message";
 import ProtectedLayout from "@/hook/ProtectedLayout";
+import { LanguageProvider } from "@/components/LanguageProvider";
 
 // Load Poppins with `variable` option
 const poppins = Poppins({
@@ -33,15 +34,17 @@ export default function RootLayout({
         style={{ fontFamily: "var(--font-poppins)" }}
         cz-shortcut-listen="true"
       >
-        <Providers>
-          <Toaster />
-          <Header />
-          <ProtectedLayout>
-          {children}
-          </ProtectedLayout>
-          <Message />
-          <Footer />
-        </Providers>
+        <LanguageProvider>
+          <Providers>
+            <Toaster />
+            <Header />
+            <ProtectedLayout>
+            {children}
+            </ProtectedLayout>
+            <Message />
+            <Footer />
+          </Providers>
+        </LanguageProvider>
       </body>
     </html>
   );

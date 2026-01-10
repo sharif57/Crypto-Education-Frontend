@@ -1,18 +1,20 @@
-
+'use client';
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function Faq() {
+    const { t } = useTranslation();
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white flex flex-col lg:flex-row items-start justify-between gap-10 py-14">
             {/* Title */}
             <div className="w-full lg:w-1/2">
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal leading-tight text-white text-start">
-                    Frequently Asked Questions About <br />
+                    {t('faq_main_title')} <br />
                     <span className="bg-gradient-to-r from-[#94ecea] to-[#307574] bg-clip-text text-transparent font-normal">
                         TheClue®
                     </span>
@@ -29,44 +31,44 @@ export default function Faq() {
                 >
                     <AccordionItem value="item-1" className="border border-[#404040] px-4  rounded-lg bg-[#121212] hover:bg-[#121212]/60">
                         <AccordionTrigger className="text-lg sm:text-xl font-normal">
-                            What makes TheClue unique?
+                            {t('faq_q1')}
                         </AccordionTrigger>
                         <AccordionContent className="flex flex-col gap-2 sm:gap-4 text-balance">
                             <p className="text-sm sm:text-base text-[#aca6a6]">
-                                We offer a comprehensive, all-encompassing approach to crypto education that combines engaging videos, live interactions, and community support.
+                                {t('faq_a1')}
                             </p>
                         </AccordionContent>
                     </AccordionItem>
 
                     <AccordionItem value="item-2" className="border border-[#404040] px-4  rounded-lg bg-[#121212] hover:bg-[#121212]/60">
                         <AccordionTrigger className="text-lg sm:text-xl font-normal">
-                            Is TheClue suitable for beginners?
+                            {t('faq_q2')}
                         </AccordionTrigger>
                         <AccordionContent className="flex flex-col gap-2 sm:gap-4 text-balance">
                             <p className="text-sm sm:text-base text-[#aca6a6]">
-                                Absolutely! Our content is tailored for all levels, starting from the very basics.
+                                {t('faq_a2')}
                             </p>
                         </AccordionContent>
                     </AccordionItem>
 
                     <AccordionItem value="item-3" className="border border-[#404040] px-4  rounded-lg bg-[#121212] hover:bg-[#121212]/60">
                         <AccordionTrigger className="text-lg sm:text-xl font-normal">
-                            How can I maximize the benefits of the referral Program?
+                            {t('faq_q3')}
                         </AccordionTrigger>
                         <AccordionContent className="flex flex-col gap-2 sm:gap-4 text-balance">
                             <p className="text-sm sm:text-base text-[#aca6a6]">
-                                Share your unique link widely - social media, friends, family. The more sign-ups you generate, the greater your rewards!
+                                {t('faq_a3')}
                             </p>
                         </AccordionContent>
                     </AccordionItem>
 
                     <AccordionItem value="item-4" className="border border-[#404040] px-4  rounded-lg bg-[#121212] hover:bg-[#121212]/60">
                         <AccordionTrigger className="text-lg sm:text-xl font-normal">
-                            What if I have a question outside of the Q&A Sessions?
+                            {t('faq_q4')}
                         </AccordionTrigger>
                         <AccordionContent className="flex flex-col gap-2 sm:gap-4 text-balance">
                             <p className="text-sm sm:text-base text-[#aca6a6]">
-                                Our support team is available to help you anytime!
+                                {t('faq_a4')}
                             </p>
                         </AccordionContent>
                     </AccordionItem>

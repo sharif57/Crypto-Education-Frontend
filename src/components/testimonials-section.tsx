@@ -1,38 +1,41 @@
 
+'use client';
 
+import { useTranslation } from '@/hooks/useTranslation'
 
 export default function TestimonialsSection() {
+  const { t } = useTranslation();
 
   const reviews = [
     {
       "id": 1,
       "name": "Jasmin K.",
-      "message": "TheClue's Telegram group is a total game-changer! Being part of this community allows me to access the latest tips and insights before anyone else. The instant updates and lively discussions keep me informed and inspired, giving me an edge in my learning journey."
+      "messageKey": "testimonial_jasmin"
     },
     {
       "id": 2,
       "name": "Alex K.",
-      "message": "Joining TheClue was the best decision I ever made! The 360° learning experience offered here is truly unparalleled. From engaging workshops to hands-on projects, every aspect is designed to enhance my skills and knowledge."
+      "messageKey": "testimonial_alex"
     },
     {
       "id": 3,
       "name": "Maria S.",
-      "message": "The energy in the weekly Q&A sessions is absolutely contagious! Each meeting is filled with vibrant discussions and insightful questions that inspire me to dive deeper into the topics. I always leave feeling motivated and eager to learn more."
+      "messageKey": "testimonial_maria"
     },
     {
       "id": 4,
       "name": "Feliz M.",
-      "message": "Being part of this community has completely transformed how I approach challenges. The shared knowledge and constant encouragement push me to grow every day. It's empowering to know I'm not doing this alone."
+      "messageKey": "testimonial_feliz"
     },
     {
       "id": 5,
       "name": "Manuel F.",
-      "message": "I've never felt so supported in an online space before. The combination of expert advice and genuine peer connection creates an environment where I feel safe to ask, explore, and grow at my own pace."
+      "messageKey": "testimonial_manuel"
     },
     {
       "id": 6,
       "name": "John B.",
-      "message": "The clarity and direction I get from the live sessions are unmatched. Every question is met with thoughtful answers that actually move me forward. It's like having a personal mentor right there with me."
+      "messageKey": "testimonial_john"
     }
   ]
 
@@ -56,12 +59,12 @@ export default function TestimonialsSection() {
               understanding of Web3 with us." /> */}
           <div>
             <h1 className="text-3xl font-normal w-full lg:w-1/2 mx-auto text-[60px] text-white text-center">
-              What customers <span className="bg-gradient-to-r from-[#94ecea] to-[#307574] bg-clip-text text-transparent font-normal">
-                Say
+              {t('testimonials_section_title')} <span className="bg-gradient-to-r from-[#94ecea] to-[#307574] bg-clip-text text-transparent font-normal">
+                
               </span>
             </h1>
             <p className="text-[16px] font-normal text-[#B4B4B4] pt-2 w-full lg:w-4xl mx-auto text-center text-balance">
-              What other people are saying about TheClue
+              {t('testimonials_section_subtitle')}
             </p>
           </div>
 
@@ -77,7 +80,7 @@ export default function TestimonialsSection() {
                     </span>
                   </div>
                   <p className="text-gray-300 font-normal text-lg leading-relaxed">
-                    {review?.message}
+                    {t(review?.messageKey)}
                   </p>
                 </div>
               ))

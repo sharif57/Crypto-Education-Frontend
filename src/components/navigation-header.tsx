@@ -19,6 +19,7 @@ import {
 import { useCreateSessionMutation } from "@/Redux/feature/chatSlice";
 import { logout } from "@/service/authService";
 import GoogleTranslate from "./GoogleTranslate";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export default function Header() {
   // 1. Hooks at top, unconditionally
@@ -257,7 +258,8 @@ export default function Header() {
               );
             })}
 
-            <GoogleTranslate />
+            <LanguageSwitcher />
+            {/* <GoogleTranslate /> */}
           </nav>
 
           {/* Desktop Login Button */}

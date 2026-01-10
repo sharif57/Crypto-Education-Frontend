@@ -5,8 +5,10 @@ import { Button } from "./ui/button";
 import { useUserProfileQuery } from "@/Redux/feature/userSlice";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const SeraUIHero = () => {
+    const { t } = useTranslation();
 
     const pathname = usePathname();
     const router = useRouter();
@@ -113,7 +115,7 @@ const SeraUIHero = () => {
 
                             {/* Text */}
                             <span className="text-white text-xs sm:text-sm md:text-base truncate max-w-[180px] sm:max-w-none">
-                                The new way to learn Crypto
+                                {t('hero_header')}
                             </span>
 
                             {/* Icon */}
@@ -125,14 +127,11 @@ const SeraUIHero = () => {
                     {/* Hero Content */}
                     <div className="text-center">
                         <h1 className="text-4xl sm:text-5xl md:text-6xl leading-tight lg:text-7xl font-normal tracking-tight text-white mb-6">
-                            Your Ultimate 360° Crypto & Trading Learning Experience —
-                            <br className="hidden md:block" />
-                            AI-Powered & Human-Led
+                            {t('hero_title')}
                         </h1>
 
                         <p className="text-base sm:text-lg text-[#B4B4B4] max-w-3xl mx-auto mb-10">
-                            Confidently navigate the world of crypto and trading with our all-in-one platform —
-                            combining expert-led live sessions and 24/7 AI-driven training for maximum results.
+                            {t('hero_subtitle')}
                         </p>
 
                         <div className="flex justify-center">
@@ -141,7 +140,7 @@ const SeraUIHero = () => {
                                 onClick={handleStartLearning}
                                 className="bg-[#62C1BF] hover:bg-[#52a9a7] cursor-pointer text-[#224443] font-medium !px-8 py-6 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40 group"
                             >
-                                Get Started
+                                {t('hero_cta')}
                                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                             </Button>
 

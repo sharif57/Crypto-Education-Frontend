@@ -6,7 +6,7 @@ import Faq from "@/components/faq";
 import Hero from "@/components/hero";
 // import Banner from "@/components/hero-banner";
 import MasterAi from "@/components/master-ai";
-import MasterClass from "@/components/master-class";
+// import MasterClass from "@/components/master-class";
 import PricingSection from "@/components/pricing-section";
 import TestimonialsSection from "@/components/testimonials-section";
 import TheClue from "@/components/TheClue";
@@ -20,7 +20,7 @@ export default function Home() {
       {/* <Banner></Banner> */}
       <Hero />
       <TheClue />
-      <MasterClass />
+      {/* <MasterClass /> */}
       <AIAssistantSection></AIAssistantSection>
       {/* <FeaturesSection /> */}
       <PricingSection />

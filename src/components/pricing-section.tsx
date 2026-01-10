@@ -9,6 +9,7 @@ import { Check, LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface Plan {
   name: string;
@@ -20,6 +21,7 @@ interface Plan {
 }
 
 export default function PricingSection() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [buySubscription] = useBuySubscriptionMutation();
   const { data } = useUserProfileQuery(undefined);
@@ -29,43 +31,40 @@ export default function PricingSection() {
 
   const PLANS: Plan[] = [
     {
-      name: "Pro",
-      billingCycle: "Monthly",
+      name: t('pricing_plan_pro'),
+      billingCycle: t('pricing_monthly'),
       price: 29.90,
-      description:
-        "Start your financial journey with guided videos, community access, and AI support—ideal for beginners building their foundation.",
+      description: t('pricing_pro_monthly_desc'),
       features: [
-        "Access to the AI Agent",
-        "Access to Telegram group",
-        "Over 150 Videos",
+        t('pricing_feature_ai'),
+        t('pricing_feature_telegram'),
+        t('pricing_feature_videos'),
       ],
       featured: false,
     },
     {
-      name: "Pro",
-      billingCycle: "Yearly",
+      name: t('pricing_plan_pro'),
+      billingCycle: t('pricing_yearly'),
       price: 250,
-      description:
-        "Take action with expert-led live calls, real-time trading signals, and portfolio insights—perfect for hands-on learners and active investors.",
+      description: t('pricing_pro_yearly_desc'),
       features: [
-        "Everything in Basic",
-        "Q&A Live Calls",
-        "Trading signals",
-        "Portfolio Analysis",
+        t('pricing_feature_everything_basic'),
+        t('pricing_feature_qa_calls'),
+        t('pricing_feature_signals'),
+        t('pricing_feature_portfolio'),
       ],
       featured: true,
     },
     {
-      name: "Elite",
-      billingCycle: "Lifetime",  // ← THIS WAS MISSING BEFORE
+      name: t('pricing_plan_elite'),
+      billingCycle: t('pricing_lifetime'),
       price: 4000,
-      description:
-        "Unlock advanced learning with personal mentorship, exclusive events, and deep-dive masterclasses—built for serious investors.",
+      description: t('pricing_elite_lifetime_desc'),
       features: [
-        "Everything in Pro",
-        "Exclusive Masterclasses",
-        "1:1 Mentoring",
-        "Exclusive Events",
+        t('pricing_feature_everything_pro'),
+        t('pricing_feature_masterclasses'),
+        t('pricing_feature_mentoring'),
+        t('pricing_feature_events'),
       ],
       featured: false,
     },
@@ -127,12 +126,14 @@ export default function PricingSection() {
         </div> */}
         <div>
           <h1 className="text-3xl font-normal w-full  mx-auto text-[60px] text-white text-center">
-            Simple Plans. Serious <span className="bg-gradient-to-r from-[#94ecea] to-[#307574] bg-clip-text text-transparent font-normal">
-              Value
+            {t('pricing_header1')} <span className="bg-gradient-to-r from-[#94ecea] to-[#307574] bg-clip-text text-transparent font-normal">
+              {t('pricing_header_value')} 
             </span>
+
+            <span>{t('pricing_header2')}</span>
           </h1>
           <p className="text-[16px] font-normal text-[#B4B4B4] pt-2 w-full lg:w-4xl mx-auto text-center text-balance">
-           Choose a plan that fits your learning journey — upgrade anytime as you grow.
+            {t('pricing_subtitle')}
           </p>
         </div>
 
@@ -173,7 +174,7 @@ export default function PricingSection() {
                     {plan.name}
                     {plan.featured && (
                       <span className="ml-3 inline-block px-3 py-1 text-xs font-semibold text-cyan-300 bg-cyan-400/20 rounded-full">
-                        Most Popular
+                        {t('pricing_most_popular')}
                       </span>
                     )}
                   </h3>
@@ -205,7 +206,7 @@ export default function PricingSection() {
                   {loadingPlan === `${plan.name}-${plan.billingCycle}` ? (
                     <LoaderCircle className="animate-spin size-8" />
                   ) : (
-                    "Choose Plan"
+                    t('pricing_choose_plan')
                   )}
                 </Button>
               </div>
