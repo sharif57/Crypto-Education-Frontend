@@ -32,7 +32,7 @@ export default function PricingSection() {
   const PLANS: Plan[] = [
     {
       name: t('pricing_plan_pro'),
-      billingCycle: t('pricing_monthly'),
+      billingCycle: 'monthly',
       price: 29.90,
       description: t('pricing_pro_monthly_desc'),
       features: [
@@ -44,7 +44,7 @@ export default function PricingSection() {
     },
     {
       name: t('pricing_plan_pro'),
-      billingCycle: t('pricing_yearly'),
+      billingCycle: 'yearly',
       price: 250,
       description: t('pricing_pro_yearly_desc'),
       features: [
@@ -57,7 +57,7 @@ export default function PricingSection() {
     },
     {
       name: t('pricing_plan_elite'),
-      billingCycle: t('pricing_lifetime'),
+      billingCycle: 'lifetime',
       price: 4000,
       description: t('pricing_elite_lifetime_desc'),
       features: [
