@@ -33,11 +33,56 @@ export default function Message() {
   const [askAssistentQuestion, { isLoading: isAsking }] = useAskAssistentQuestionMutation(language);
 
   const [newMessage, setNewMessage] = useState("");
+  const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 });
+  const [buttonPosition, setButtonPosition] = useState({ x: 0, y: 0 });
+  const dragState = useRef({ startX: 0, startY: 0, originX: 0, originY: 0, dragging: false });
+  const buttonDragState = useRef({
+    startX: 0,
+    startY: 0,
+    originX: 0,
+    originY: 0,
+    dragging: false,
+    moved: false,
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const isInteractiveElement = (target: EventTarget | null) => {
+    if (!(target instanceof HTMLElement)) return false;
+    const tag = target.tagName.toLowerCase();
+    // Allow dragging even when starting on buttons; block only true text-entry / link elements
+    if (
+      tag === "input" ||
+      tag === "textarea" ||
+      tag === "select" ||
+      tag === "option" ||
+      tag === "label" ||
+      tag === "a"
+    ) {
+      return true;
+    }
+    return target.closest("input, textarea, select, option, label, a") !== null;
+  };
+
+  const clampToViewport = (x: number, y: number, padding = 32) => {
+    if (typeof window === "undefined") return { x, y };
+    const maxX = window.innerWidth - padding;
+    const maxY = window.innerHeight - padding;
+    return {
+      x: Math.min(Math.max(x, -maxX), maxX),
+      y: Math.min(Math.max(y, -maxY), maxY),
+    };
+  };
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    return () => {
+      stopDragging();
+      stopButtonDragging();
+    };
+  }, []);
 
   // Hide chat on auth pages
   if (
@@ -54,6 +99,81 @@ export default function Message() {
 
 
   // Auto-scroll to bottom when new messages arrive
+
+  const stopDragging = () => {
+    dragState.current.dragging = false;
+    window.removeEventListener("pointermove", handlePointerMove);
+    window.removeEventListener("pointerup", stopDragging);
+  };
+
+  const stopButtonDragging = () => {
+    buttonDragState.current.dragging = false;
+    window.removeEventListener("pointermove", handleButtonPointerMove);
+    window.removeEventListener("pointerup", stopButtonDragging);
+  };
+
+  const handlePointerMove = (event: PointerEvent) => {
+    if (!dragState.current.dragging) return;
+    const deltaX = event.clientX - dragState.current.startX;
+    const deltaY = event.clientY - dragState.current.startY;
+    const next = clampToViewport(
+      dragState.current.originX + deltaX,
+      dragState.current.originY + deltaY,
+      48
+    );
+    setDragPosition(next);
+  };
+
+  const startDragging = (clientX: number, clientY: number) => {
+    dragState.current = {
+      startX: clientX,
+      startY: clientY,
+      originX: dragPosition.x,
+      originY: dragPosition.y,
+      dragging: true,
+    };
+
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", stopDragging);
+  };
+
+  const handleDragStart = (event: React.PointerEvent<HTMLElement>) => {
+    if (isInteractiveElement(event.target)) return;
+    event.preventDefault();
+    startDragging(event.clientX, event.clientY);
+  };
+
+  const handleButtonPointerMove = (event: PointerEvent) => {
+    if (!buttonDragState.current.dragging) return;
+    const deltaX = event.clientX - buttonDragState.current.startX;
+    const deltaY = event.clientY - buttonDragState.current.startY;
+    const distance = Math.abs(deltaX) + Math.abs(deltaY);
+    if (distance > 3) buttonDragState.current.moved = true;
+    const next = clampToViewport(
+      buttonDragState.current.originX + deltaX,
+      buttonDragState.current.originY + deltaY,
+      32
+    );
+    setButtonPosition(next);
+  };
+
+  const startButtonDragging = (clientX: number, clientY: number) => {
+    buttonDragState.current = {
+      startX: clientX,
+      startY: clientY,
+      originX: buttonPosition.x,
+      originY: buttonPosition.y,
+      dragging: true,
+      moved: false,
+    };
+    window.addEventListener("pointermove", handleButtonPointerMove);
+    window.addEventListener("pointerup", stopButtonDragging);
+  };
+
+  const handleButtonPointerDown = (event: React.PointerEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    startButtonDragging(event.clientX, event.clientY);
+  };
 
   const handleSendMessage = async () => {
     if (newMessage.trim() === "" || isAsking) return;
@@ -113,12 +233,22 @@ export default function Message() {
     setIsOpen(!isOpen);
   };
 
+  const handleLauncherClick = () => {
+    if (buttonDragState.current.dragging || buttonDragState.current.moved) {
+      buttonDragState.current.moved = false;
+      return;
+    }
+    toggleChat();
+  };
+
   return (
     <div className="z-[999] ">
       {/* Floating Chat Button */}
       <button
-        onClick={toggleChat}
-        className="fixed bottom-6 right-6 z-[999] text-white rounded-full transition-all hover:scale-110 cursor-pointer "
+        onPointerDown={handleButtonPointerDown}
+        onClick={handleLauncherClick}
+        className="fixed bottom-6 right-6 z-[999] text-white rounded-full transition-all hover:scale-110 cursor-grab active:cursor-grabbing "
+        style={{ transform: `translate(${buttonPosition.x}px, ${buttonPosition.y}px)` }}
         aria-label="Open AI Assistant"
       >
         <svg
@@ -174,7 +304,6 @@ export default function Message() {
 
       {/* Chat Window */}
       {isOpen && (
-        // <div className="fixed bottom-[140px] right-6 z-[999] w-full max-w-md rounded-2xl overflow-hidden shadow-2xl bg-[#1B1B1B]  " >
         <div
           className="
     fixed bottom-[140px] right-0
@@ -183,11 +312,17 @@ export default function Message() {
     shadow-2xl 
     bg-[url('/images/crypto.jpg')]
     bg-cover bg-center bg-no-repeat
+    cursor-grab active:cursor-grabbing
   "
+          style={{ transform: `translate(${dragPosition.x}px, ${dragPosition.y}px)` }}
+          onPointerDown={handleDragStart}
         >
 
           {/* Header */}
-          <div className="bg-[#62C1BF] p-4 flex items-center justify-between">
+          <div
+            className="bg-[#62C1BF] p-4 flex items-center justify-between cursor-grab active:cursor-grabbing select-none"
+            onPointerDown={handleDragStart}
+          >
             <div className="flex items-center gap-3">
               <div className="bg-white/20 p-2 rounded-full">
                 <Bot className="h-6 w-6 text-white" />
