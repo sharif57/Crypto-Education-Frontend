@@ -26,13 +26,25 @@
   display: none !important;
 } */
 
+::-moz-selection {
+  /* Code for Firefox */
 
+  color: white;
+
+  background: #62c1bf;
+}
+
+::selection {
+  color: white;
+
+  background: #62c1bf;
+}
 
 :root {
   --primary: white;
-  --text:#62C1BF;
+  --text: #62c1bf;
   --radius: 0.625rem;
-  --background: #1B1B1B;
+  --background: #1b1b1b;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -67,7 +79,6 @@
 @theme {
   --color-primary: var(--primary);
   --color-text: var(--text);
-
 }
 
 @theme inline {

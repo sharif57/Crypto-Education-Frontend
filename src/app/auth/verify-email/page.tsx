@@ -48,7 +48,6 @@ function VerifyOTP() {
         otp,
       }).unwrap();
 
-      console.log("Verification response:", res);
 
       toast.success(res.message || "Verification successful!");
       localStorage.setItem("access_token", res.access_token);
@@ -77,7 +76,6 @@ function VerifyOTP() {
           ((error as { data: { error?: string } }).data.error) || errorMessage;
       }
       toast.error(errorMessage);
-      console.error("Verification failed:", error);
     } finally {
       setLoading(false);
     }

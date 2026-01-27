@@ -45,7 +45,6 @@ export default function ForgotPass() {
         errorMessage = (error.data as { error?: string }).error || errorMessage;
       }
       toast.error(errorMessage);
-      console.error("Failed to send OTP:", error);
     } finally {
       setLoading(false);
     }

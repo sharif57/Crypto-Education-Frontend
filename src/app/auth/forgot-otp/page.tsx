@@ -13,17 +13,7 @@ import { useVerifyEmailMutation } from "@/Redux/feature/authSlice";
 import { Suspense, useState } from "react";
 
  function ForgotOTP() {
-  // const router = useRouter();
-
-  // const handleVerify = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   try {
-  //     console.log("Verifying OTP...");
-  //     router.push("/auth/create-pass");
-  //   } catch (error) {
-  //     console.error("Verification failed:", error);
-  //   }
-  // };
+  
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const [otp, setOtp] = useState("");
@@ -54,7 +44,6 @@ import { Suspense, useState } from "react";
         otp,
       }).unwrap();
 
-      console.log("Verification response:", res);
 
       toast.success(res.message || "Verification successful!");
       localStorage.setItem("verify", res.access_token);
@@ -73,7 +62,6 @@ import { Suspense, useState } from "react";
           ((error as { data: { error?: string } }).data.error) || errorMessage;
       }
       toast.error(errorMessage);
-      console.error("Verification failed:", error);
     } finally {
       setLoading(false);
     }

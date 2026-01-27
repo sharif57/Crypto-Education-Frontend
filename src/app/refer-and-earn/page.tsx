@@ -119,7 +119,7 @@ export default function ReferEarnCard() {
             <div className="  max-w-6xl mx-auto min-h-screen pt-[100px] ">
                 <div className="flex items-center justify-center ">
                     <div className="w-full max-w-xl h-[530px] p-4">
-                        <div className="rounded-3xl bg-gradient-to-b border border-[#62C1BF] from-[#161616] via-[#2c2c2c] to-[#3f3d3d] p-6 sm:p-8 shadow-2xl">
+                        <div className="rounded-3xl  border border-[#62C1BF] bg-white/10 backdrop-blur-xl p-6 sm:p-8 shadow-2xl">
                             <h1 className="text-center text-3xl sm:text-5xl font-medium text-[#EFF9F9] mb-6 sm:mb-8 tracking-tight">
                                 Refer & Earn
                             </h1>
@@ -132,12 +132,12 @@ export default function ReferEarnCard() {
                                         type="text"
                                         value={link}
                                         readOnly
-                                        className="flex-1 rounded-lg bg-[#535353] px-4 py-3 text-center text-sm sm:text-base font-mono text-gray-200"
+                                        className="flex-1 rounded-lg bg-white/10 backdrop-blur-xl px-4 py-3 text-center text-sm sm:text-base font-mono text-gray-200"
                                     />
                                     <button
                                         onClick={handleCopy}
                                         disabled={copied}
-                                        className="rounded-lg bg-[#535353] hover:bg-slate-600 p-3 text-[#62C1BF] transition-all"
+                                        className="rounded-lg bg-white/10 backdrop-blur-xl hover:bg-white/20 p-3 text-[#62C1BF] transition-all"
                                     >
                                         {copied ? <Check size={20} /> : <Copy size={20} />}
                                     </button>
@@ -151,14 +151,14 @@ export default function ReferEarnCard() {
                                         Your Wallet Address
                                     </Label>
                                     {currentWallet && (
-                                        <Button variant="outline" size="sm" className="text-white" onClick={openWalletEdit}>
+                                        <Button variant="outline" size="sm" className="text-white bg-white/10 backdrop-blur-xl " onClick={openWalletEdit}>
                                             Edit
                                         </Button>
                                     )}
                                 </div>
 
                                 {currentWallet ? (
-                                    <div className="rounded-lg bg-[#535353] px-4 py-3 text-sm text-gray-200 break-all">
+                                    <div className="rounded-lg bg-white/10 backdrop-blur-xl px-4 py-3 text-sm text-gray-200 break-all">
                                         {currentWallet}
                                     </div>
                                 ) : (
@@ -170,17 +170,17 @@ export default function ReferEarnCard() {
 
                             {/* Stats */}
                             <div className="grid grid-cols-2 gap-4 mb-8">
-                                <div className="rounded-lg bg-[#535353] p-5 text-center">
+                                <div className="rounded-lg bg-white/10 backdrop-blur-xl p-5 text-center">
                                     <div className="text-3xl font-normal text-white">{successfulSignups}</div>
                                     <p className="text-sm text-[#FFFFFF] font-medium">Successful Signups</p>
                                 </div>
-                                <div className="rounded-lg bg-[#535353] p-5 text-center">
+                                <div className="rounded-lg bg-white/10 backdrop-blur-xl p-5 text-center">
                                     <div className="text-3xl font-normal text-white">${bonusEarned}</div>
                                     <p className="text-sm text-[#FFFFFF] font-medium">Bonus Earned</p>
                                 </div>
                             </div>
 
-                            <div className="rounded-lg bg-[#535353] p-6 mb-8 text-center">
+                            <div className="rounded-lg bg-white/10 backdrop-blur-xl p-6 mb-8 text-center">
                                 <div className="text-3xl font-normal text-white">${withdrawableBonus}</div>
                                 <p className="text-sm text-[#FFFFFF] font-medium">Withdrawable Bonus</p>
                             </div>
@@ -192,10 +192,10 @@ export default function ReferEarnCard() {
                                         Withdraw
                                     </button>
                                 </DialogTrigger>
-                                <DialogContent className="sm:max-w-md">
+                                <DialogContent className="sm:max-w-md bg-white/10 backdrop-blur-xl border border-[#62C1BF]">
                                     <DialogHeader>
                                         <DialogTitle className="text-white">Withdraw</DialogTitle>
-                                        <DialogDescription>Minimum withdrawal amount is $100</DialogDescription>
+                                        <DialogDescription className="text-gray-300">Minimum withdrawal amount is $100</DialogDescription>
                                     </DialogHeader>
                                     <form onSubmit={handleWithdraw}>
                                         <div className="grid gap-4 py-4">
@@ -206,7 +206,7 @@ export default function ReferEarnCard() {
                                                 placeholder="Enter amount"
                                                 value={amount || ""}
                                                 onChange={(e) => setAmount(Number(e.target.value) || undefined)}
-                                                className="text-white"
+                                                className="text-white placeholder:text-gray-400 border border-gray-400 "
                                                 required
                                             />
                                         </div>
@@ -230,12 +230,12 @@ export default function ReferEarnCard() {
 
                     {/* Wallet Address Dialog */}
                     <Dialog open={openWalletDialog} onOpenChange={setOpenWalletDialog}>
-                        <DialogContent className="sm:max-w-md">
+                        <DialogContent className="sm:max-w-md bg-white/10 backdrop-blur-xl border border-[#62C1BF]">
                             <DialogHeader>
                                 <DialogTitle className="text-white">
                                     {currentWallet ? "Update" : "Add"} Wallet Address
                                 </DialogTitle>
-                                <DialogDescription>
+                                <DialogDescription className="text-gray-300">
                                     This address will be used for all withdrawal requests.
                                 </DialogDescription>
                             </DialogHeader>
@@ -245,7 +245,7 @@ export default function ReferEarnCard() {
                                     id="wallet"
                                     placeholder="e.g. TZ1r.......SV8CRnHq"
                                     value={walletInput}
-                                    className="text-white"
+                                    className="text-white placeholder:text-gray-400 border border-gray-400"
                                     onChange={(e) => setWalletInput(e.target.value)}
                                     autoFocus
                                 />

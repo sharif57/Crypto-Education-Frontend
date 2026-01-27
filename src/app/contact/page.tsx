@@ -264,30 +264,30 @@ export default function Contact() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Field>
                       <FieldLabel className="text-[#B8B8B8]">First Name</FieldLabel>
-                      <Input value={firstName} placeholder='' onChange={(e) => setFirstName(e.target.value)} className="text-white" />
+                      <Input value={firstName} placeholder='Enter your first name ' onChange={(e) => setFirstName(e.target.value)} className="text-white placeholder:text-gray-400  " />
                     </Field>
 
                     <Field>
                       <FieldLabel className="text-[#B8B8B8]">Last Name</FieldLabel>
-                      <Input value={lastName} onChange={(e) => setLastName(e.target.value)} className="text-white" />
+                      <Input value={lastName} placeholder='Enter your last name' onChange={(e) => setLastName(e.target.value)} className="text-white placeholder:text-gray-400  " />
                     </Field>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Field>
                       <FieldLabel className="text-[#B8B8B8]">Email</FieldLabel>
-                      <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="text-white" />
+                      <Input type="email" placeholder="john@example.com" value={email} onChange={(e) => setEmail(e.target.value)} className="text-white placeholder:text-gray-400  " />
                     </Field>
 
                     <Field>
                       <FieldLabel className="text-[#B8B8B8]">Phone</FieldLabel>
-                      <Input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="text-white" />
+                      <Input type="tel" placeholder="(123) 456-7890" value={phone} onChange={(e) => setPhone(e.target.value)} className="text-white placeholder:text-gray-400  " />
                     </Field>
                   </div>
 
                   <Field>
                     <FieldLabel className="text-[#B8B8B8]">Message</FieldLabel>
-                    <Textarea value={message} onChange={(e) => setMessage(e.target.value)} className="min-h-[120px] text-white" />
+                    <Textarea value={message} placeholder="Enter your message" onChange={(e) => setMessage(e.target.value)} className="min-h-[120px] text-white placeholder:text-gray-400" />
                   </Field>
 
                   {/* ✅ reCAPTCHA */}

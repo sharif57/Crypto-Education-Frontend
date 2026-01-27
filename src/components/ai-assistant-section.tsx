@@ -49,35 +49,72 @@ export default function AIAssistantSection() {
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center">
           {/* Left Content - Text */}
-          <div className="space-y-8 text-center lg:text-left order-2 lg:order-1">
+          <div
+            className="
+    order-2 lg:order-1
+    space-y-10
+    text-center lg:text-left
+    max-w-6xl
+    mx-auto
+    px-4 sm:px-6 lg:px-0
+  "
+          >
+            {/* Heading + Text */}
             <div className="space-y-6">
-              <h2 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-medium leading-tight">
-                <span className="text-white">Got Questions?</span>
+              <h2
+                className="
+        font-medium text-white leading-tight
+        text-3xl sm:text-4xl md:text-5xl xl:text-6xl
+      "
+              >
+                <span>Got Questions?</span>
                 <br />
-                <span className="text-white">Ask Our AI</span>
+                <span>Ask Our AI</span>
                 <br />
-                <span className="text-white">Learning Assistant</span>
+                <span>Learning Assistant</span>
               </h2>
 
-              <p className="text-gray-300 text-lg sm:text-xl lg:text-xl leading-relaxed lg:w-2/3  mx-auto lg:mx-0">
+              <p
+                className="
+        text-gray-300 leading-relaxed
+        text-base sm:text-lg md:text-xl
+        max-w-xl lg:max-w-2xl
+        mx-auto lg:mx-0
+      "
+              >
                 Instantly get answers about Web3, crypto, or any course topic —
                 24/7, powered by AI
               </p>
             </div>
 
+            {/* Button */}
             <div className="flex justify-center lg:justify-start">
-              {/* <Link href="/chat"> */}
               <Button
                 onClick={handleStartLearning}
                 size="lg"
-                className="bg-text cursor-pointer text-[#224443] font-medium !px-8 py-6 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40 group"
+                className="
+        bg-text text-[#224443] font-medium cursor-pointer
+        px-6 sm:px-8 py-4 sm:py-6
+        rounded-full
+        text-base sm:text-lg
+        transition-all duration-300
+        shadow-lg shadow-cyan-400/25
+        hover:shadow-cyan-400/40
+        group
+      "
               >
                 Ask the AI Now
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                <ArrowRight
+                  className="
+          ml-2 w-4 h-4 sm:w-5 sm:h-5
+          group-hover:translate-x-1
+          transition-transform duration-300
+        "
+                />
               </Button>
-              {/* </Link> */}
             </div>
           </div>
+
 
           {/* Right Content - Phone Mockup with AI Robot */}
           <div className="flex justify-center lg:justify-end order-1 lg:order-2">

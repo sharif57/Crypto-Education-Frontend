@@ -28,7 +28,6 @@ export default function VideoDetailPage() {
 
   const { data, isLoading, isError } = useSingleCategoryVideoQuery(id);
 
-  console.log(data, 'related videos');
 
   const toggleModule = (moduleId: string) => {
     setExpandedModule(prev => prev === moduleId ? null : moduleId);

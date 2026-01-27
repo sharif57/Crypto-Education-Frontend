@@ -114,17 +114,8 @@ export default function PricingSection() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        {/* <div className="text-center mb-16 lg:mb-20">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-medium leading-tight mb-6">
-            <span className="text-white">Simple Plans. Serious </span>
-            <span className="text-text">Value</span>
-          </h2>
-          <p className="text-gray-300 text-lg sm:text-xl lg:text-2xl font-normal leading-relaxed mx-auto">
-            Choose a plan that fits your learning journey — upgrade anytime as you grow.
-          </p>
-        </div> */}
-        <div>
+
+        {/* <div>
           <h1 className="text-3xl font-normal w-full  mx-auto text-[60px] text-white text-center">
             {t('pricing_header1')} <span className="bg-gradient-to-r from-[#94ecea] to-[#307574] bg-clip-text text-transparent font-normal">
               {t('pricing_header_value')} 
@@ -135,7 +126,35 @@ export default function PricingSection() {
           <p className="text-[16px] font-normal text-[#B4B4B4] pt-2 w-full lg:w-4xl mx-auto text-center text-balance">
             {t('pricing_subtitle')}
           </p>
+        </div> */}
+
+        <div className="px-4 sm:px-6 lg:px-0">
+          <h1
+            className="
+      mx-auto text-center text-white font-normal
+      text-3xl sm:text-4xl md:text-5xl xl:text-6xl
+      leading-tight sm:leading-snug xl:leading-[1.15]
+      max-w-5xl
+    "
+          >
+            {t("pricing_header1")}{" "}
+            <span className="bg-gradient-to-r from-[#94ecea] to-[#307574] bg-clip-text text-transparent">
+              {t("pricing_header_value")}
+            </span>{" "}
+            <span>{t("pricing_header2")}</span>
+          </h1>
+
+          <p
+            className="
+      mx-auto mt-3 text-center text-[#B4B4B4]
+      text-sm sm:text-base md:text-lg
+      max-w-3xl
+    "
+          >
+            {t("pricing_subtitle")}
+          </p>
         </div>
+
 
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 xl:gap-8 mt-14">

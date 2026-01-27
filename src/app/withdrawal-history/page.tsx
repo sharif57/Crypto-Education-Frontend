@@ -108,7 +108,7 @@ export default function WithdrawalTable() {
     return <p className="text-center mt-20 text-red-500">Failed to load withdrawals</p>
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-[#326866] to-[#1B1B1B]">
+    <div className="w-full min-h-screen bg-gradient-to-b from-[#326866] to-[#1B1B1B] px-4 sm:px-6 lg:px-8 py-12">
       <div className="w-full space-y-6 max-w-7xl mx-auto pt-[150px] pb-10 h-screen">
         <h1 className="text-2xl font-semibold text-[#62C1BF]">
           Withdrawal History
@@ -178,7 +178,7 @@ export default function WithdrawalTable() {
         </div>
 
         {/* SUMMARY */}
-        <div className="rounded-lg border border-border bg-muted/30 p-4">
+        <div className="rounded-lg border border-[#307574] bg-muted/30 p-4">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <p className="text-xs text-white">Total Requests</p>
