@@ -39,6 +39,8 @@ export default function PricingSection() {
         t('pricing_feature_ai'),
         t('pricing_feature_telegram'),
         t('pricing_feature_videos'),
+        t('pricing_feature_live_calls'),
+        t('pricing_feature_workshops'),
       ],
       featured: false,
     },
