@@ -34,8 +34,8 @@ export default function ReferEarnCard() {
     const datas = affiliateData?.data || {};
 
     const currentWallet = profileWallet ?? affiliateWallet ?? null;
-    // main.theclue.io
-    const link = `https://main.theclue.io/auth/signup?reff_id=${datas?.referral_id || ""}`
+    // theclue.io
+    const link = `https://theclue.io/auth/signup?reff_id=${datas?.referral_id || ""}`
 
     const [amount, setAmount] = useState<number | undefined>(undefined);
 
