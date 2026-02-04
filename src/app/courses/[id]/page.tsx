@@ -9,6 +9,7 @@ import { ChevronDown } from "lucide-react";
 import { useCategoryVideoQuery } from "@/Redux/feature/categoryVideoSlice";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useParams } from "next/navigation";
+import { Progress } from "@/components/ui/progress";
 
 interface Lesson {
   object_id: string;
@@ -18,6 +19,9 @@ interface Lesson {
   video_file?: string;
   isCompleted?: boolean;
   isLocked?: boolean;
+  progress?: {
+    is_completed?: boolean;
+  };
 }
 
 interface Module {
@@ -32,12 +36,13 @@ interface Module {
 
 
 
-export default function Category () {
+export default function Category() {
   const params = useParams();
   const id = params?.id as string;
 
   const [expandedModule, setExpandedModule] = useState<string | null>(null);
   const { data: categoryVideo, isLoading: categoryVideoLoading } = useCategoryVideoQuery(id);
+  console.log(categoryVideo, '===========>category======>')
 
 
   const toggleModule = (moduleId: string) => {
@@ -47,7 +52,7 @@ export default function Category () {
   return (
     <div className="min-h-screen pt-[100px] lg:pt-[100px] p-4 sm:p-6 lg:p-8 w-full  bg-gradient-to-b from-[#326866] to-[#1B1B1B]">
       <div className="max-w-3xl mx-auto space-y-5">
-   
+
         {/* Modules Section */}
         <div>
           {categoryVideoLoading ? (
@@ -55,7 +60,7 @@ export default function Category () {
               {Array.from({ length: 7 }).map((_, index) => (
                 <div
                   key={index}
-                  className="bg-[#23272f] border-t border-[#333] px-4 py-6 flex items-center gap-4"
+                  className="bg-[#23272f] border-t border-[#333] px-4 py-8 flex items-center gap-4"
                 >
                   <Skeleton className="w-10 h-10 rounded-full" />
                   <div className="flex-1 space-y-2">
@@ -71,24 +76,24 @@ export default function Category () {
               {categoryVideo?.data?.map((module: Module) => (
                 <div
                   key={module.id}
-                  className="bg-[#2a2a2a] rounded-xl overflow-hidden"
+                  className="bg-[#2a2a2a] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-[#3a3a3a]"
                   title={module.name}
                 >
                   {/* Module Header */}
                   <Button
                     onClick={() => toggleModule(module.id.toString())}
-                    className="w-full cursor-pointer p-4 flex items-center justify-between bg-transparent hover:bg-[#333333] transition-colors duration-200 rounded-none h-auto"
+                    className="w-full cursor-pointer p-5 flex items-center justify-between bg-transparent hover:bg-[#333333]/50 transition-all duration-200 rounded-none h-auto"
                     variant="ghost"
                   >
-                    <div className="flex items-center gap-4">
-                      <div className="relative">
+                    <div className="grid grid-cols-[auto_1fr] gap-4 w-full">
+                      <div className="relative rounded-lg overflow-hidden shadow-md">
                         <Image
                           src={module.thumbnail || "/images/placeholder.png"}
                           alt={module.name}
-                          width={100}
-                          height={70}
+                          width={500}
+                          height={700}
                           priority
-                          className="object-cover w-[100px] h-[70px] object-center"
+                          className="object-cover w-[100px] h-[90px] sm:w-[120px] sm:h-[85px] lg:w-[150px] lg:h-[100px] object-center hover:scale-105 transition-transform duration-300"
                         />
                       </div>
                       <div className="text-left flex-1">
@@ -96,12 +101,23 @@ export default function Category () {
                         <p className="text-[#62C1BF] text-lg font-normal">
                           {module.total_videos} Video{module.total_videos !== 1 ? "s" : ""}
                         </p>
+                        <div className="w-full flex flex-col justify-between  pt-1">
+                          <div className="flex justify-between mb-2">
+                            <span className="text-slate-200 font-normal text-xs">Module Progress</span>
+                            <span className="text-[#62C1BF] font-normal text-xs">{Math.floor((module.completed_videos / module.total_videos) * 100)}%</span>
+                          </div>
+                          <Progress
+                            value={Math.floor((module.completed_videos / module.total_videos) * 100)}
+                            id={`progress-${module.id}`}
+                            className="w-full"
+                          />
+                        </div>
                       </div>
+
                     </div>
                     <ChevronDown
-                      className={`text-white transition-transform duration-200 group-hover:scale-110 ${
-                        expandedModule === module.id.toString() ? "rotate-180" : ""
-                      }`}
+                      className={`text-white transition-transform duration-200 group-hover:scale-110 ${expandedModule === module.id.toString() ? "rotate-180" : ""
+                        }`}
                       size={32}
                     />
                   </Button>
@@ -135,6 +151,7 @@ export default function Category () {
                                 {Math.floor(video.duration_seconds / 60)} mins
                               </p>
                             )}
+                            <p>{video?.progress?.is_completed === true ? <span className="text-[#62C1BF] font-semibold">Completed</span> : ""}</p>
                           </div>
                         </Link>
                       ))}

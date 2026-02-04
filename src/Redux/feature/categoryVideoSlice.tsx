@@ -60,8 +60,21 @@ export const categoryVideoApi = baseApi.injectEndpoints({
             providesTags: ["Category"],
         }),
 
+        // /tutorials/progress/
+        progressUpdate: builder.mutation({
+            query: (data) => ({
+                url: "/tutorials/progress/",
+                method: "POST",
+                body: data,
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+                },
+            }),
+            invalidatesTags: ["Category"],
+        }),
+
 
     }),
 });
 
-export const { useCategoryVideoQuery , useSingleCategoryVideoQuery, useAllCourseQuery, useCategoryWiseVideoQuery, useSingleVideoQuery } = categoryVideoApi;
+export const { useCategoryVideoQuery, useSingleCategoryVideoQuery, useAllCourseQuery, useCategoryWiseVideoQuery, useSingleVideoQuery, useProgressUpdateMutation } = categoryVideoApi;

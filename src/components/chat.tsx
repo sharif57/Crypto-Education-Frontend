@@ -157,7 +157,7 @@ export default function Chat({ videoId, videoResource }: ChatProps) {
 
   return (
     <div>
-      <div className="lg:flex gap-2 items-center justify-between  space-y-8">
+      <div className="lg:flex gap-2 items-center justify-between  space-y-8 ">
 
 
         <Button
@@ -165,7 +165,7 @@ export default function Chat({ videoId, videoResource }: ChatProps) {
             setIsAIModalOpen(true);
             createSession();
           }}
-          className="px-4 py-2 mb-8 bg-[#62C1BF] text-[#224443] cursor-pointer rounded-full text-sm font-medium transition-colors"
+          className="px-4 py-2  bg-[#62C1BF] text-[#224443] cursor-pointer rounded-full text-sm font-medium transition-colors"
         >
           <svg
             width="24"
@@ -217,7 +217,7 @@ export default function Chat({ videoId, videoResource }: ChatProps) {
       </div>
 
       {isAIModalOpen && (
-        <div className="absolute lg:top-[600px] top-0 h-[485px] border-text lg:right-12 right-0 lg:w-[400px] w-full m-0 lg:m-5 z-20 rounded-xl border flex flex-col">
+        <div className="absolute lg:top-[600px] top-[200px] h-[485px] border-text lg:right-12 right-0 lg:w-[400px] w-full m-0 lg:m-5 z-20 rounded-xl border flex flex-col">
           <div className="flex items-center justify-between p-4 bg-[#62C1BF] rounded-t-xl text-[#224443]">
             <div className="flex items-center gap-2">
               <svg
@@ -374,5 +374,6 @@ export default function Chat({ videoId, videoResource }: ChatProps) {
         </div>
       )}
     </div>
+    
   );
 }
