@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 "use client";
 
@@ -5,10 +6,9 @@ import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useProgressUpdateMutation, useSingleVideoQuery } from "@/Redux/feature/categoryVideoSlice";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ChevronUp, ChevronDown, Play, ArrowRight } from "lucide-react";
+import { ArrowLeft, ChevronUp, ChevronDown, Play, ArrowRight, Download, ExternalLink, FileText } from "lucide-react";
 import Loading from "@/components/Loading";
 import Chat from "@/components/chat";
-import Link from "next/link";
 
 interface RelatedVideo {
   id: number | string;
@@ -31,6 +31,7 @@ export default function VideoDetailPage() {
   const id = params?.catId as string;
   const [expandedModule, setExpandedModule] = useState<string | null>('related-videos');
   const [currentTime, setCurrentTime] = useState<number>(0);
+  const [isResourceDropdownOpen, setIsResourceDropdownOpen] = useState<boolean>(false);
 
   const { data, isLoading, isError } = useSingleVideoQuery(id);
 
@@ -183,22 +184,123 @@ export default function VideoDetailPage() {
 
                 <div className="flex flex-wrap gap-2 sm:gap-4 items-center justify-start sm:justify-end">
 
-                  {typeof video?.video_resource === "string" &&
-                    video.video_resource.trim() !== "" && (
-                      <Link
-                        href={video.video_resource}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block"
+                  {/* Resources Dropdown Button */}
+                  {(video?.video_resource || video?.resources?.length > 0) && (
+                    <div className="relative">
+                      <Button
+                        onClick={() => setIsResourceDropdownOpen(!isResourceDropdownOpen)}
+                        className="px-4 py-2 bg-[#62C1BF] text-[#224443] cursor-pointer rounded-full text-sm font-medium transition-colors hover:bg-[#4CA7A5] flex items-center gap-2"
                       >
-                        <Button
-                          className="px-4 py-2 bg-[#62C1BF] text-[#224443] cursor-pointer rounded-full 
-                   text-sm font-medium transition-colors hover:bg-[#4CA7A5]"
-                        >
-                          Video Resource
-                        </Button>
-                      </Link>
-                    )}
+                        <FileText className="w-4 h-4" />
+                        Resources
+                        <ChevronDown className={`w-4 h-4 transition-transform ${isResourceDropdownOpen ? 'rotate-180' : ''}`} />
+                      </Button>
+
+                      {/* Dropdown Menu */}
+                      {isResourceDropdownOpen && (
+                        <>
+                          {/* Mobile Backdrop */}
+                          <div
+                            className="fixed inset-0 bg-black/50 z-[60] sm:hidden"
+                            onClick={() => setIsResourceDropdownOpen(false)}
+                          />
+
+                          {/* Dropdown Container */}
+                          <div className="fixed sm:absolute bottom-0 sm:top-full left-0 right-0 sm:left-auto sm:right-0 sm:mt-2 sm:w-80 w-full bg-[#2a2a2a]  rounded-t-2xl sm:rounded-xl shadow-2xl z-[70] max-h-[70vh] sm:max-h-[400px]">
+                            {/* Mobile Header */}
+                            <div className="sm:hidden flex items-center justify-between p-4 border-b border-[#62C1BF]/30">
+                              <h3 className="text-white font-semibold">Resources</h3>
+                              <button
+                                onClick={() => setIsResourceDropdownOpen(false)}
+                                className="text-gray-400 hover:text-white transition-colors"
+                              >
+                                <ChevronDown className="w-5 h-5 rotate-180" />
+                              </button>
+                            </div>
+
+                            {/* Content */}
+                            <div className="p-3 border border-[#62C1BF]/30 bg-gradient-to-b from-[#326866] to-[#1B1B1B] rounded-lg sm:p-4 space-y-2 sm:space-y-3 overflow-y-auto max-h-[calc(70vh-70px)] sm:max-h-[400px]">
+                              {/* Main Video Resource */}
+                              {video?.video_resource && (
+                                <a
+                                  href={video.video_resource}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="block p-3 rounded-lg bg-[#333333] hover:bg-[#3a3a3a] border border-[#62C1BF]/30 transition-colors group"
+                                >
+                                  <div className="flex items-start gap-3">
+                                    <div className="w-8 h-8 rounded-lg bg-[#62C1BF]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                      <Download className="w-4 h-4 text-[#62C1BF]" />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                      <p className="text-sm font-medium text-white truncate group-hover:text-[#62C1BF] transition-colors">Main Resource</p>
+                                      <p className="text-xs text-gray-400 mt-1">Video documentation & materials</p>
+                                    </div>
+                                    <ExternalLink className="w-4 h-4 text-gray-500 group-hover:text-[#62C1BF] transition-colors flex-shrink-0" />
+                                  </div>
+                                </a>
+                              )}
+
+                              {/* Additional Resources - Show all items */}
+                              {video?.resources && video.resources.length > 0 && (
+                                <>
+                                  {video.resources.map((resource: any) => (
+                                    <div key={resource.object_id}>
+                                      {resource.file_url ? (
+                                        <a
+                                          href={resource.file_url}
+                                          download
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            const link = document.createElement('a');
+                                            link.href = resource.file_url;
+                                            link.download = resource.file_url.split('/').pop() || 'resource';
+                                            document.body.appendChild(link);
+                                            link.click();
+                                            document.body.removeChild(link);
+                                          }}
+                                          className="block p-3 rounded-lg bg-[#333333] hover:bg-[#3a3a3a] border border-[#62C1BF]/30 transition-colors group cursor-pointer"
+                                        >
+                                          <div className="flex items-start gap-3">
+                                            <div className="w-8 h-8 rounded-lg bg-[#62C1BF]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                              <Download className="w-4 h-4 text-[#62C1BF]" />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                              <p className="text-sm font-medium text-white truncate group-hover:text-[#62C1BF] transition-colors">{resource.file_url.split('/').pop()}</p>
+                                              <p className="text-xs text-gray-400 mt-1">Document file</p>
+                                            </div>
+                                            <Download className="w-4 h-4 text-gray-500 group-hover:text-[#62C1BF] transition-colors flex-shrink-0" />
+                                          </div>
+                                        </a>
+                                      ) : resource.link ? (
+                                        <a
+                                          href={resource.link}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="block p-3 rounded-lg bg-[#333333] hover:bg-[#3a3a3a] border border-[#62C1BF]/30 transition-colors group"
+                                        >
+                                          <div className="flex items-start gap-3">
+                                            <div className="w-8 h-8 rounded-lg bg-[#62C1BF]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                              <ExternalLink className="w-4 h-4 text-[#62C1BF]" />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                              <p className="text-sm font-medium text-white truncate group-hover:text-[#62C1BF] transition-colors">External Link</p>
+                                              <p className="text-xs text-gray-400 mt-1 truncate">{new URL(resource.link).hostname}</p>
+                                            </div>
+                                            <ExternalLink className="w-4 h-4 text-gray-500 group-hover:text-[#62C1BF] transition-colors flex-shrink-0" />
+                                          </div>
+                                        </a>
+                                      ) : null}
+                                    </div>
+                                  ))}
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  )}
 
 
                   {/* <Chat videoId={video?.subtitle_object_id} videoResource={video?.video_resource} /> */}
