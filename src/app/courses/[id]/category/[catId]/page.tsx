@@ -219,7 +219,7 @@ export default function VideoDetailPage() {
                             </div>
 
                             {/* Content */}
-                            <div className="p-3 border border-[#62C1BF]/30 bg-gradient-to-b from-[#326866] to-[#1B1B1B] rounded-lg sm:p-4 space-y-2 sm:space-y-3 overflow-y-auto max-h-[calc(70vh-70px)] sm:max-h-[400px]">
+                            <div className="p-3 border border-[#62C1BF]/30 bg-gradient-to-b from-[#326866] to-[#1B1B1B] rounded-none  sm:rounded-lg lg:rounded-lg sm:p-4 space-y-2 sm:space-y-3 overflow-y-auto max-h-[calc(70vh-70px)] sm:max-h-[400px]">
                               {/* Main Video Resource */}
                               {video?.video_resource && (
                                 <a
