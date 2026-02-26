@@ -72,9 +72,20 @@ export const categoryVideoApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["Category"],
         }),
+        // /tutorials/additional-resources/
+        additionalResources: builder.query({
+            query: () => ({
+                url: `/tutorials/additional-resources/`,
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+                },
+            }),
+            providesTags: ["Category"],
+        }),
 
 
     }),
 });
 
-export const { useCategoryVideoQuery, useSingleCategoryVideoQuery, useAllCourseQuery, useCategoryWiseVideoQuery, useSingleVideoQuery, useProgressUpdateMutation } = categoryVideoApi;
+export const { useCategoryVideoQuery, useSingleCategoryVideoQuery, useAllCourseQuery, useCategoryWiseVideoQuery, useSingleVideoQuery, useProgressUpdateMutation, useAdditionalResourcesQuery } = categoryVideoApi;
