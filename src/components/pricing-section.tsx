@@ -74,7 +74,7 @@ export default function PricingSection() {
 
   const handleBuySubscription = async (plan: Plan) => {
     if (!user) {
-      toast.error("Please log in to buy a subscription.");
+      toast.error("Please sign in to buy a subscription.");
       router.push("/auth/login");
       return;
     }
@@ -104,7 +104,7 @@ export default function PricingSection() {
   };
 
   return (
-    <section id="pricing" className="relative bg-[#1a1a1a] py-16 lg:py-24">
+    <section id="pricing" className="relative bg-[#1a1a1a] ">
       <div className="absolute inset-0 opacity-5">
         <div
           className="absolute inset-0"

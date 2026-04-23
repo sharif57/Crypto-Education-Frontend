@@ -7,12 +7,12 @@ import { useTranslation } from '@/hooks/useTranslation'
 export default function TheClue() {
     const { t } = useTranslation();
     return (
-        <div>
+        <div >
             <Heading
                 title={t('clue_title')}
                 subtitle={t('clue_description')}
             />
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
                     {/* Row 1 */}
                     {/* Global Access - Large Card */}

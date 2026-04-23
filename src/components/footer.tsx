@@ -4,10 +4,12 @@ import Link from "next/link";
 import { Instagram, Linkedin, Youtube } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import ReportIssueModal from "./report-issue-modal";
 
 export default function Footer() {
   const pathname = usePathname();
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
   // Define routes where the footer should be hidden
   const hideFooterRoutes = useMemo(
@@ -50,7 +52,7 @@ export default function Footer() {
                 alt="Logo"
                 width={400}
                 height={500}
-                className="object-cover w-[250px] h-[190px] object-center"
+                className="object-cover size-[100px] object-center"
               />
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -125,6 +127,12 @@ export default function Footer() {
               >
                 About Us
               </Link>
+              <button
+                onClick={() => setIsReportModalOpen(true)}
+                className="block text-gray-300 hover:text-[#4ade80] transition-colors duration-200 text-sm text-left w-full"
+              >
+                Report an Issue
+              </button>
             </nav>
           </div>
 
@@ -189,6 +197,11 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
+      <ReportIssueModal
+        isOpen={isReportModalOpen}
+        onClose={() => setIsReportModalOpen(false)}
+      />
     </footer>
   );
 }

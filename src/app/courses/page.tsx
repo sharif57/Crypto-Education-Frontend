@@ -109,7 +109,7 @@ export default function Courses() {
                 {/* Image Container */}
                 <div className="relative overflow-hidden flex-shrink-0">
                   <Image
-                    src={"/images/resource.png"}
+                    src={"/images/importants.png"}
                     alt={"important"}
                     width={400}
                     priority

@@ -16,7 +16,7 @@ import React from "react";
 
 export default function Home() {
   return (
-    <div className="mt-[0px] lg:t-[50px]">
+    <div className="">
       {/* <Banner></Banner> */}
       <Hero />
       <TheClue />
