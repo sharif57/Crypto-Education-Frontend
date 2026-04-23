@@ -103,7 +103,7 @@ export default function Everyone() {
                         </div>
 
                         {/* IMAGE (bottom cropped, taller) */}
-                        <div className="absolute bottom-4 left-4 right-4 h-[62%] overflow-hidden rounded-2xl border border-foreground">
+                        <div className="absolute bottom-4 left-4 right-4 h-[62%] overflow-hidden rounded-2xl ">
                             <Image
                                 src="/Layer_1.png"
                                 alt="video"

@@ -13,7 +13,8 @@ export const baseApi = createApi({
     "Privacy",
     'Chat',
     'Subscription',
-    "Referral"
+    "Referral",
+    "Issue"
    
   ],
   endpoints: () => ({}),

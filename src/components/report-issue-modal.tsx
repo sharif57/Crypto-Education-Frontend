@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useRef } from "react";
 import { ImagePlus, X } from "lucide-react";
 import Image from "next/image";
+import { useReportIssueMutation } from "@/Redux/feature/issueSlice";
+import { toast } from "sonner";
 
 interface ReportIssueModalProps {
     isOpen: boolean;
@@ -19,12 +22,14 @@ export default function ReportIssueModal({
         photo: null as File | null,
     });
     const [photoPreview, setPhotoPreview] = useState<string | null>(null);
-    const [isSubmitting,] = useState(false);
-    const [submitStatus,] = useState<{
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState<{
         type: "success" | "error" | null;
         message: string;
     }>({ type: null, message: "" });
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const [reportIssue] = useReportIssueMutation();
 
     const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -43,6 +48,62 @@ export default function ReportIssueModal({
     ) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const resetForm = () => {
+        setFormData({
+            issue: "",
+            email: "",
+            photo: null,
+        });
+        setPhotoPreview(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (!formData.issue.trim() || !formData.email.trim()) {
+            setSubmitStatus({
+                type: "error",
+                message: "Issue description and email are required.",
+            });
+            return;
+        }
+
+        setIsSubmitting(true);
+        setSubmitStatus({ type: null, message: "" });
+
+        try {
+            const submitFormData = new FormData();
+            submitFormData.append("description", formData.issue.trim());
+            submitFormData.append("email", formData.email.trim());
+
+            if (formData.photo) {
+                submitFormData.append("images", formData.photo);
+            }
+
+            await reportIssue(submitFormData).unwrap();
+
+            setSubmitStatus({
+                type: "success",
+                message: "Issue reported successfully.",
+            });
+            toast.success("Issue reported successfully.");
+            resetForm();
+            onClose();
+        } catch (error: any) {
+            setSubmitStatus({
+                type: "error",
+                message: error?.data?.error || "Unable to submit the issue. Please try again.",
+            });
+            toast.error(error?.data?.error || "Unable to submit the issue. Please try again.");
+            console.error("Error submitting issue report:", error);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
 
@@ -80,7 +141,7 @@ export default function ReportIssueModal({
                 </div>
 
                 {/* Form Content */}
-                <form className=" space-y-4 pt-6">
+                <form className=" space-y-4 pt-6" onSubmit={handleSubmit}>
                     {/* Issue Description */}
                     <div>
                         <label className="block text-[#F3F3F3] text-lg font-semibold mb-3">

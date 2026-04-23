@@ -42,7 +42,7 @@ export default function TestimonialsSection() {
 
   return (
     <div>
-      <div id="testimonials" className="min-h-screen     text-white  px-4 sm:px-6 lg:px-8">
+      <div id="testimonials" className="     text-white  px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto -z-20">
           {/* Header Section */}
           <div className="px-4 sm:px-6 lg:px-0">
