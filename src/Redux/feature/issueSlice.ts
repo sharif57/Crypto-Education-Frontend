@@ -10,9 +10,6 @@ export const issueApi = baseApi.injectEndpoints({
         url: "/settings/report-issue/",
         method: "POST",
         body: data,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
       }),
       invalidatesTags: ["Issue"],
     }),
