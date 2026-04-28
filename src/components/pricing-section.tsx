@@ -143,6 +143,7 @@ export default function PricingSection() {
             <span className="bg-gradient-to-r from-[#94ecea] to-[#307574] bg-clip-text text-transparent">
               {t("pricing_header_value")}
             </span>{" "}
+            
             <span>{t("pricing_header2")}</span>
           </h1>
 
