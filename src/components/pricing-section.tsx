@@ -21,19 +21,28 @@ interface Plan {
 }
 
 export default function PricingSection() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const [buySubscription] = useBuySubscriptionMutation();
   const { data } = useUserProfileQuery(undefined);
   const user = data?.data;
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
 
+  const formatPrice = (price: number) => {
+    const locale = i18n.language?.startsWith("de") ? "de-DE" : "en-US";
+
+    return `$${new Intl.NumberFormat(locale, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2,
+    }).format(price)}`;
+  };
+
 
   const PLANS: Plan[] = [
     {
       name: t('pricing_plan_pro'),
       billingCycle: 'monthly',
-      price: 29.90,
+      price: 29.99,
       description: t('pricing_pro_monthly_desc'),
       features: [
         t('pricing_feature_ai'),
@@ -50,23 +59,25 @@ export default function PricingSection() {
       price: 250,
       description: t('pricing_pro_yearly_desc'),
       features: [
-        t('pricing_feature_everything_basic'),
-        t('pricing_feature_qa_calls'),
-        t('pricing_feature_signals'),
-        t('pricing_feature_portfolio'),
+        t('pricing_feature_ai'),
+        t('pricing_feature_telegram'),
+        t('pricing_feature_videos'),
+        t('pricing_feature_live_calls'),
+        t('pricing_feature_workshops'),
       ],
       featured: true,
     },
     {
       name: t('pricing_plan_elite'),
       billingCycle: 'lifetime',
-      price: 4000,
+      price: 3999,
       description: t('pricing_elite_lifetime_desc'),
       features: [
-        t('pricing_feature_everything_pro'),
-        t('pricing_feature_masterclasses'),
-        t('pricing_feature_mentoring'),
-        t('pricing_feature_events'),
+        t('pricing_elite_feature_mentoring'),
+        t('pricing_elite_feature_strategy'),
+        t('pricing_elite_feature_analysis'),
+        t('pricing_elite_feature_access'),
+        t('pricing_elite_feature_support'),
       ],
       featured: false,
     },
@@ -81,7 +92,7 @@ export default function PricingSection() {
 
     const payload = {
       plan: plan.name.toLowerCase(),
-      billing_cycle: plan.billingCycle?.toLowerCase() || "",
+      billing_cycle: plan.billingCycle,
     };
 
     // console.log("SUBSCRIPTION PAYLOAD 👉", payload);
@@ -143,7 +154,7 @@ export default function PricingSection() {
             <span className="bg-gradient-to-r from-[#94ecea] to-[#307574] bg-clip-text text-transparent">
               {t("pricing_header_value")}
             </span>{" "}
-            
+
             <span>{t("pricing_header2")}</span>
           </h1>
 
@@ -180,14 +191,14 @@ export default function PricingSection() {
               </div>
 
               <div className="relative z-20 flex flex-col h-full">
-                <div className="grow">
+                <div className="grow flex flex-col">
                   {/* Price */}
                   <div className="mb-6">
                     <div className="flex items-baseline">
                       <span className="text-4xl lg:text-4xl font-semibold text-white">
-                        ${plan.price}
+                        {formatPrice(plan.price)}
                       </span>
-                      <span className="text-gray-400 ml-2">/{plan.billingCycle}</span>
+                      <span className="text-gray-400 ml-2">/{t(`pricing_${plan.billingCycle}`)}</span>
                     </div>
                   </div>
 
@@ -207,7 +218,7 @@ export default function PricingSection() {
                   </p>
 
                   {/* Features */}
-                  <div className="space-y-4 mb-8">
+                  <div className="space-y-4 mb-4">
                     {plan.features.map((feature, idx) => (
                       <div key={idx} className="flex items-start space-x-3">
                         <div className="flex-shrink-0 w-5 h-5 bg-cyan-400/20 rounded-full flex items-center justify-center mt-0.5">
@@ -216,6 +227,11 @@ export default function PricingSection() {
                         <span className="text-gray-300 text-base">{feature}</span>
                       </div>
                     ))}
+                  </div>
+                  <div className="mt-auto pt-2 pb-4">
+                    <p className="text-gray-300 text-sm text-center">
+                      {t('motivation_title')}
+                    </p>
                   </div>
                 </div>
 
