@@ -20,6 +20,112 @@ interface Plan {
   billingCycle: string;  // Remove ? to make it required
 }
 
+const EliteCard = ({ t }: { t: any }) => {
+  return (
+    <div className="relative rounded-3xl transition-all duration-500 overflow-hidden group bg-gradient-to-br from-[#1c1c1c] to-[#2e2e2e] border border-gray-700/50 hover:border-cyan-400/30 hover:shadow-lg hover:shadow-cyan-400/10 h-[600px] lg:h-full">
+      {/* Hover Background Image */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 pointer-events-none">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: "url('/images/layers.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <div className="absolute inset-0" />
+      </div>
+
+      <div className="relative lg:absolute lg:inset-0 p-8 z-20 flex flex-col h-full">
+        {/* Scrollable Content */}
+        <div className="grow flex flex-col overflow-y-auto pr-2 mb-6 space-y-6 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-600 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-500">
+          
+          <div>
+            <h3 className="text-2xl lg:text-3xl font-medium text-white mb-2">
+              {t('pricing_plan_elite')}
+            </h3>
+            <h4 className="text-xl font-medium text-cyan-300">
+              {t('pricing_elite_card_title')}
+            </h4>
+          </div>
+
+          <div className="text-gray-300 text-sm space-y-2">
+            <p>{t('pricing_elite_card_intro1')}</p>
+            {t('pricing_elite_card_intro2') && <p>{t('pricing_elite_card_intro2')}</p>}
+            <p className="font-semibold text-white">{t('pricing_elite_card_intro3')}</p>
+            <p>{t('pricing_elite_card_intro4')}</p>
+          </div>
+
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold text-cyan-300">{t('pricing_elite_card_what_you_get')}</h4>
+            
+            <div className="space-y-1">
+              <p className="text-white font-medium">{t('pricing_elite_card_mentoring_title')}</p>
+              <p className="text-gray-400 text-sm">{t('pricing_elite_card_mentoring_desc')}</p>
+            </div>
+
+            <div className="space-y-1">
+              <p className="text-white font-medium">{t('pricing_elite_card_strategy_title')}</p>
+              <p className="text-gray-400 text-sm">{t('pricing_elite_card_strategy_desc')}</p>
+              <ul className="text-gray-400 text-sm pl-2 space-y-0.5">
+                <li>{t('pricing_elite_card_strategy_p1')}</li>
+                <li>{t('pricing_elite_card_strategy_p2')}</li>
+                <li>{t('pricing_elite_card_strategy_p3')}</li>
+                <li>{t('pricing_elite_card_strategy_p4')}</li>
+              </ul>
+            </div>
+
+            <div className="space-y-1">
+              <p className="text-white font-medium">{t('pricing_elite_card_market_title')}</p>
+              <p className="text-gray-400 text-sm">{t('pricing_elite_card_market_desc')}</p>
+              <ul className="text-gray-400 text-sm pl-2 space-y-0.5">
+                <li>{t('pricing_elite_card_market_p1')}</li>
+                <li>{t('pricing_elite_card_market_p2')}</li>
+                <li>{t('pricing_elite_card_market_p3')}</li>
+                <li>{t('pricing_elite_card_market_p4')}</li>
+              </ul>
+            </div>
+
+            <div className="space-y-1">
+              <p className="text-white font-medium">{t('pricing_elite_card_clue_title')}</p>
+              <p className="text-gray-400 text-sm">{t('pricing_elite_card_clue_desc')}</p>
+              <ul className="text-cyan-400 text-sm pl-2 space-y-0.5">
+                <li>{t('pricing_elite_card_clue_p1')}</li>
+                <li>{t('pricing_elite_card_clue_p2')}</li>
+                <li>{t('pricing_elite_card_clue_p3')}</li>
+                <li>{t('pricing_elite_card_clue_p4')}</li>
+                <li>{t('pricing_elite_card_clue_p5')}</li>
+              </ul>
+            </div>
+
+            <div className="space-y-1">
+              <p className="text-white font-medium">{t('pricing_elite_card_target_title')}</p>
+              <p className="text-gray-400 text-sm">{t('pricing_elite_card_target_desc')}</p>
+              <ul className="text-gray-400 text-sm pl-2 space-y-0.5">
+                <li>{t('pricing_elite_card_target_p1')}</li>
+                <li>{t('pricing_elite_card_target_p2')}</li>
+                <li>{t('pricing_elite_card_target_p3')}</li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* CTA Button Fixed at bottom */}
+        <div className="mt-auto pt-4 border-t border-gray-700/50">
+          <Button
+            className="w-full !py-6 rounded-full text-lg font-medium transition-all duration-300 bg-text hover:bg-text cursor-pointer text-black shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40"
+            onClick={() => window.open("https://calendly.com/", "_blank")}
+          >
+            {t('pricing_elite_card_contact')}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function PricingSection() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
@@ -173,6 +279,9 @@ export default function PricingSection() {
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 xl:gap-8 mt-14">
           {PLANS.map((plan) => (
+            plan.name === t('pricing_plan_elite') ? (
+              <EliteCard key={plan.billingCycle} t={t} />
+            ) : (
             <div
               key={`${plan.billingCycle}`}
               className="relative rounded-3xl p-8 transition-all duration-500 overflow-hidden group bg-gradient-to-br from-[#1c1c1c] to-[#2e2e2e] border border-gray-700/50 hover:border-cyan-400/30 hover:shadow-lg hover:shadow-cyan-400/10 min-h-[500px] flex flex-col"
@@ -249,6 +358,7 @@ export default function PricingSection() {
                 </Button>
               </div>
             </div>
+            )
           ))}
         </div>
       </div>
