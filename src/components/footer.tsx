@@ -140,7 +140,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <h3 className="text-lg font-semibold mb-6">Socials</h3>
             <nav className="space-y-4">
-              <Link
+              {/* <Link
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -159,9 +159,9 @@ export default function Footer() {
                   />
                 </svg>
                 X
-              </Link>
+              </Link> */}
               <Link
-                href="https://instagram.com"
+                href="https://www.instagram.com/corinnareibchen/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors duration-200 text-sm group"
@@ -172,7 +172,7 @@ export default function Footer() {
                 Instagram
               </Link>
               <Link
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/corinna-reibchen/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors duration-200 text-sm group"
@@ -183,7 +183,7 @@ export default function Footer() {
                 LinkedIn
               </Link>
               <Link
-                href="https://youtube.com"
+                href="https://www.youtube.com/@TheClueGerman"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors duration-200 text-sm group"
