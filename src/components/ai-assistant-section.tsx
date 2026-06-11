@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/hooks/useTranslation";
 import { useUserProfileQuery } from "@/Redux/feature/userSlice";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
@@ -10,6 +11,7 @@ import { useEffect } from "react";
 export default function AIAssistantSection() {
   const pathname = usePathname();
   const router = useRouter();
+  const { t } = useTranslation();
 
   const { data, isLoading } = useUserProfileQuery(undefined);
   const user = data?.data;
@@ -67,11 +69,11 @@ export default function AIAssistantSection() {
         text-3xl sm:text-4xl md:text-5xl xl:text-6xl
       "
               >
-                <span>Got Questions?</span>
+                <span>{t("ai_section_title1")}</span>
                 <br />
-                <span>Ask Our AI</span>
+                <span>{t("ai_section_title2")}</span>
                 <br />
-                <span>Learning Assistant</span>
+                <span>{t("ai_section_title3")}</span>
               </h2>
 
               <p
@@ -82,8 +84,7 @@ export default function AIAssistantSection() {
         mx-auto lg:mx-0
       "
               >
-                Instantly get answers about Web3, crypto, or any course topic —
-                24/7, powered by AI
+                {t("ai_section_description")}
               </p>
             </div>
 
@@ -103,7 +104,7 @@ export default function AIAssistantSection() {
         group
       "
               >
-                Ask the AI Now
+                {t("ai_section_button")}
                 <ArrowRight
                   className="
           ml-2 w-4 h-4 sm:w-5 sm:h-5

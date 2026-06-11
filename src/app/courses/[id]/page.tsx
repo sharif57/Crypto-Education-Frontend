@@ -162,7 +162,23 @@ export default function Category() {
             </div>
           )}
         </div>
+
+        {/* Take Quiz */}
+        <Link href={`/courses/${id}/quiz`} className="bg-[#62C1BF] px-6 py-4 cursor-pointer rounded-[12px] flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-semibold text-[#224443]">Take Quiz</h1>
+            <p className="text-lg font-normal text-[#224443]">To earn points</p>
+          </div>
+          <div >
+
+            <svg width="13" height="23" viewBox="0 0 13 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.25 1.25L11.25 11.25L1.25 21.25" stroke="#224443" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+
+          </div>
+        </Link>
+
       </div>
-    </div>
+    </div >
   );
 }

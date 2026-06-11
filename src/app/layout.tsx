@@ -35,19 +35,20 @@ export default function RootLayout({
         style={{ fontFamily: "var(--font-poppins)" }}
         cz-shortcut-listen="true"
       >
-        <LanguageProvider>
-          <Providers>
-            <InitialLoadGate>
-              <Toaster />
-              <Header />
-              <ProtectedLayout>
-                {children}
-              </ProtectedLayout>
-              <Message />
-              <Footer />
-            </InitialLoadGate>
-          </Providers>
-        </LanguageProvider>
+          <LanguageProvider>
+            <Providers>
+              <InitialLoadGate>
+                <Toaster />
+                <Header />
+                <ProtectedLayout>
+                  {children}
+                </ProtectedLayout>
+                <Message />
+                <Footer />
+              </InitialLoadGate>
+            </Providers>
+          </LanguageProvider>
+        
       </body>
     </html>
   );

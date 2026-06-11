@@ -4,6 +4,7 @@ import Everyone from "@/components/everyone";
 import Faq from "@/components/faq";
 // import FeaturesSection from "@/components/features-section";
 import Hero from "@/components/hero";
+import LandingPageWrapper from "@/components/LandingPageWrapper";
 // import Banner from "@/components/hero-banner";
 import MasterAi from "@/components/master-ai";
 // import MasterClass from "@/components/master-class";
@@ -17,19 +18,21 @@ import React from "react";
 export default function Home() {
   return (
     <div className="">
-      {/* <Banner></Banner> */}
-      <Hero />
-      <TheClue />
-      {/* <MasterClass /> */}
-      <AIAssistantSection></AIAssistantSection>
-      {/* <FeaturesSection /> */}
-      <PricingSection />
-      <MasterAi />
-      <TestimonialsSection />
-      <Everyone />
-      <Faq />
-      <Transform />
-      <Trainer />
+      <LandingPageWrapper>
+        {/* <Banner></Banner> */}
+        <Hero />
+        <TheClue />
+        {/* <MasterClass /> */}
+        <AIAssistantSection></AIAssistantSection>
+        {/* <FeaturesSection /> */}
+        <PricingSection />
+        <MasterAi />
+        <TestimonialsSection />
+        <Everyone />
+        <Faq />
+        <Transform />
+        <Trainer />
+      </LandingPageWrapper>
       {/* <MobileShowcase /> */}
     </div>
   );
