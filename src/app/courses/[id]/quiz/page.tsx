@@ -1,73 +1,44 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from 'react';
 import QuizComplete from '@/components/quiz-complete';
-
-const questions = [
-    {
-        id: 1,
-        question: "What is the primary purpose of a crypto wallet?",
-        options: [
-            { id: 'a', text: "To mine cryptocurrency" },
-            { id: 'b', text: "To store and manage digital assets" },
-            { id: 'c', text: "To create smart contracts" },
-            { id: 'd', text: "To verify blockchain transactions" }
-        ],
-        correctAnswer: 'b'
-    },
-    {
-        id: 2,
-        question: "Which of the following is a characteristic of a hardware wallet?",
-        options: [
-            { id: 'a', text: "It is always connected to the internet" },
-            { id: 'b', text: "It stores private keys offline" },
-            { id: 'c', text: "It is a mobile application" },
-            { id: 'd', text: "It is managed by a centralized exchange" }
-        ],
-        correctAnswer: 'b'
-    },
-    {
-        id: 3,
-        question: "What is a 'seed phrase' used for?",
-        options: [
-            { id: 'a', text: "To generate a public address" },
-            { id: 'b', text: "To encrypt communications" },
-            { id: 'c', text: "To recover a wallet if access is lost" },
-            { id: 'd', text: "To pay transaction fees" }
-        ],
-        correctAnswer: 'c'
-    },
-    {
-        id: 4,
-        question: "Which type of wallet is considered the most secure for long-term storage?",
-        options: [
-            { id: 'a', text: "Web wallet" },
-            { id: 'b', text: "Mobile wallet" },
-            { id: 'c', text: "Hardware wallet" },
-            { id: 'd', text: "Exchange wallet" }
-        ],
-        correctAnswer: 'c'
-    },
-    {
-        id: 5,
-        question: "What happens if you lose your private key and seed phrase?",
-        options: [
-            { id: 'a', text: "You can request a new one from the blockchain" },
-            { id: 'b', text: "You permanently lose access to your funds" },
-            { id: 'c', text: "Your funds are automatically returned to the sender" },
-            { id: 'd', text: "You can recover it using your email address" }
-        ],
-        correctAnswer: 'b'
-    }
-];
+import { useQuizQuestionsQuery, useQuizResultQuery, useSubmitAnswerMutation } from '@/Redux/feature/quiz';
+import { useParams } from 'next/navigation';
 
 export default function QuizPage() {
+    const { id } = useParams();
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
     const [isFinished, setIsFinished] = useState(false);
 
-    const currentQuestion = questions[currentQuestionIndex];
-    const totalQuestions = questions.length;
+    const { data, isLoading, error } = useQuizQuestionsQuery(id);
+
+    const { data: result, isLoading: isResultLoading } = useQuizResultQuery(id, { skip: !isFinished });
+    const [submitAnswer, { isLoading: isSubmitting }] = useSubmitAnswerMutation();
+
+    if (isLoading) {
+        return <div className="min-h-screen flex items-center justify-center text-white text-xl">Loading quiz...</div>;
+    }
+
+    if (error || !data || !data.quizzes || data.quizzes.length === 0) {
+        return <div className="min-h-screen flex items-center justify-center text-white text-xl">No quiz available.</div>;
+    }
+
+    const formattedQuestions = data.quizzes.map((q: any) => ({
+        id: q.id,
+        question: q.questions,
+        options: [
+            { id: 'option1', text: q.option1 },
+            { id: 'option2', text: q.option2 },
+            { id: 'option3', text: q.option3 },
+            { id: 'option4', text: q.option4 }
+        ].filter((opt: any) => opt.text),
+        correctAnswer: q.correct_option
+    }));
+
+    const currentQuestion = formattedQuestions[currentQuestionIndex];
+    const totalQuestions = formattedQuestions.length;
     const currentAnswer = selectedAnswers[currentQuestion.id];
 
     const handleSelectOption = (optionId: string) => {
@@ -77,11 +48,25 @@ export default function QuizPage() {
         }));
     };
 
-    const handleNext = () => {
+    const handleNext = async () => {
         if (currentQuestionIndex < totalQuestions - 1) {
             setCurrentQuestionIndex(prev => prev + 1);
         } else {
-            setIsFinished(true);
+            // Submit the answers
+            const payload = {
+                course_id: Number(id),
+                answers: formattedQuestions.map((q: any) => ({
+                    quiz_id: q.id,
+                    answer: selectedAnswers[q.id] || ""
+                }))
+            };
+
+            try {
+                await submitAnswer(payload).unwrap();
+                setIsFinished(true);
+            } catch (err) {
+                console.error("Failed to submit quiz:", err);
+            }
         }
     };
 
@@ -92,19 +77,30 @@ export default function QuizPage() {
     };
 
     if (isFinished) {
-        let score = 0;
-        questions.forEach(q => {
-            if (selectedAnswers[q.id] === q.correctAnswer) {
-                score++;
-            }
-        });
+        if (isResultLoading || !result) {
+            return <div className="min-h-screen flex items-center justify-center text-white text-xl">Loading results...</div>;
+        }
+
+        const score = result.submission_report ? result.submission_report.filter((r: any) => r.is_correct).length : 0;
+        
+        const serverSelectedAnswers: Record<number, string> = {};
+        if (result.submission_report) {
+            result.submission_report.forEach((report: any) => {
+                serverSelectedAnswers[report.question] = report.answer;
+                // Also update correct answers based on server response to be perfectly accurate
+                const questionObj = formattedQuestions.find((q: any) => q.id === report.question);
+                if (questionObj) {
+                    questionObj.correctAnswer = report.correct_answer;
+                }
+            });
+        }
 
         return (
             <QuizComplete
                 score={score}
                 totalQuestions={totalQuestions}
-                questions={questions}
-                selectedAnswers={selectedAnswers}
+                questions={formattedQuestions}
+                selectedAnswers={serverSelectedAnswers}
                 onRetake={() => {
                     setIsFinished(false);
                     setCurrentQuestionIndex(0);
@@ -131,7 +127,7 @@ export default function QuizPage() {
 
                 {/* Options */}
                 <div className="space-y-4 mb-10">
-                    {currentQuestion.options.map((option) => {
+                    {currentQuestion.options.map((option: any) => {
                         const isSelected = currentAnswer === option.id;
 
                         return (

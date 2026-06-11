@@ -14,8 +14,9 @@ export const baseApi = createApi({
     'Chat',
     'Subscription',
     "Referral",
-    "Issue"
-   
+    "Issue",
+    'Quiz'
+
   ],
   endpoints: () => ({}),
 });
