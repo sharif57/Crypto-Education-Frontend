@@ -450,6 +450,9 @@ import { ArrowLeft, ChevronUp, ChevronDown, Play, ArrowRight, Download, External
 import Loading from "@/components/Loading";
 import Chat from "@/components/chat";
 import BookMark from "@/components/book-mark";
+import NoBookMark from "@/components/icon/no-book";
+import { useSaveVideoMutation, useUnSaveVideoMutation } from "@/Redux/feature/bookingSlice";
+import { toast } from "sonner";
 
 interface RelatedVideo {
   id: number | string;
@@ -479,7 +482,28 @@ export default function VideoDetailPage() {
 
   const [progressUpdate] = useProgressUpdateMutation();
 
+  const [saveVideo] = useSaveVideoMutation();
+  const [unSaveVideo] = useUnSaveVideoMutation();
 
+  const handleSaveToggle = async () => {
+    const videoId = data?.data?.video_id;
+    console.log(videoId, 'jjjjjjjjjjjjj')
+    if (!videoId) return;
+
+    try {
+      if (data?.data?.is_saved) {
+        const res = await unSaveVideo({ video_id: videoId }).unwrap();
+        console.log(res, '=============')
+        toast.success(res?.message || 'Video unsaved successfully');
+      } else {
+        const res = await saveVideo({ video_id: videoId }).unwrap();
+        toast.success(res?.message || 'Video saved successfully');
+      }
+    } catch (err: any) {
+      console.error("Failed to toggle save video", err);
+      toast.error(err?.data?.error || 'Failed to toggle save video')
+    }
+  };
   const handleProgressUpdate = async (videoId: string, isCompleted: boolean) => {
     try {
       await progressUpdate({ video: videoId, is_completed: isCompleted }).unwrap();
@@ -606,8 +630,8 @@ export default function VideoDetailPage() {
                   {video.title}
                 </h1>
                 <div className="flex items-center gap-2">
-                  <div className="cursor-pointer">
-                    <BookMark />
+                  <div className="cursor-pointer" onClick={handleSaveToggle}>
+                    {video?.is_saved ? <BookMark /> : <NoBookMark />}
                   </div>
                   {!isVideoWatched50Percent && (
                     <p className="text-[10px] sm:text-xs text-gray-400 sm:text-right">

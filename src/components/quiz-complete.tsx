@@ -68,8 +68,8 @@ export default function QuizComplete({ score, totalQuestions, questions, selecte
                 <div key={q.id} className="space-y-3">
                   <p className="text-base  sm:text-lg font-normal text-[#F3F3F3]">{q.question}</p>
 
-                  <div className="relative flex items-center justify-between p-4 rounded-xl border border-[#62C1BF] ">
-                    <span className="text-sm sm:text-base text-[#62C1BF] font-normal">
+                  <div className={`relative flex items-center justify-between p-4 rounded-xl border ${isCorrect ? 'border-[#62C1BF]' : 'border-[#EF5053]'}`}>
+                    <span className={`text-sm sm:text-base font-normal ${isCorrect ? 'text-[#62C1BF]' : 'text-[#EF5053]'}`}>
                       {userAnswerObj?.text || "No answer selected"}
                     </span>
 

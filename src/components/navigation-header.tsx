@@ -96,6 +96,7 @@ export default function Header() {
       { name: "Home", href: "/" },
       { name: "Courses", href: "/courses" },
       { name: "AI Assistance", href: "/chat" },
+      { name: "Bookmarks", href: "/book-marks" },
       { name: "Pricing", href: "/#pricing" },
       { name: "Refer & Earn", href: "/refer-and-earn" },
       { name: "Contact", href: "/contact" },
@@ -203,9 +204,8 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-gray-500/15 backdrop-blur-xl shadow-lg" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-gray-500/15 backdrop-blur-xl shadow-lg" : "bg-transparent"
+        }`}
     >
       <div className="relative z-10 mx-auto px-4 sm:px-6 py-4 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -230,11 +230,10 @@ export default function Header() {
                 <a
                   key={item.name}
                   href={item.href}
-                  className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full ${
-                    isActive
+                  className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full ${isActive
                       ? "bg-white/10 backdrop-blur-xl text-white px-6 py-2 text-lg font-normal rounded-full shadow-xl"
                       : "text-[#c2bebe] hover:text-white hover:bg-gray-800/50"
-                  }`}
+                    }`}
                   onClick={(e) => handleNavigationClick(e, item.href, item.name)}
                 >
                   {item.name}
@@ -340,10 +339,9 @@ export default function Header() {
                       className={`
                         flex items-center px-5 py-4 rounded-xl text-base font-medium
                         transition-all duration-200
-                        ${
-                          isActive
-                            ? "bg-gradient-to-r from-cyan-600/20 to-cyan-500/10 text-cyan-300 border-l-4 border-cyan-400 font-semibold shadow-sm shadow-cyan-500/20"
-                            : "text-gray-300 hover:bg-gray-800/60 hover:text-white"
+                        ${isActive
+                          ? "bg-gradient-to-r from-cyan-600/20 to-cyan-500/10 text-cyan-300 border-l-4 border-cyan-400 font-semibold shadow-sm shadow-cyan-500/20"
+                          : "text-gray-300 hover:bg-gray-800/60 hover:text-white"
                         }
                       `}
                     >
@@ -379,7 +377,7 @@ export default function Header() {
                             {user.full_name}
                           </div>
                           <div className="text-xs text-gray-400">Logged in</div>
-                          
+
                         </div>
                       </div>
                       <button

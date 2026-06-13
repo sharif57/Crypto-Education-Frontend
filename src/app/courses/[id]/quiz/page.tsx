@@ -15,7 +15,7 @@ export default function QuizPage() {
     const { data, isLoading, error } = useQuizQuestionsQuery(id);
 
     const { data: result, isLoading: isResultLoading } = useQuizResultQuery(id, { skip: !isFinished });
-    const [submitAnswer, { isLoading: isSubmitting }] = useSubmitAnswerMutation();
+    const [submitAnswer] = useSubmitAnswerMutation();
 
     if (isLoading) {
         return <div className="min-h-screen flex items-center justify-center text-white text-xl">Loading quiz...</div>;
@@ -82,7 +82,7 @@ export default function QuizPage() {
         }
 
         const score = result.submission_report ? result.submission_report.filter((r: any) => r.is_correct).length : 0;
-        
+
         const serverSelectedAnswers: Record<number, string> = {};
         if (result.submission_report) {
             result.submission_report.forEach((report: any) => {

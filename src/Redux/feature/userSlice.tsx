@@ -35,9 +35,20 @@ export const userApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-    })
+    }),
+
+    // /auth/progress/
+    userProgress: builder.query({
+      query: () => ({
+        url: "/auth/progress/",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      }),
+    }),
 
   }),
 });
 
-export const { useUserProfileQuery, useUpdateProfileMutation , useUserSendMessageMutation } = userApi;
+export const { useUserProfileQuery, useUpdateProfileMutation, useUserSendMessageMutation, useUserProgressQuery } = userApi;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { Send, X } from 'lucide-react';
@@ -18,10 +19,10 @@ interface ChatProps {
   videoResource: string;
 }
 
-export default function Chat({ videoId, videoResource }: ChatProps) {
+export default function Chat({ videoId }: ChatProps) {
 
-  console.log('Video ID:', videoId);
-  console.log('Video Resource:', videoResource);
+  // console.log('Video ID:', videoId);
+  // console.log('Video Resource:', videoResource);
 
   const [language, setLanguage] = useState<string>('');
   const [isAIModalOpen, setIsAIModalOpen] = useState<boolean>(false);
@@ -79,7 +80,7 @@ export default function Chat({ videoId, videoResource }: ChatProps) {
     }
   }, [videoSessionId, createSession]);
 
-  console.log('Video Session ID:', videoSessionId);
+  // console.log('Video Session ID:', videoSessionId);
 
 
 
@@ -105,7 +106,7 @@ export default function Chat({ videoId, videoResource }: ChatProps) {
         session_id: videoSessionId,
       };
 
-      console.log('Payload:', payload);
+      // console.log('Payload:', payload);
 
       const res = await videoAskChatWithId({
         data: payload,
@@ -128,13 +129,13 @@ export default function Chat({ videoId, videoResource }: ChatProps) {
           timestamp: new Date(),
         },
       ]);
-    } catch (error) {
-      console.error('Failed to fetch AI response:', error);
+    } catch (error: any) {
+      // console.error('Failed to fetch AI response:', error?.data?.detail);
       setMessages((prev) => [
         ...prev,
         {
           id: (Date.now() + 1).toString(),
-          text: "Error: " + error,
+          text: error?.data?.detail || 'Something went wrong. Please try again later.',
           isUser: false,
           timestamp: new Date(),
         },
@@ -374,6 +375,6 @@ export default function Chat({ videoId, videoResource }: ChatProps) {
         </div>
       )}
     </div>
-    
+
   );
 }
