@@ -48,7 +48,7 @@ export default function MyProfile() {
   }
 
   return (
-    <div className="w-full min-h-screen bg-[#111111] flex justify-center items-center py-[160px] ">
+    <div className="w-full min-h-screen bg-[#111111] flex justify-center items-center py-[160px] p-2 ">
       <div className="w-full max-w-[890px] bg-[#1E1E1E] border border-[#325251] rounded-[32px] p-[28px]  sm:p-[40px] shadow-2xl">
 
         {/* Top Section */}
