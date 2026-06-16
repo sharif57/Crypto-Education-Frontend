@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { useTranslation } from "@/hooks/useTranslation";
 
 interface Plan {
+  id: string;
   name: string;
   price: number;
   description: string;
@@ -146,6 +147,7 @@ export default function PricingSection() {
 
   const PLANS: Plan[] = [
     {
+      id: 'pro',
       name: t('pricing_plan_pro'),
       billingCycle: 'monthly',
       price: 29.99,
@@ -160,6 +162,7 @@ export default function PricingSection() {
       featured: false,
     },
     {
+      id: 'pro',
       name: t('pricing_plan_pro'),
       billingCycle: 'yearly',
       price: 250,
@@ -174,6 +177,7 @@ export default function PricingSection() {
       featured: true,
     },
     {
+      id: 'elite',
       name: t('pricing_plan_elite'),
       billingCycle: 'lifetime',
       price: 3999,
@@ -197,14 +201,14 @@ export default function PricingSection() {
     }
 
     const payload = {
-      plan: plan.name.toLowerCase(),
+      plan: plan.id,
       billing_cycle: plan.billingCycle,
     };
 
     // console.log("SUBSCRIPTION PAYLOAD 👉", payload);
 
     try {
-      setLoadingPlan(`${plan.name}-${plan.billingCycle}`);
+      setLoadingPlan(`${plan.id}-${plan.billingCycle}`);
       const res = await buySubscription(payload).unwrap();
 
       if (res?.checkout_url) {
@@ -346,11 +350,11 @@ export default function PricingSection() {
 
                 {/* CTA Button */}
                 <Button
-                  disabled={loadingPlan === `${plan.name}-${plan.billingCycle}`}
+                  disabled={loadingPlan === `${plan.id}-${plan.billingCycle}`}
                   className="w-full !py-6 rounded-full text-lg font-medium transition-all duration-300 bg-text hover:bg-text cursor-pointer text-black shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40"
                   onClick={() => handleBuySubscription(plan)}
                 >
-                  {loadingPlan === `${plan.name}-${plan.billingCycle}` ? (
+                  {loadingPlan === `${plan.id}-${plan.billingCycle}` ? (
                     <LoaderCircle className="animate-spin size-8" />
                   ) : (
                     t('pricing_choose_plan')
