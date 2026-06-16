@@ -1,8 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { CheckCircle2 } from 'lucide-react';
 import Cup from './cup';
+import { useRouter } from 'next/navigation';
 
 interface Question {
   id: number;
@@ -22,6 +22,10 @@ interface QuizCompleteProps {
 export default function QuizComplete({ score, totalQuestions, questions, selectedAnswers }: QuizCompleteProps) {
   // Assuming 100 points per correct answer based on the design showing "Point Earned 400" for 4/5.
   const pointsEarned = score * 100;
+  const router = useRouter();
+  const handleNavigateBack = () => {
+    router.back();
+  };
 
   return (
     <div className="relative min-h-screen bg-[#1c1c1c] text-white py-12 px-4 sm:px-6 lg:px-8 mt-20">
@@ -95,11 +99,11 @@ export default function QuizComplete({ score, totalQuestions, questions, selecte
         </div>
 
         {/* Back To Home Button */}
-        <Link href="/" className="w-full ">
+        <button onClick={handleNavigateBack} className="w-full ">
           <button className="w-full py-3 px-6 rounded-full bg-[#62C1BF] text-[#224443] font-medium text-lg transition-all duration-200 hover:bg-[#64d2c1]">
             Back To Home
           </button>
-        </Link>
+        </button>
 
 
 
