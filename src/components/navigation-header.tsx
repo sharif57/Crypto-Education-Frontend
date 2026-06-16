@@ -5,7 +5,7 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User, LogOut } from "lucide-react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useUserProfileQuery } from "@/Redux/feature/userSlice";
@@ -231,8 +231,8 @@ export default function Header() {
                   key={item.name}
                   href={item.href}
                   className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full ${isActive
-                      ? "bg-white/10 backdrop-blur-xl text-white px-6 py-2 text-lg font-normal rounded-full shadow-xl"
-                      : "text-[#c2bebe] hover:text-white hover:bg-gray-800/50"
+                    ? "bg-white/10 backdrop-blur-xl text-white px-6 py-2 text-lg font-normal rounded-full shadow-xl"
+                    : "text-[#c2bebe] hover:text-white hover:bg-gray-800/50"
                     }`}
                   onClick={(e) => handleNavigationClick(e, item.href, item.name)}
                 >
@@ -249,24 +249,40 @@ export default function Header() {
           {/* Desktop Auth */}
           <div className="hidden md:flex items-center">
             {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger className="cursor-pointer border rounded-full" title={user?.full_name}>
+              <DropdownMenu modal={false}>
+                <DropdownMenuTrigger className="cursor-pointer border-2 border-cyan-500/30 hover:border-cyan-400 transition-colors rounded-full focus:outline-none flex items-center justify-center p-0.5" title={user?.full_name}>
                   <Image
-                    src={user?.image}
+                    src={user?.image || "/images/default-avatar.png"}
                     alt="Profile"
-                    width={400}
-                    height={400}
-                    className="w-[40px] h-[40px] rounded-full"
+                    width={40}
+                    height={40}
+                    className="w-9 h-9 rounded-full object-cover"
                   />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <Link href="/profile/my-profile">
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuContent className="w-64 bg-white/10 backdrop-blur-xl border border-white/20 text-white shadow-2xl rounded-xl mt-2 p-2" align="end">
+                  <DropdownMenuLabel className="font-normal p-3">
+                    <div className="flex flex-col space-y-1.5">
+                      <p className="text-sm font-medium leading-none text-white">{user?.full_name}</p>
+                      <p className="text-xs leading-none text-cyan-300">
+                        Manage your account
+                      </p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator className="bg-white/20 my-1" />
+                  <Link href="/profile/my-profile" className="w-full outline-none">
+                    <DropdownMenuItem className="cursor-pointer text-gray-200 hover:!bg-cyan-500/10 focus:!bg-cyan-500/10 hover:!text-cyan-300 focus:!text-cyan-300 py-3 px-3 rounded-lg transition-colors outline-none">
+                      <User className="mr-2.5 h-4 w-4 text-white" />
+                      <span className="font-medium">Profile</span>
+                    </DropdownMenuItem>
                   </Link>
-                  <DropdownMenuItem>{user?.full_name}</DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleLOut}>Log Out</DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-white/20 my-1" />
+                  <DropdownMenuItem
+                    onClick={handleLOut}
+                    className="cursor-pointer text-red-500 hover:!bg-red-500/10 focus:!bg-red-500/10 hover:!text-red-400 focus:!text-red-400 py-3 px-3 rounded-lg transition-colors outline-none"
+                  >
+                    <LogOut className="mr-2.5 h-4 w-4 text-red-500" />
+                    <span className="font-medium">Log Out</span>
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
@@ -309,19 +325,19 @@ export default function Header() {
           <div
             className={`
               absolute right-0 top-0 h-full w-4/5 max-w-[320px]
-              bg-gradient-to-b from-gray-950 via-gray-900 to-black
-              border-l border-gray-800/70 shadow-2xl
+              bg-white/10 backdrop-blur-xl
+              border-l border-white/20 shadow-2xl
               transform transition-transform duration-300 ease-in-out
               ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}
             `}
           >
             <div className="flex flex-col h-full">
               {/* Header */}
-              <div className="flex items-center justify-between p-5 border-b border-gray-800/60">
+              <div className="flex items-center justify-between p-5 border-b border-white/20">
                 <span className="text-lg font-semibold text-white">Menu</span>
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 rounded-full hover:bg-gray-800 text-gray-300 hover:text-white"
+                  className="p-2 rounded-full hover:bg-white/10 text-gray-300 hover:text-white transition-colors"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -341,7 +357,7 @@ export default function Header() {
                         transition-all duration-200
                         ${isActive
                           ? "bg-gradient-to-r from-cyan-600/20 to-cyan-500/10 text-cyan-300 border-l-4 border-cyan-400 font-semibold shadow-sm shadow-cyan-500/20"
-                          : "text-gray-300 hover:bg-gray-800/60 hover:text-white"
+                          : "text-gray-300 hover:bg-white/10 hover:text-white"
                         }
                       `}
                     >
@@ -355,7 +371,7 @@ export default function Header() {
               </nav>
 
               {/* Bottom section */}
-              <div className="p-5 border-t border-gray-800/60 mt-auto">
+              <div className="p-5 border-t border-white/20 mt-auto">
                 <div className="mb-6">
                   <div className="text-sm text-gray-400 mb-3">Language</div>
                   <LanguageSwitcher />
@@ -363,7 +379,7 @@ export default function Header() {
 
                 <div>
                   {user ? (
-                    <div className="flex flex-col items-center justify-between bg-gray-900/70 p-4 rounded-xl border border-gray-700/50">
+                    <div className="flex flex-col items-center justify-between bg-black/20 p-4 rounded-xl border border-white/10">
                       <div className="flex items-center gap-3 w-full">
                         <Image
                           src={user?.image || "/images/default-avatar.png"}
