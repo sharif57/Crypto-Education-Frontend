@@ -1,0 +1,14 @@
+# User-Agent directives for standard search engines
+User-agent: *
+
+# Allow crawling of the primary public landing pages
+Allow: *
+
+# Block dynamic, auth-guarded, or empty states to preserve crawl budget
+Disallow: /auth/
+Disallow: /auth/login
+Disallow: /book-marks
+Disallow: /bookmarks
+
+# Sitemaps declaration
+Sitemap: https://www.theclue.io/sitemap.xml
