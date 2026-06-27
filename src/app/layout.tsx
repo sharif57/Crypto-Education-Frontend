@@ -32,6 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="facebook-domain-verification" content="uag16d6y6fcdkz8ag7rtenwhyldo13" />
         {/* Google Tag Manager */}
         <Script
           id="google-tag-manager"
