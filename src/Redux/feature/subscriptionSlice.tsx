@@ -6,10 +6,10 @@ import baseApi from "../Api/baseApi";
 export const subscriptionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     buySubscription: builder.mutation({
-      query: ({ plan , billing_cycle }) => ({
+      query: ({ plan, billing_cycle, skip_trial }) => ({
         url: `/subscriptions/stripe/checkout/`,
         method: "POST",
-        body: { plan , billing_cycle },
+        body: { plan, billing_cycle, skip_trial },
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },

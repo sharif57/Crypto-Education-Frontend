@@ -5,11 +5,18 @@
 import { Button } from "@/components/ui/button";
 import { useBuySubscriptionMutation } from "@/Redux/feature/subscriptionSlice";
 import { useUserProfileQuery } from "@/Redux/feature/userSlice";
-import { Check, LoaderCircle } from "lucide-react";
+import { Check, LoaderCircle, Sparkles, ArrowRight, Zap } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useTranslation } from "@/hooks/useTranslation";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 interface Plan {
   id: string;
@@ -40,7 +47,7 @@ const EliteCard = ({ t }: { t: any }) => {
       <div className="relative lg:absolute lg:inset-0 p-8 z-20 flex flex-col h-full">
         {/* Scrollable Content */}
         <div className="grow flex flex-col overflow-y-auto pr-2 mb-6 space-y-6 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-600 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-500">
-          
+
           <div>
             <h3 className="text-2xl lg:text-3xl font-medium text-white mb-2">
               {t('pricing_plan_elite')}
@@ -59,7 +66,7 @@ const EliteCard = ({ t }: { t: any }) => {
 
           <div className="space-y-4">
             <h4 className="text-lg font-semibold text-cyan-300">{t('pricing_elite_card_what_you_get')}</h4>
-            
+
             <div className="space-y-1">
               <p className="text-white font-medium">{t('pricing_elite_card_mentoring_title')}</p>
               <p className="text-gray-400 text-sm">{t('pricing_elite_card_mentoring_desc')}</p>
@@ -134,6 +141,8 @@ export default function PricingSection() {
   const { data } = useUserProfileQuery(undefined);
   const user = data?.data;
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const formatPrice = (price: number) => {
     const locale = i18n.language?.startsWith("de") ? "de-DE" : "en-US";
@@ -193,22 +202,30 @@ export default function PricingSection() {
     },
   ];
 
-  const handleBuySubscription = async (plan: Plan) => {
+  const handleOpenModal = (plan: Plan) => {
     if (!user) {
       toast.error("Please sign in to buy a subscription.");
       router.push("/auth/login");
       return;
     }
+    setSelectedPlan(plan);
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmSubscription = async (skip_trial: boolean) => {
+    if (!selectedPlan) return;
 
     const payload = {
-      plan: plan.id,
-      billing_cycle: plan.billingCycle,
+      plan: selectedPlan.id,
+      billing_cycle: selectedPlan.billingCycle,
+      skip_trial,
     };
+    console.log(payload, '=======================')
 
     // console.log("SUBSCRIPTION PAYLOAD 👉", payload);
 
     try {
-      setLoadingPlan(`${plan.id}-${plan.billingCycle}`);
+      setLoadingPlan(`${selectedPlan.id}-${selectedPlan.billingCycle}-${skip_trial}`);
       const res = await buySubscription(payload).unwrap();
 
       if (res?.checkout_url) {
@@ -221,6 +238,7 @@ export default function PricingSection() {
       toast.error(error?.data?.message || "Failed to process subscription. Please try again.");
     } finally {
       setLoadingPlan(null);
+      setIsModalOpen(false);
     }
   };
 
@@ -286,86 +304,142 @@ export default function PricingSection() {
             plan.name === t('pricing_plan_elite') ? (
               <EliteCard key={plan.billingCycle} t={t} />
             ) : (
-            <div
-              key={`${plan.billingCycle}`}
-              className="relative rounded-3xl p-8 transition-all duration-500 overflow-hidden group bg-gradient-to-br from-[#1c1c1c] to-[#2e2e2e] border border-gray-700/50 hover:border-cyan-400/30 hover:shadow-lg hover:shadow-cyan-400/10 min-h-[500px] flex flex-col"
-            >
-              {/* Hover Background Image */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0">
-                <div
-                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                  style={{
-                    backgroundImage: "url('/images/layers.png')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                />
-                <div className="absolute inset-0" />
-              </div>
+              <div
+                key={`${plan.billingCycle}`}
+                className="relative rounded-3xl p-8 transition-all duration-500 overflow-hidden group bg-gradient-to-br from-[#1c1c1c] to-[#2e2e2e] border border-gray-700/50 hover:border-cyan-400/30 hover:shadow-lg hover:shadow-cyan-400/10 min-h-[500px] flex flex-col"
+              >
+                {/* Hover Background Image */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                    style={{
+                      backgroundImage: "url('/images/layers.png')",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
+                  <div className="absolute inset-0" />
+                </div>
 
-              <div className="relative z-20 flex flex-col h-full">
-                <div className="grow flex flex-col">
-                  {/* Price */}
-                  <div className="mb-6">
-                    <div className="flex items-baseline">
-                      <span className="text-4xl lg:text-4xl font-semibold text-white">
-                        {formatPrice(plan.price)}
-                      </span>
-                      <span className="text-gray-400 ml-2">/{t(`pricing_${plan.billingCycle}`)}</span>
+                <div className="relative z-20 flex flex-col h-full">
+                  <div className="grow flex flex-col">
+                    {/* Price */}
+                    <div className="mb-6">
+                      <div className="flex items-baseline">
+                        <span className="text-4xl lg:text-4xl font-semibold text-white">
+                          {formatPrice(plan.price)}
+                        </span>
+                        <span className="text-gray-400 ml-2">/{t(`pricing_${plan.billingCycle}`)}</span>
+                      </div>
+                    </div>
+
+                    {/* Plan Name + Badge if featured */}
+                    <h3 className="text-2xl lg:text-3xl font-medium text-white mb-4">
+                      {plan.name}
+                      {plan.featured && (
+                        <span className="ml-3 inline-block px-3 py-1 text-xs font-semibold text-cyan-300 bg-cyan-400/20 rounded-full">
+                          {t('pricing_most_popular')}
+                        </span>
+                      )}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-gray-300 text-base lg:text-lg leading-relaxed mb-8">
+                      {plan.description}
+                    </p>
+
+                    {/* Features */}
+                    <div className="space-y-4 mb-4">
+                      {plan.features.map((feature, idx) => (
+                        <div key={idx} className="flex items-start space-x-3">
+                          <div className="flex-shrink-0 w-5 h-5 bg-cyan-400/20 rounded-full flex items-center justify-center mt-0.5">
+                            <Check className="w-3 h-3 text-cyan-400" />
+                          </div>
+                          <span className="text-gray-300 text-base">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-auto pt-2 pb-4">
+                      <p className="text-gray-300 text-sm text-center">
+                        {t('motivation_title')}
+                      </p>
                     </div>
                   </div>
 
-                  {/* Plan Name + Badge if featured */}
-                  <h3 className="text-2xl lg:text-3xl font-medium text-white mb-4">
-                    {plan.name}
-                    {plan.featured && (
-                      <span className="ml-3 inline-block px-3 py-1 text-xs font-semibold text-cyan-300 bg-cyan-400/20 rounded-full">
-                        {t('pricing_most_popular')}
-                      </span>
+                  {/* CTA Button */}
+                  <Button
+                    disabled={loadingPlan !== null && loadingPlan.startsWith(`${plan.id}-${plan.billingCycle}`)}
+                    className="w-full !py-6 rounded-full text-lg font-medium transition-all duration-300 bg-text hover:bg-text cursor-pointer text-black shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40"
+                    onClick={() => handleOpenModal(plan)}
+                  >
+                    {loadingPlan !== null && loadingPlan.startsWith(`${plan.id}-${plan.billingCycle}`) ? (
+                      <LoaderCircle className="animate-spin size-8" />
+                    ) : (
+                      t('pricing_choose_plan')
                     )}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-gray-300 text-base lg:text-lg leading-relaxed mb-8">
-                    {plan.description}
-                  </p>
-
-                  {/* Features */}
-                  <div className="space-y-4 mb-4">
-                    {plan.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-start space-x-3">
-                        <div className="flex-shrink-0 w-5 h-5 bg-cyan-400/20 rounded-full flex items-center justify-center mt-0.5">
-                          <Check className="w-3 h-3 text-cyan-400" />
-                        </div>
-                        <span className="text-gray-300 text-base">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-auto pt-2 pb-4">
-                    <p className="text-gray-300 text-sm text-center">
-                      {t('motivation_title')}
-                    </p>
-                  </div>
+                  </Button>
                 </div>
-
-                {/* CTA Button */}
-                <Button
-                  disabled={loadingPlan === `${plan.id}-${plan.billingCycle}`}
-                  className="w-full !py-6 rounded-full text-lg font-medium transition-all duration-300 bg-text hover:bg-text cursor-pointer text-black shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40"
-                  onClick={() => handleBuySubscription(plan)}
-                >
-                  {loadingPlan === `${plan.id}-${plan.billingCycle}` ? (
-                    <LoaderCircle className="animate-spin size-8" />
-                  ) : (
-                    t('pricing_choose_plan')
-                  )}
-                </Button>
               </div>
-            </div>
             )
           ))}
         </div>
       </div>
+
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="bg-gradient-to-br from-[#1c1c1c] to-[#2e2e2e] text-white border border-gray-700/50 shadow-lg shadow-cyan-400/10 sm:max-w-md p-0 overflow-hidden rounded-3xl [&>button]:text-gray-400 [&>button:hover]:text-white">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#94ecea] to-[#307574]"></div>
+
+          <div className="p-8">
+            <DialogHeader className="mb-6">
+              <DialogTitle className="text-2xl font-normal flex items-center gap-2 mb-2">
+                <Sparkles className="w-6 h-6 text-[#94ecea]" />
+                <span className="bg-gradient-to-r from-[#94ecea] to-[#307574] bg-clip-text text-transparent">Choose Your Path</span>
+              </DialogTitle>
+              <DialogDescription className="text-[#B4B4B4] text-base leading-relaxed">
+                Unlock the full potential of your trading journey. Start with a risk-free trial or dive straight in.
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="flex flex-col gap-4 mt-8">
+              <Button
+                className="w-full !py-6 rounded-full text-lg font-medium transition-all duration-300 bg-text hover:bg-text cursor-pointer text-black shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40 group relative flex items-center justify-center gap-2 border-none"
+                onClick={() => handleConfirmSubscription(false)}
+                disabled={!!loadingPlan}
+              >
+                {loadingPlan === `${selectedPlan?.id}-${selectedPlan?.billingCycle}-false` ? (
+                  <LoaderCircle className="animate-spin size-6" />
+                ) : (
+                  <>
+                    <span>Start 3-Day Free Trial</span>
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
+              </Button>
+
+              <div className="relative flex items-center py-2">
+                <div className="flex-grow border-t border-gray-700/50"></div>
+                <span className="flex-shrink-0 mx-4 text-[#B4B4B4] text-sm font-normal">OR</span>
+                <div className="flex-grow border-t border-gray-700/50"></div>
+              </div>
+
+              <Button
+                className="w-full !py-6 rounded-full text-lg font-medium transition-all duration-300 bg-transparent border border-gray-700 hover:border-cyan-400/30 text-gray-300 hover:text-white hover:bg-cyan-400/5 group flex items-center justify-center gap-2"
+                onClick={() => handleConfirmSubscription(true)}
+                disabled={!!loadingPlan}
+              >
+                {loadingPlan === `${selectedPlan?.id}-${selectedPlan?.billingCycle}-true` ? (
+                  <LoaderCircle className="animate-spin size-6" />
+                ) : (
+                  <>
+                    <Zap className="w-5 h-5 group-hover:scale-110 transition-transform text-[#94ecea]" />
+                    <span>Skip Trial & Pay Now</span>
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
