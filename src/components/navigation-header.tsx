@@ -96,13 +96,15 @@ export default function Header() {
       { name: "Home", href: "/" },
       { name: "Courses", href: "/courses" },
       { name: "AI Assistance", href: "/chat" },
-      { name: "Bookmarks", href: "/book-marks" },
       { name: "Pricing", href: "/#pricing" },
-      { name: "Refer & Earn", href: "/refer-and-earn" },
       { name: "Contact", href: "/contact" },
     ];
 
     if (user) {
+      items.splice(3, 0,
+        { name: "Refer & Earn", href: "/refer-and-earn" },
+        { name: "Bookmarks", href: "/book-marks" },
+      );
       items.push({
         name: "Withdraw History",
         href: "/withdrawal-history",
