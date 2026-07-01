@@ -15,7 +15,14 @@ const SeraUIHero = () => {
 
                     <div className="flex justify-center mb-8 px-4">
                         <a
-                            href="#"
+                            href="#the-clue"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                const element = document.getElementById("the-clue");
+                                if (element) {
+                                    element.scrollIntoView({ behavior: "smooth", block: "start" });
+                                }
+                            }}
                             className="
       inline-flex items-center gap-2 sm:gap-3
       rounded-full

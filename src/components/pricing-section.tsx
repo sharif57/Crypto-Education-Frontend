@@ -228,10 +228,12 @@ export default function PricingSection() {
       setLoadingPlan(`${selectedPlan.id}-${selectedPlan.billingCycle}-${skip_trial}`);
       const res = await buySubscription(payload).unwrap();
 
-      if (res?.checkout_url) {
+      if (res?.clientSecret) {
+        router.push(`/checkout?secret=${encodeURIComponent(res.clientSecret)}`);
+      } else if (res?.checkout_url) {
         window.open(res.checkout_url, "_blank");
       } else {
-        toast.error("No checkout URL received.");
+        toast.error("No checkout details received.");
       }
     } catch (error: any) {
       console.error("Subscription error:", error);

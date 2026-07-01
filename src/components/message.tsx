@@ -41,6 +41,16 @@ export default function Message() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  useEffect(() => {
+    const handleOpenChat = () => {
+      setIsOpen(true);
+    };
+    window.addEventListener("open-ai-assistant", handleOpenChat);
+    return () => {
+      window.removeEventListener("open-ai-assistant", handleOpenChat);
+    };
+  }, []);
+
   // Hide chat on auth pages
   if (
     pathname === "/auth/create-pass" ||
@@ -48,7 +58,8 @@ export default function Message() {
     pathname === "/auth/forgot-pass" ||
     pathname === "/auth/signup" ||
     pathname === "/auth/login" ||
-    pathname === "/auth/verify-email"
+    pathname === "/auth/verify-email" ||
+    pathname === "/checkout"
   ) {
     return null;
   }
@@ -112,7 +123,13 @@ export default function Message() {
   };
 
   const toggleChat = () => {
-    setIsOpen(!isOpen);
+    const nextState = !isOpen;
+    setIsOpen(nextState);
+    if (nextState) {
+      window.dispatchEvent(new CustomEvent("open-ai-assistant"));
+    } else {
+      window.dispatchEvent(new CustomEvent("close-ai-assistant"));
+    }
   };
 
   return (

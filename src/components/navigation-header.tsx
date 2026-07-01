@@ -72,6 +72,7 @@ export default function Header() {
       "/auth/signup",
       "/auth/login",
       "/auth/verify-email",
+      "/checkout",
     ],
     []
   );
@@ -96,7 +97,7 @@ export default function Header() {
       { name: "Home", href: "/" },
       { name: "Courses", href: "/courses" },
       { name: "AI Assistance", href: "/chat" },
-      { name: "Pricing", href: "/#pricing" },
+      { name: "Pricing", href: "/pricing" },
       { name: "Contact", href: "/contact" },
     ];
 
@@ -126,6 +127,7 @@ export default function Header() {
     (hash: string): string | null => {
       if (!hash.startsWith("#")) return null;
       const section = hash.slice(1).toLowerCase();
+      if (section === "the-clue") return "Courses";
       const match = navigationItems.find(
         (item) => item.href.toLowerCase() === `/#${section}`
       );
@@ -156,6 +158,39 @@ export default function Header() {
     }
   }, [pathname, getNameFromHash, navigationItems]);
 
+  useEffect(() => {
+    const handleOpenChat = () => {
+      setActiveItem("AI Assistance");
+    };
+    const handleCloseChat = () => {
+      if (pathname === "/") {
+        const hash = typeof window !== "undefined" ? window.location.hash : "";
+        if (hash) {
+          const name = getNameFromHash(hash);
+          if (name) {
+            setActiveItem(name);
+            return;
+          }
+        }
+        setActiveItem("Home");
+      } else {
+        const match = navigationItems.find(
+          (item) =>
+            item.href === pathname ||
+            (item.href !== "/" && pathname.startsWith(item.href))
+        );
+        setActiveItem(match ? match.name : "");
+      }
+    };
+
+    window.addEventListener("open-ai-assistant", handleOpenChat);
+    window.addEventListener("close-ai-assistant", handleCloseChat);
+    return () => {
+      window.removeEventListener("open-ai-assistant", handleOpenChat);
+      window.removeEventListener("close-ai-assistant", handleCloseChat);
+    };
+  }, [pathname, getNameFromHash, navigationItems]);
+
   if (hideLayout) return null;
 
   const handleNavigationClick = async (
@@ -166,31 +201,48 @@ export default function Header() {
     e.preventDefault();
     setIsMobileMenuOpen(false);
 
+    if (itemName === "Home" || href === "/") {
+      if (pathname === "/") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.history.pushState(null, "", "/");
+        setActiveItem("Home");
+        return;
+      }
+    }
+
     const isSubscribed = user?.subscription && ["basic", "pro", "elite"].includes(user.subscription);
 
-    if (itemName === "Courses" || itemName === "AI Assistance") {
+    if (itemName === "AI Assistance") {
+      if (isSubscribed) {
+        try {
+          const res = await createSession({}).unwrap();
+          localStorage.setItem("session_id", res?.object_id);
+          router.push(href);
+        } catch (error) {
+          console.error("Failed to create session:", error);
+          router.push("/#pricing");
+        }
+      } else {
+        window.dispatchEvent(new CustomEvent("open-ai-assistant"));
+      }
+      return;
+    }
+
+    if (itemName === "Courses") {
       if (!isSubscribed) {
         if (pathname === "/") {
-          const element = document.getElementById("pricing");
+          const targetId = "the-clue";
+          const element = document.getElementById(targetId);
           if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
-          setActiveItem("Pricing");
+          setActiveItem("Courses");
         } else {
-          router.push("/#pricing");
+          router.push("/#the-clue");
         }
         return;
       }
     }
 
-    if (itemName === "AI Assistance") {
-      try {
-        const res = await createSession({}).unwrap();
-        localStorage.setItem("session_id", res?.object_id);
-        router.push(href);
-      } catch (error) {
-        console.error("Failed to create session:", error);
-        router.push("/#pricing");
-      }
-    } else if (href.startsWith("/#")) {
+    if (href.startsWith("/#")) {
       if (pathname === "/") {
         const sectionId = href.slice(2);
         const element = document.getElementById(sectionId);
@@ -291,7 +343,7 @@ export default function Header() {
               <Link href="/auth/login">
                 <Button
                   variant="outline"
-                  className="bg-transparent border-white text-white hover:bg-white/10 hover:text-black hover:border-gray-300 px-6 py-5 rounded-full text-sm font-medium"
+                  className="bg-transparent border-gray-400 text-white hover:bg-white/10 hover:text-black hover:border-gray-300 px-6 py-5 rounded-full text-sm font-medium"
                 >
                   Log In
                 </Button>

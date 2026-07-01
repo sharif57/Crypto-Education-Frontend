@@ -94,14 +94,7 @@ export default function AIAssistantSection() {
                 onClick={handleStartLearning}
                 size="lg"
                 className="
-        bg-text text-[#224443] font-medium cursor-pointer
-        px-6 sm:px-8 py-4 sm:py-6
-        rounded-full
-        text-base sm:text-lg
-        transition-all duration-300
-        shadow-lg shadow-cyan-400/25
-        hover:shadow-cyan-400/40
-        group
+        bg-[#62C1BF] hover:bg-[#52a9a7] cursor-pointer text-[#224443] font-medium !px-8 py-6 rounded-full text-lg transition-all duration-300 shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40 group
       "
               >
                 {t("ai_section_button")}
