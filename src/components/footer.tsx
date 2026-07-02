@@ -22,7 +22,8 @@ export default function Footer() {
       "/auth/signup",
       "/auth/login",
       "/auth/verify-email",
-      "/checkout"
+      "/checkout",
+      "/booking",
     ],
     []
   );

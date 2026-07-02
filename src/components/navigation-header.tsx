@@ -73,6 +73,7 @@ export default function Header() {
       "/auth/login",
       "/auth/verify-email",
       "/checkout",
+      "/booking",
     ],
     []
   );

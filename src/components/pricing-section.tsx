@@ -29,6 +29,7 @@ interface Plan {
 }
 
 const EliteCard = ({ t }: { t: any }) => {
+  const router = useRouter();
   return (
     <div className="relative rounded-3xl transition-all duration-500 overflow-hidden group bg-gradient-to-br from-[#1c1c1c] to-[#2e2e2e] border border-gray-700/50 hover:border-cyan-400/30 hover:shadow-lg hover:shadow-cyan-400/10 h-[600px] lg:h-full">
       {/* Hover Background Image */}
@@ -124,7 +125,7 @@ const EliteCard = ({ t }: { t: any }) => {
         <div className="mt-auto pt-4 border-t border-gray-700/50">
           <Button
             className="w-full !py-6 rounded-full text-lg font-medium transition-all duration-300 bg-text hover:bg-text cursor-pointer text-black shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40"
-            onClick={() => window.open("https://calendly.com/", "_blank")}
+            onClick={() => router.push("/booking")}
           >
             {t('pricing_elite_card_contact')}
           </Button>
